@@ -1,0 +1,339 @@
+[
+  {
+    "patient_id": "stress-p01",
+    "synthetic": true,
+    "active_encounter_id": "enc-new",
+    "encounters": [
+      {
+        "id": "enc-new",
+        "results": [
+          {
+            "id": "k10",
+            "test_name": "potassium",
+            "value": "3.1",
+            "unit": "mmol/L",
+            "timestamp": "2026-01-01T10:00:00Z",
+            "institution": "A"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "patient_id": "stress-p02",
+    "synthetic": true,
+    "active_encounter_id": "enc-new",
+    "encounters": [
+      {
+        "id": "enc-old",
+        "date": "2025-12-01",
+        "results": []
+      },
+      {
+        "id": "enc-new",
+        "date": "2026-01-01",
+        "results": []
+      }
+    ]
+  },
+  {
+    "patient_id": "stress-p03",
+    "synthetic": true,
+    "active_encounter_id": "enc-new",
+    "encounters": [
+      {
+        "id": "enc-new",
+        "results": [
+          {
+            "id": "cr1",
+            "test_name": "creatinine",
+            "value": "1.0",
+            "unit": "mg/dL",
+            "timestamp": "2026-02-01T10:00:00Z"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "patient_id": "stress-p04",
+    "synthetic": true,
+    "active_encounter_id": "enc-new",
+    "encounters": [
+      {
+        "id": "enc-new",
+        "results": [
+          {
+            "id": "glu1",
+            "test_name": "glucose",
+            "value": "100",
+            "unit": "mg/dL",
+            "timestamp": "2026-02-02T10:00:00Z"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "patient_id": "stress-p05",
+    "synthetic": true,
+    "active_encounter_id": "enc-new",
+    "encounters": [
+      {
+        "id": "enc-new",
+        "results": []
+      }
+    ]
+  },
+  {
+    "patient_id": "stress-p06",
+    "synthetic": true,
+    "active_encounter_id": "enc-new",
+    "encounters": [
+      {
+        "id": "enc-new",
+        "documents": [
+          {
+            "id": "doc6",
+            "accession": "ACC-6",
+            "title": "Right knee report"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "patient_id": "stress-p07",
+    "synthetic": true,
+    "active_encounter_id": "enc-new",
+    "encounters": [
+      {
+        "id": "enc-new",
+        "requests": [
+          {
+            "id": "req7",
+            "description": "CT head without contrast",
+            "status": "active"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "patient_id": "stress-p08",
+    "synthetic": true,
+    "active_encounter_id": "enc-new",
+    "encounters": [
+      {
+        "id": "enc-new",
+        "documents": [
+          {
+            "id": "doc8",
+            "accession": "A8",
+            "title": "Discharge Summary"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "patient_id": "stress-p09",
+    "synthetic": true,
+    "active_encounter_id": "enc-new",
+    "encounters": [
+      {
+        "id": "enc-new",
+        "requests": [
+          {
+            "id": "req9",
+            "description": "MRI lumbar spine",
+            "status": "ordered"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "patient_id": "stress-p10",
+    "synthetic": true,
+    "active_encounter_id": "enc-new",
+    "encounters": [
+      {
+        "id": "enc-new",
+        "documents": [
+          {
+            "id": "doc10",
+            "accession": "A10",
+            "title": "Operative note"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "patient_id": "stress-p11",
+    "synthetic": true,
+    "active_encounter_id": "enc-new",
+    "encounters": [
+      {
+        "id": "enc-a",
+        "date": "2026-05-01"
+      },
+      {
+        "id": "enc-b",
+        "date": "2026-05-01"
+      }
+    ]
+  },
+  {
+    "patient_id": "stress-p12",
+    "synthetic": true,
+    "active_encounter_id": "enc-new",
+    "encounters": [
+      {
+        "id": "enc-new",
+        "results": []
+      }
+    ]
+  },
+  {
+    "patient_id": "stress-p13",
+    "synthetic": true,
+    "active_encounter_id": "enc-new",
+    "encounters": [
+      {
+        "id": "enc-new",
+        "documents": [
+          {
+            "id": "doc13",
+            "accession": null,
+            "title": "Pathology report"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "patient_id": "stress-p14",
+    "synthetic": true,
+    "active_encounter_id": "enc-new",
+    "encounters": [
+      {
+        "id": "enc-old",
+        "documents": []
+      },
+      {
+        "id": "enc-new",
+        "documents": []
+      }
+    ]
+  },
+  {
+    "patient_id": "stress-p15",
+    "synthetic": true,
+    "active_encounter_id": "enc-new",
+    "encounters": [
+      {
+        "id": "enc-new",
+        "results": [
+          {
+            "id": "na15",
+            "test_name": "sodium",
+            "value": "140",
+            "unit": "mmol/L",
+            "timestamp": "2026-06-01T10:00:00Z"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "patient_id": "stress-p16",
+    "synthetic": true,
+    "active_encounter_id": "enc-new",
+    "encounters": [
+      {
+        "id": "enc-new",
+        "requests": [
+          {
+            "id": "r16",
+            "description": "Chest radiograph",
+            "status": "ordered"
+          }
+        ],
+        "results": []
+      }
+    ]
+  },
+  {
+    "patient_id": "stress-p17",
+    "synthetic": true,
+    "active_encounter_id": "enc-new",
+    "encounters": [
+      {
+        "id": "enc-old",
+        "results": [
+          {
+            "id": "cr17",
+            "test_name": "creatinine",
+            "value": "1.0",
+            "unit": "mg/dL",
+            "timestamp": "2026-01-01T08:00:00Z"
+          }
+        ]
+      },
+      {
+        "id": "enc-new",
+        "results": []
+      }
+    ]
+  },
+  {
+    "patient_id": "stress-p18",
+    "synthetic": true,
+    "active_encounter_id": "enc-new",
+    "encounters": [
+      {
+        "id": "enc-new",
+        "results": [
+          {
+            "id": "h18",
+            "test_name": "hemoglobin",
+            "value": "11",
+            "unit": "g/dL",
+            "timestamp": "2026-07-02T08:00:00Z",
+            "institution": "A"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "patient_id": "stress-p19",
+    "synthetic": true,
+    "active_encounter_id": "enc-new",
+    "encounters": [
+      {
+        "id": "enc-new",
+        "requests": [
+          {
+            "id": "r19",
+            "external_id": "RX19",
+            "status": "cancelled"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "patient_id": "stress-p20",
+    "synthetic": true,
+    "active_encounter_id": "enc-new",
+    "encounters": [
+      {
+        "id": "enc-new",
+        "documents": []
+      }
+    ]
+  }
+]

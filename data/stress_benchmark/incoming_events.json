@@ -1,0 +1,387 @@
+[
+  {
+    "patient_id": "stress-p01",
+    "event_id": "stress-e01",
+    "synthetic": true,
+    "facts": [
+      {
+        "id": "f1",
+        "kind": "result",
+        "test_name": "potassium",
+        "value": "4.8",
+        "unit": "mmol/L",
+        "timestamp": "2026-01-01T16:00:00Z",
+        "institution": "B",
+        "encounter_id": "enc-new"
+      }
+    ]
+  },
+  {
+    "patient_id": "stress-p02",
+    "event_id": "stress-e02",
+    "synthetic": true,
+    "facts": [
+      {
+        "id": "f2",
+        "kind": "result",
+        "test_name": "sodium",
+        "value": "139",
+        "unit": "mmol/L",
+        "timestamp": "2025-12-01T09:00:00Z",
+        "institution": "B",
+        "encounter_id": "enc-old"
+      }
+    ]
+  },
+  {
+    "patient_id": "stress-p03",
+    "event_id": "stress-e03",
+    "synthetic": true,
+    "facts": [
+      {
+        "id": "f3",
+        "kind": "result",
+        "test_name": "Creatinine",
+        "value": "88.4",
+        "unit": "umol/L",
+        "timestamp": "2026-02-01T10:00:00Z",
+        "institution": "B",
+        "external_id": "cr-x"
+      }
+    ]
+  },
+  {
+    "patient_id": "stress-p04",
+    "event_id": "stress-e04",
+    "synthetic": true,
+    "facts": [
+      {
+        "id": "f4",
+        "kind": "result",
+        "test_name": "glucose",
+        "value": "5.55",
+        "unit": "mmol/L",
+        "timestamp": "2026-02-02T10:00:00Z",
+        "institution": "C"
+      }
+    ]
+  },
+  {
+    "patient_id": "stress-p05",
+    "event_id": "stress-e05",
+    "synthetic": true,
+    "facts": [
+      {
+        "id": "f5a",
+        "kind": "result",
+        "test_name": "potassium",
+        "value": "3.1",
+        "unit": "mmol/L",
+        "timestamp": "2026-03-01T10:00:00Z",
+        "institution": "A",
+        "external_id": "spec-5"
+      },
+      {
+        "id": "f5b",
+        "kind": "result",
+        "test_name": "potassium",
+        "value": "4.8",
+        "unit": "mmol/L",
+        "timestamp": "2026-03-01T10:00:00Z",
+        "institution": "B",
+        "external_id": "spec-5"
+      }
+    ]
+  },
+  {
+    "patient_id": "stress-p06",
+    "event_id": "stress-e06",
+    "synthetic": true,
+    "facts": [
+      {
+        "id": "f6a",
+        "kind": "document",
+        "accession": "ACC-6",
+        "title": "Left knee report",
+        "institution": "B"
+      },
+      {
+        "id": "f6b",
+        "kind": "identity",
+        "accession": "ACC-6",
+        "encounter_id": "enc-new"
+      }
+    ]
+  },
+  {
+    "patient_id": "stress-p07",
+    "event_id": "stress-e07",
+    "synthetic": true,
+    "facts": [
+      {
+        "id": "f7",
+        "kind": "request",
+        "description": "Non-contrast CT of head",
+        "status": "active",
+        "external_id": "R7",
+        "institution": "B"
+      }
+    ]
+  },
+  {
+    "patient_id": "stress-p08",
+    "event_id": "stress-e08",
+    "synthetic": true,
+    "facts": [
+      {
+        "id": "f8",
+        "kind": "document",
+        "accession": "A8",
+        "title": "  discharge   summary ",
+        "institution": "C"
+      }
+    ]
+  },
+  {
+    "patient_id": "stress-p09",
+    "event_id": "stress-e09",
+    "synthetic": true,
+    "facts": [
+      {
+        "id": "f9",
+        "kind": "request",
+        "description": "MRI lumbar spine",
+        "status": "scheduled",
+        "scheduled_at": "2026-04-02T09:00:00Z",
+        "institution": "B"
+      }
+    ]
+  },
+  {
+    "patient_id": "stress-p10",
+    "event_id": "stress-e10",
+    "synthetic": true,
+    "facts": [
+      {
+        "id": "f10",
+        "kind": "document",
+        "accession": "A10",
+        "title": "Operative note",
+        "signed_at": "2026-04-03T12:00:00Z",
+        "institution": "B"
+      }
+    ]
+  },
+  {
+    "patient_id": "stress-p11",
+    "event_id": "stress-e11",
+    "synthetic": true,
+    "facts": [
+      {
+        "id": "f11",
+        "kind": "result",
+        "test_name": "hemoglobin",
+        "value": "12",
+        "unit": "g/dL",
+        "timestamp": "2026-05-01T11:00:00Z",
+        "institution": "B"
+      }
+    ]
+  },
+  {
+    "patient_id": "stress-p12",
+    "event_id": "stress-e12",
+    "synthetic": true,
+    "facts": [
+      {
+        "id": "f12",
+        "kind": "result",
+        "value": "7.1",
+        "timestamp": "2026-05-02T11:00:00Z",
+        "institution": "C"
+      }
+    ]
+  },
+  {
+    "patient_id": "stress-p13",
+    "event_id": "stress-e13",
+    "synthetic": true,
+    "facts": [
+      {
+        "id": "f13a",
+        "kind": "document",
+        "title": "Pathology report",
+        "external_document_id": "D13",
+        "institution": "B"
+      },
+      {
+        "id": "f13b",
+        "kind": "identity",
+        "external_document_id": "D13",
+        "accession": "ACC13",
+        "encounter_id": "enc-new"
+      }
+    ]
+  },
+  {
+    "patient_id": "stress-p14",
+    "event_id": "stress-e14",
+    "synthetic": true,
+    "facts": [
+      {
+        "id": "f14a",
+        "kind": "document",
+        "title": "Consult note",
+        "external_document_id": "D14",
+        "institution": "C"
+      },
+      {
+        "id": "f14b",
+        "kind": "identity",
+        "external_document_id": "D14",
+        "encounter_id": "enc-old"
+      }
+    ]
+  },
+  {
+    "patient_id": "stress-p15",
+    "event_id": "stress-e15",
+    "synthetic": true,
+    "facts": [
+      {
+        "id": "f15a",
+        "kind": "result",
+        "test_name": "sodium",
+        "value": "140",
+        "unit": "mmol/L",
+        "timestamp": "2026-06-01T10:00:00Z",
+        "institution": "B"
+      },
+      {
+        "id": "f15b",
+        "kind": "result",
+        "test_name": "potassium",
+        "value": "3.0",
+        "unit": "mmol/L",
+        "timestamp": "2026-06-01T11:00:00Z",
+        "institution": "A",
+        "external_id": "S15"
+      },
+      {
+        "id": "f15c",
+        "kind": "result",
+        "test_name": "potassium",
+        "value": "4.0",
+        "unit": "mmol/L",
+        "timestamp": "2026-06-01T11:00:00Z",
+        "institution": "B",
+        "external_id": "S15"
+      },
+      {
+        "id": "f15d",
+        "kind": "result",
+        "value": "9",
+        "institution": "C"
+      }
+    ]
+  },
+  {
+    "patient_id": "stress-p16",
+    "event_id": "stress-e16",
+    "synthetic": true,
+    "facts": [
+      {
+        "id": "f16a",
+        "kind": "request",
+        "description": "Chest radiograph",
+        "status": "completed",
+        "institution": "B"
+      },
+      {
+        "id": "f16b",
+        "kind": "result",
+        "test_name": "glucose",
+        "value": "6.0",
+        "unit": "mmol/L",
+        "timestamp": "2026-06-02T13:00:00Z",
+        "institution": "B"
+      }
+    ]
+  },
+  {
+    "patient_id": "stress-p17",
+    "event_id": "stress-e17",
+    "synthetic": true,
+    "facts": [
+      {
+        "id": "f17a",
+        "kind": "result",
+        "test_name": "creatinine",
+        "value": "88.4",
+        "unit": "umol/L",
+        "timestamp": "2026-01-01T08:00:00Z",
+        "encounter_id": "enc-old",
+        "institution": "C"
+      },
+      {
+        "id": "f17b",
+        "kind": "result",
+        "test_name": "creatinine",
+        "value": "100",
+        "unit": "umol/L",
+        "timestamp": "2026-07-01T08:00:00Z",
+        "encounter_id": "enc-new",
+        "institution": "C"
+      }
+    ]
+  },
+  {
+    "patient_id": "stress-p18",
+    "event_id": "stress-e18",
+    "synthetic": true,
+    "facts": [
+      {
+        "id": "f18",
+        "kind": "result",
+        "test_name": "hemoglobin",
+        "value": "12",
+        "unit": "g/dL",
+        "timestamp": "2026-07-02T12:00:00Z",
+        "institution": "B"
+      }
+    ]
+  },
+  {
+    "patient_id": "stress-p19",
+    "event_id": "stress-e19",
+    "synthetic": true,
+    "facts": [
+      {
+        "id": "f19a",
+        "kind": "request",
+        "external_id": "RX19",
+        "status": "active",
+        "institution": "B"
+      },
+      {
+        "id": "f19b",
+        "kind": "identity",
+        "external_id": "RX19",
+        "encounter_id": "enc-new"
+      }
+    ]
+  },
+  {
+    "patient_id": "stress-p20",
+    "event_id": "stress-e20",
+    "synthetic": true,
+    "facts": [
+      {
+        "id": "f20",
+        "kind": "document",
+        "title": "Radiology report",
+        "institution": "C"
+      }
+    ]
+  }
+]

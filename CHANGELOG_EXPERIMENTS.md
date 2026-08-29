@@ -134,3 +134,16 @@ values as JSON-encoded strings with explicit JSON Schema `type: string`, then
 losslessly decodes them into the unchanged `ProposedUpdate` benchmark model.
 This corrects OpenAI strict structured-output compatibility without changing the
 task prompt, benchmark data, model configuration, evaluator, or update semantics.
+# Stress benchmark v1.0.0 — benchmark hardening
+
+Experiment 002 showed that the original benchmark's apparent failures were
+overwhelmingly output-representation mismatches rather than failures of semantic
+reconciliation. Instead of claiming an artificial improvement by adding a
+formatter, the next benchmark was created to test the real operational
+bottleneck: reconciliation of fragmented, temporally distinct, cross-source
+patient-record information.
+
+This release adds a completely separate, frozen 20-case synthetic stress suite,
+semantic evaluator, one-call baseline, leakage/integrity tests, explicit
+normalization contract, benchmark statistics, and SHA-256 manifest. Experiment
+002 data, evaluation behavior, prompts, and results remain unchanged.

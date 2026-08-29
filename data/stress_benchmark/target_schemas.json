@@ -1,0 +1,20 @@
+[
+  {
+    "id": "ehr_alpha",
+    "fields": [
+      "encounters[].results[]",
+      "encounters[].requests[]",
+      "encounters[].documents[]",
+      "workflow.review"
+    ]
+  },
+  {
+    "id": "ehr_beta",
+    "fields": [
+      "visits[].observations[]",
+      "visits[].orders[]",
+      "visits[].documents[]",
+      "review_queue"
+    ]
+  }
+]
