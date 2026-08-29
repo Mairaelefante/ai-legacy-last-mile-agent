@@ -1,0 +1,322 @@
+[
+  {
+    "case_id": "patient-01:event-01:ehr_alpha",
+    "patient_id": "patient-01",
+    "event_id": "event-01",
+    "target_schema_id": "ehr_alpha",
+    "response": "{\"updates\":[{\"case_id\":\"patient-01:event-01:ehr_alpha\",\"patient_id\":\"patient-01\",\"event_id\":\"event-01\",\"target_schema_id\":\"ehr_alpha\",\"action_type\":\"NO_OP\",\"target_path\":\"patient.medications.active.med-01.dose\",\"source_fact_ids\":[\"e01-med\"],\"current_value\":\"\\\"10 mg\\\"\",\"proposed_value\":\"\\\"10 mg\\\"\",\"status\":\"INFORMATIONAL\",\"reason\":\"Incoming cetirizine dose is already represented correctly in the active medication record.\"}]}",
+    "error": null
+  },
+  {
+    "case_id": "patient-01:event-01:ehr_beta",
+    "patient_id": "patient-01",
+    "event_id": "event-01",
+    "target_schema_id": "ehr_beta",
+    "response": "{\"updates\":[{\"case_id\":\"patient-01:event-01:ehr_beta\",\"patient_id\":\"patient-01\",\"event_id\":\"event-01\",\"target_schema_id\":\"ehr_beta\",\"action_type\":\"NO_OP\",\"target_path\":\"chart.med_list.current.med-01.sig\",\"source_fact_ids\":[\"e01-med\"],\"current_value\":\"\\\"10 mg\\\"\",\"proposed_value\":\"\\\"10 mg\\\"\",\"status\":\"INFORMATIONAL\",\"reason\":\"Incoming cetirizine dose of 10 mg is already represented in the current medication record.\"}]}",
+    "error": null
+  },
+  {
+    "case_id": "patient-01:event-02:ehr_alpha",
+    "patient_id": "patient-01",
+    "event_id": "event-02",
+    "target_schema_id": "ehr_alpha",
+    "response": "{\"updates\":[{\"case_id\":\"patient-01:event-02:ehr_alpha\",\"patient_id\":\"patient-01\",\"event_id\":\"event-02\",\"target_schema_id\":\"ehr_alpha\",\"action_type\":\"UPDATE\",\"target_path\":\"patient.medications.active.med-01.dose\",\"source_fact_ids\":[\"e02-med\"],\"current_value\":\"\\\"10 mg\\\"\",\"proposed_value\":\"\\\"20 mg\\\"\",\"status\":\"REQUIRES_HUMAN_REVIEW\",\"reason\":\"Incoming clinician medication fact explicitly changes the active cetirizine dose from 10 mg to 20 mg.\"},{\"case_id\":\"patient-01:event-02:ehr_alpha\",\"patient_id\":\"patient-01\",\"event_id\":\"event-02\",\"target_schema_id\":\"ehr_alpha\",\"action_type\":\"ADD\",\"target_path\":\"patient.medications.active\",\"source_fact_ids\":[\"e02-new-med\"],\"current_value\":\"[{\\\"id\\\":\\\"med-01\\\",\\\"name\\\":\\\"cetirizine\\\",\\\"dose\\\":\\\"10 mg\\\",\\\"status\\\":\\\"active\\\"}]\",\"proposed_value\":\"{\\\"name\\\":\\\"fluticasone nasal spray\\\",\\\"dose\\\":\\\"1 spray each nostril daily\\\",\\\"status\\\":\\\"active\\\"}\",\"status\":\"REQUIRES_HUMAN_REVIEW\",\"reason\":\"Incoming clinician medication fact explicitly adds fluticasone nasal spray with the stated dose.\"},{\"case_id\":\"patient-01:event-02:ehr_alpha\",\"patient_id\":\"patient-01\",\"event_id\":\"event-02\",\"target_schema_id\":\"ehr_alpha\",\"action_type\":\"ADD\",\"target_path\":\"encounter.requests.radiology\",\"source_fact_ids\":[\"e02-request\"],\"current_value\":\"[]\",\"proposed_value\":\"\\\"CT sinus without contrast\\\"\",\"status\":\"REQUIRES_HUMAN_REVIEW\",\"reason\":\"Incoming clinician request fact explicitly requests CT sinus without contrast.\"}]}",
+    "error": null
+  },
+  {
+    "case_id": "patient-01:event-02:ehr_beta",
+    "patient_id": "patient-01",
+    "event_id": "event-02",
+    "target_schema_id": "ehr_beta",
+    "response": "{\"updates\":[{\"case_id\":\"patient-01:event-02:ehr_beta\",\"patient_id\":\"patient-01\",\"event_id\":\"event-02\",\"target_schema_id\":\"ehr_beta\",\"action_type\":\"UPDATE\",\"target_path\":\"chart.med_list.current.med-01.sig\",\"source_fact_ids\":[\"e02-med\"],\"current_value\":\"\\\"10 mg\\\"\",\"proposed_value\":\"\\\"20 mg\\\"\",\"status\":\"REQUIRES_HUMAN_REVIEW\",\"reason\":\"Incoming clinician medication fact explicitly changes the cetirizine dose from 10 mg to 20 mg.\"},{\"case_id\":\"patient-01:event-02:ehr_beta\",\"patient_id\":\"patient-01\",\"event_id\":\"event-02\",\"target_schema_id\":\"ehr_beta\",\"action_type\":\"ADD\",\"target_path\":\"chart.med_list.current\",\"source_fact_ids\":[\"e02-new-med\"],\"current_value\":\"[{\\\"id\\\":\\\"med-01\\\",\\\"name\\\":\\\"cetirizine\\\",\\\"dose\\\":\\\"10 mg\\\",\\\"status\\\":\\\"active\\\"}]\",\"proposed_value\":\"{\\\"name\\\":\\\"fluticasone nasal spray\\\",\\\"dose\\\":\\\"1 spray each nostril daily\\\"}\",\"status\":\"REQUIRES_HUMAN_REVIEW\",\"reason\":\"Incoming clinician medication fact explicitly directs addition of fluticasone nasal spray with the supplied dose.\"},{\"case_id\":\"patient-01:event-02:ehr_beta\",\"patient_id\":\"patient-01\",\"event_id\":\"event-02\",\"target_schema_id\":\"ehr_beta\",\"action_type\":\"ADD\",\"target_path\":\"chart.orders.imaging\",\"source_fact_ids\":[\"e02-request\"],\"current_value\":\"[]\",\"proposed_value\":\"\\\"CT sinus without contrast\\\"\",\"status\":\"REQUIRES_HUMAN_REVIEW\",\"reason\":\"Incoming clinician request fact explicitly requests CT sinus imaging without contrast.\"}]}",
+    "error": null
+  },
+  {
+    "case_id": "patient-02:event-03:ehr_alpha",
+    "patient_id": "patient-02",
+    "event_id": "event-03",
+    "target_schema_id": "ehr_alpha",
+    "response": "{\"updates\":[{\"case_id\":\"patient-02:event-03:ehr_alpha\",\"patient_id\":\"patient-02\",\"event_id\":\"event-03\",\"target_schema_id\":\"ehr_alpha\",\"action_type\":\"ADD\",\"target_path\":\"encounter.requests.radiology\",\"source_fact_ids\":[\"e03-request-ct\"],\"current_value\":\"[]\",\"proposed_value\":\"\\\"CT head without contrast\\\"\",\"status\":\"REQUIRES_HUMAN_REVIEW\",\"reason\":\"Incoming clinician request explicitly supports adding this radiology request; order-related changes require human review.\"},{\"case_id\":\"patient-02:event-03:ehr_alpha\",\"patient_id\":\"patient-02\",\"event_id\":\"event-03\",\"target_schema_id\":\"ehr_alpha\",\"action_type\":\"ADD\",\"target_path\":\"encounter.requests.radiology\",\"source_fact_ids\":[\"e03-request-mri\"],\"current_value\":\"[]\",\"proposed_value\":\"\\\"MRI brain without contrast\\\"\",\"status\":\"REQUIRES_HUMAN_REVIEW\",\"reason\":\"Incoming clinician request explicitly supports adding this radiology request; order-related changes require human review.\"}]}",
+    "error": null
+  },
+  {
+    "case_id": "patient-02:event-03:ehr_beta",
+    "patient_id": "patient-02",
+    "event_id": "event-03",
+    "target_schema_id": "ehr_beta",
+    "response": "{\"updates\":[{\"case_id\":\"patient-02:event-03:ehr_beta\",\"patient_id\":\"patient-02\",\"event_id\":\"event-03\",\"target_schema_id\":\"ehr_beta\",\"action_type\":\"ADD\",\"target_path\":\"chart.orders.imaging\",\"source_fact_ids\":[\"e03-request-ct\"],\"current_value\":\"[]\",\"proposed_value\":\"{\\\"id\\\":\\\"e03-request-ct\\\",\\\"request\\\":\\\"CT head without contrast\\\"}\",\"status\":\"REQUIRES_HUMAN_REVIEW\",\"reason\":\"Incoming clinician event explicitly requests CT head without contrast; adding an imaging order is consequential and requires human review.\"},{\"case_id\":\"patient-02:event-03:ehr_beta\",\"patient_id\":\"patient-02\",\"event_id\":\"event-03\",\"target_schema_id\":\"ehr_beta\",\"action_type\":\"ADD\",\"target_path\":\"chart.orders.imaging\",\"source_fact_ids\":[\"e03-request-mri\"],\"current_value\":\"[]\",\"proposed_value\":\"{\\\"id\\\":\\\"e03-request-mri\\\",\\\"request\\\":\\\"MRI brain without contrast\\\"}\",\"status\":\"REQUIRES_HUMAN_REVIEW\",\"reason\":\"Incoming clinician event explicitly requests MRI brain without contrast; adding an imaging order is consequential and requires human review.\"}]}",
+    "error": null
+  },
+  {
+    "case_id": "patient-02:event-04:ehr_alpha",
+    "patient_id": "patient-02",
+    "event_id": "event-04",
+    "target_schema_id": "ehr_alpha",
+    "response": "{\"updates\":[{\"case_id\":\"patient-02:event-04:ehr_alpha\",\"patient_id\":\"patient-02\",\"event_id\":\"event-04\",\"target_schema_id\":\"ehr_alpha\",\"action_type\":\"ADD\",\"target_path\":\"encounter.requests.consultations\",\"source_fact_ids\":[\"e04-request\"],\"current_value\":\"[]\",\"proposed_value\":\"\\\"Neurology consultation for headache review\\\"\",\"status\":\"REQUIRES_HUMAN_REVIEW\",\"reason\":\"The incoming clinician fact explicitly requests a neurology consultation for headache review, and no active consultation request is currently recorded.\"}]}",
+    "error": null
+  },
+  {
+    "case_id": "patient-02:event-04:ehr_beta",
+    "patient_id": "patient-02",
+    "event_id": "event-04",
+    "target_schema_id": "ehr_beta",
+    "response": "{\"updates\":[{\"case_id\":\"patient-02:event-04:ehr_beta\",\"patient_id\":\"patient-02\",\"event_id\":\"event-04\",\"target_schema_id\":\"ehr_beta\",\"action_type\":\"ADD\",\"target_path\":\"chart.orders.consults\",\"source_fact_ids\":[\"e04-request\"],\"current_value\":\"[]\",\"proposed_value\":\"[\\\"Neurology consultation for headache review\\\"]\",\"status\":\"REQUIRES_HUMAN_REVIEW\",\"reason\":\"Incoming fact explicitly requests a neurology consultation for headache review; no active request is currently recorded.\"}]}",
+    "error": null
+  },
+  {
+    "case_id": "patient-03:event-05:ehr_alpha",
+    "patient_id": "patient-03",
+    "event_id": "event-05",
+    "target_schema_id": "ehr_alpha",
+    "response": "{\"updates\":[{\"case_id\":\"patient-03:event-05:ehr_alpha\",\"patient_id\":\"patient-03\",\"event_id\":\"event-05\",\"target_schema_id\":\"ehr_alpha\",\"action_type\":\"ADD\",\"target_path\":\"encounter.observations.laboratory\",\"source_fact_ids\":[\"e05-result\"],\"current_value\":\"[]\",\"proposed_value\":\"[{\\\"name\\\":\\\"magnesium\\\",\\\"value\\\":\\\"1.9\\\",\\\"unit\\\":\\\"mg/dL\\\",\\\"observed_at\\\":\\\"2026-01-13T09:00:00Z\\\"}]\",\"status\":\"REQUIRES_HUMAN_REVIEW\",\"reason\":\"Incoming laboratory fact explicitly reports a magnesium result not present in the current record.\"},{\"case_id\":\"patient-03:event-05:ehr_alpha\",\"patient_id\":\"patient-03\",\"event_id\":\"event-05\",\"target_schema_id\":\"ehr_alpha\",\"action_type\":\"ADD\",\"target_path\":\"encounter.notes.clinical_diary\",\"source_fact_ids\":[\"e05-diary\"],\"current_value\":\"[{\\\"id\\\":\\\"diary-03\\\",\\\"recorded_at\\\":\\\"2026-01-10T08:00:00Z\\\",\\\"text\\\":\\\"Synthetic admission record notes gastroesophageal reflux.\\\"}]\",\"proposed_value\":\"[{\\\"id\\\":\\\"diary-03\\\",\\\"recorded_at\\\":\\\"2026-01-10T08:00:00Z\\\",\\\"text\\\":\\\"Synthetic admission record notes gastroesophageal reflux.\\\"},{\\\"recorded_at\\\":\\\"2026-01-13T09:00:00Z\\\",\\\"text\\\":\\\"Magnesium result 1.9 mg/dL received from Synthetic Central Laboratory.\\\"}]\",\"status\":\"PROPOSED\",\"reason\":\"Incoming event explicitly includes a result-posted clinical diary message not present in the current record.\"}]}",
+    "error": null
+  },
+  {
+    "case_id": "patient-03:event-05:ehr_beta",
+    "patient_id": "patient-03",
+    "event_id": "event-05",
+    "target_schema_id": "ehr_beta",
+    "response": "{\"updates\":[{\"case_id\":\"patient-03:event-05:ehr_beta\",\"patient_id\":\"patient-03\",\"event_id\":\"event-05\",\"target_schema_id\":\"ehr_beta\",\"action_type\":\"ADD\",\"target_path\":\"chart.results.laboratory\",\"source_fact_ids\":[\"e05-result\"],\"current_value\":\"null\",\"proposed_value\":\"{\\\"name\\\":\\\"magnesium\\\",\\\"value\\\":\\\"1.9\\\",\\\"unit\\\":\\\"mg/dL\\\",\\\"observed_at\\\":\\\"2026-01-13T09:00:00Z\\\"}\",\"status\":\"PROPOSED\",\"reason\":\"Incoming laboratory fact explicitly reports a magnesium result not present in the current record.\"},{\"case_id\":\"patient-03:event-05:ehr_beta\",\"patient_id\":\"patient-03\",\"event_id\":\"event-05\",\"target_schema_id\":\"ehr_beta\",\"action_type\":\"ADD\",\"target_path\":\"chart.timeline.entries\",\"source_fact_ids\":[\"e05-diary\"],\"current_value\":\"null\",\"proposed_value\":\"{\\\"recorded_at\\\":\\\"2026-01-13T09:00:00Z\\\",\\\"text\\\":\\\"Magnesium result 1.9 mg/dL received from Synthetic Central Laboratory.\\\"}\",\"status\":\"PROPOSED\",\"reason\":\"Incoming event explicitly includes a result-posted diary message not present in the current timeline.\"}]}",
+    "error": null
+  },
+  {
+    "case_id": "patient-03:event-06:ehr_alpha",
+    "patient_id": "patient-03",
+    "event_id": "event-06",
+    "target_schema_id": "ehr_alpha",
+    "response": "{\"updates\":[{\"case_id\":\"patient-03:event-06:ehr_alpha\",\"patient_id\":\"patient-03\",\"event_id\":\"event-06\",\"target_schema_id\":\"ehr_alpha\",\"action_type\":\"ADD\",\"target_path\":\"encounter.observations.laboratory\",\"source_fact_ids\":[\"e06-sodium\"],\"current_value\":\"[]\",\"proposed_value\":\"[{\\\"name\\\":\\\"sodium\\\",\\\"value\\\":139,\\\"unit\\\":\\\"mmol/L\\\"}]\",\"status\":\"REQUIRES_HUMAN_REVIEW\",\"reason\":\"Incoming laboratory fact explicitly reports sodium as 139 mmol/L, which is not present in the current record.\"},{\"case_id\":\"patient-03:event-06:ehr_alpha\",\"patient_id\":\"patient-03\",\"event_id\":\"event-06\",\"target_schema_id\":\"ehr_alpha\",\"action_type\":\"FLAG_CONFLICT\",\"target_path\":\"workflow.review.conflicts\",\"source_fact_ids\":[\"e06-source-a\",\"e06-source-b\"],\"current_value\":\"[]\",\"proposed_value\":\"[{\\\"name\\\":\\\"potassium\\\",\\\"conflicting_values\\\":[{\\\"value\\\":\\\"3.1\\\",\\\"unit\\\":\\\"mmol/L\\\"},{\\\"value\\\":\\\"4.8\\\",\\\"unit\\\":\\\"mmol/L\\\"}]}]\",\"status\":\"REQUIRES_HUMAN_REVIEW\",\"reason\":\"Two incoming source facts report irreconcilable potassium values of 3.1 and 4.8 mmol/L; no potassium observation can be safely mapped.\"}]}",
+    "error": null
+  },
+  {
+    "case_id": "patient-03:event-06:ehr_beta",
+    "patient_id": "patient-03",
+    "event_id": "event-06",
+    "target_schema_id": "ehr_beta",
+    "response": "{\"updates\":[{\"case_id\":\"patient-03:event-06:ehr_beta\",\"patient_id\":\"patient-03\",\"event_id\":\"event-06\",\"target_schema_id\":\"ehr_beta\",\"action_type\":\"ADD\",\"target_path\":\"chart.results.laboratory\",\"source_fact_ids\":[\"e06-sodium\"],\"current_value\":\"null\",\"proposed_value\":\"{\\\"name\\\":\\\"sodium\\\",\\\"value\\\":139,\\\"unit\\\":\\\"mmol/L\\\",\\\"observed_at\\\":\\\"2026-01-13T10:00:00Z\\\"}\",\"status\":\"REQUIRES_HUMAN_REVIEW\",\"reason\":\"Incoming laboratory fact explicitly reports sodium as 139 mmol/L.\"},{\"case_id\":\"patient-03:event-06:ehr_beta\",\"patient_id\":\"patient-03\",\"event_id\":\"event-06\",\"target_schema_id\":\"ehr_beta\",\"action_type\":\"FLAG_CONFLICT\",\"target_path\":\"chart.work_queue.data_conflicts\",\"source_fact_ids\":[\"e06-source-a\",\"e06-source-b\"],\"current_value\":\"null\",\"proposed_value\":\"{\\\"name\\\":\\\"potassium\\\",\\\"unit\\\":\\\"mmol/L\\\",\\\"conflicting_values\\\":[\\\"3.1\\\",\\\"4.8\\\"]}\",\"status\":\"REQUIRES_HUMAN_REVIEW\",\"reason\":\"Two incoming source facts report irreconcilable potassium values of 3.1 and 4.8 mmol/L.\"}]}",
+    "error": null
+  },
+  {
+    "case_id": "patient-04:event-07:ehr_alpha",
+    "patient_id": "patient-04",
+    "event_id": "event-07",
+    "target_schema_id": "ehr_alpha",
+    "response": "{\"updates\":[{\"case_id\":\"patient-04:event-07:ehr_alpha\",\"patient_id\":\"patient-04\",\"event_id\":\"event-07\",\"target_schema_id\":\"ehr_alpha\",\"action_type\":\"ADD\",\"target_path\":\"encounter.documents.available\",\"source_fact_ids\":[\"e07-report\"],\"current_value\":\"[{\\\"id\\\":\\\"doc-04-existing\\\",\\\"document_type\\\":\\\"radiology_report\\\",\\\"title\\\":\\\"Right knee radiograph report\\\"}]\",\"proposed_value\":\"{\\\"document_type\\\":\\\"radiology_report\\\",\\\"title\\\":\\\"Left knee radiograph report\\\",\\\"status\\\":\\\"final\\\"}\",\"status\":\"PROPOSED\",\"reason\":\"The incoming event explicitly provides a final left knee radiograph report that is not present in the available documents.\"}]}",
+    "error": null
+  },
+  {
+    "case_id": "patient-04:event-07:ehr_beta",
+    "patient_id": "patient-04",
+    "event_id": "event-07",
+    "target_schema_id": "ehr_beta",
+    "response": "{\"updates\":[{\"case_id\":\"patient-04:event-07:ehr_beta\",\"patient_id\":\"patient-04\",\"event_id\":\"event-07\",\"target_schema_id\":\"ehr_beta\",\"action_type\":\"ADD\",\"target_path\":\"chart.attachments\",\"source_fact_ids\":[\"e07-report\"],\"current_value\":\"null\",\"proposed_value\":\"{\\\"document_type\\\":\\\"radiology_report\\\",\\\"title\\\":\\\"Left knee radiograph report\\\",\\\"status\\\":\\\"final\\\"}\",\"status\":\"PROPOSED\",\"reason\":\"Incoming event explicitly provides a final left knee radiograph report not represented among the current attachments.\"}]}",
+    "error": null
+  },
+  {
+    "case_id": "patient-04:event-08:ehr_alpha",
+    "patient_id": "patient-04",
+    "event_id": "event-08",
+    "target_schema_id": "ehr_alpha",
+    "response": "{\"updates\":[{\"case_id\":\"patient-04:event-08:ehr_alpha\",\"patient_id\":\"patient-04\",\"event_id\":\"event-08\",\"target_schema_id\":\"ehr_alpha\",\"action_type\":\"NO_OP\",\"target_path\":\"encounter.documents.available.doc-04-existing\",\"source_fact_ids\":[\"e08-report\"],\"current_value\":\"{\\\"id\\\":\\\"doc-04-existing\\\",\\\"document_type\\\":\\\"radiology_report\\\",\\\"title\\\":\\\"Right knee radiograph report\\\"}\",\"proposed_value\":\"{\\\"id\\\":\\\"doc-04-existing\\\",\\\"document_type\\\":\\\"radiology_report\\\",\\\"title\\\":\\\"Right knee radiograph report\\\"}\",\"status\":\"INFORMATIONAL\",\"reason\":\"The retransmitted right knee radiograph report is already represented in the available documents.\"}]}",
+    "error": null
+  },
+  {
+    "case_id": "patient-04:event-08:ehr_beta",
+    "patient_id": "patient-04",
+    "event_id": "event-08",
+    "target_schema_id": "ehr_beta",
+    "response": "{\"updates\":[{\"case_id\":\"patient-04:event-08:ehr_beta\",\"patient_id\":\"patient-04\",\"event_id\":\"event-08\",\"target_schema_id\":\"ehr_beta\",\"action_type\":\"NO_OP\",\"target_path\":\"chart.attachments.doc-04-existing\",\"source_fact_ids\":[\"e08-report\"],\"current_value\":\"{\\\"id\\\":\\\"doc-04-existing\\\",\\\"document_type\\\":\\\"radiology_report\\\",\\\"title\\\":\\\"Right knee radiograph report\\\"}\",\"proposed_value\":\"{\\\"id\\\":\\\"doc-04-existing\\\",\\\"document_type\\\":\\\"radiology_report\\\",\\\"title\\\":\\\"Right knee radiograph report\\\"}\",\"status\":\"INFORMATIONAL\",\"reason\":\"The retransmitted right knee radiograph report is already represented by the existing attachment with the same document type and title.\"}]}",
+    "error": null
+  },
+  {
+    "case_id": "patient-05:event-09:ehr_alpha",
+    "patient_id": "patient-05",
+    "event_id": "event-09",
+    "target_schema_id": "ehr_alpha",
+    "response": "{\"updates\":[{\"case_id\":\"patient-05:event-09:ehr_alpha\",\"patient_id\":\"patient-05\",\"event_id\":\"event-09\",\"target_schema_id\":\"ehr_alpha\",\"action_type\":\"ADD\",\"target_path\":\"encounter.documents.available\",\"source_fact_ids\":[\"e09-document\"],\"current_value\":\"[]\",\"proposed_value\":\"[{\\\"title\\\":\\\"Community clinic discharge summary\\\",\\\"document_type\\\":\\\"discharge_summary\\\"}]\",\"status\":\"PROPOSED\",\"reason\":\"Incoming event explicitly identifies an available external discharge summary document not present in the current record.\"}]}",
+    "error": null
+  },
+  {
+    "case_id": "patient-05:event-09:ehr_beta",
+    "patient_id": "patient-05",
+    "event_id": "event-09",
+    "target_schema_id": "ehr_beta",
+    "response": "{\"updates\":[{\"case_id\":\"patient-05:event-09:ehr_beta\",\"patient_id\":\"patient-05\",\"event_id\":\"event-09\",\"target_schema_id\":\"ehr_beta\",\"action_type\":\"ADD\",\"target_path\":\"chart.attachments\",\"source_fact_ids\":[\"e09-document\"],\"current_value\":\"[]\",\"proposed_value\":\"[{\\\"title\\\":\\\"Community clinic discharge summary\\\",\\\"document_type\\\":\\\"discharge_summary\\\"}]\",\"status\":\"PROPOSED\",\"reason\":\"The incoming event explicitly identifies a discharge summary document, and the current record has no available documents.\"}]}",
+    "error": null
+  },
+  {
+    "case_id": "patient-05:event-10:ehr_alpha",
+    "patient_id": "patient-05",
+    "event_id": "event-10",
+    "target_schema_id": "ehr_alpha",
+    "response": "{\"updates\":[{\"case_id\":\"patient-05:event-10:ehr_alpha\",\"patient_id\":\"patient-05\",\"event_id\":\"event-10\",\"target_schema_id\":\"ehr_alpha\",\"action_type\":\"ADD\",\"target_path\":\"encounter.documents.available\",\"source_fact_ids\":[\"e10-document\"],\"current_value\":\"[]\",\"proposed_value\":\"[{\\\"title\\\":\\\"Outside chemistry report\\\",\\\"document_type\\\":\\\"laboratory_report\\\"}]\",\"status\":\"PROPOSED\",\"reason\":\"Incoming event explicitly provides a new external laboratory report document that is not present in available documents.\"},{\"case_id\":\"patient-05:event-10:ehr_alpha\",\"patient_id\":\"patient-05\",\"event_id\":\"event-10\",\"target_schema_id\":\"ehr_alpha\",\"action_type\":\"FLAG_MISSING_CONTEXT\",\"target_path\":\"workflow.review.missing_context\",\"source_fact_ids\":[\"e10-result\"],\"current_value\":\"null\",\"proposed_value\":\"{\\\"category\\\":\\\"laboratory\\\",\\\"name\\\":\\\"unnamed result\\\",\\\"value\\\":\\\"7.1\\\",\\\"unit\\\":null,\\\"missing_context\\\":[\\\"test name\\\",\\\"unit\\\"]}\",\"status\":\"REQUIRES_HUMAN_REVIEW\",\"reason\":\"The reported value cannot be safely mapped to a laboratory observation because the test name and unit are absent.\"}]}",
+    "error": null
+  },
+  {
+    "case_id": "patient-05:event-10:ehr_beta",
+    "patient_id": "patient-05",
+    "event_id": "event-10",
+    "target_schema_id": "ehr_beta",
+    "response": "{\"updates\":[{\"case_id\":\"patient-05:event-10:ehr_beta\",\"patient_id\":\"patient-05\",\"event_id\":\"event-10\",\"target_schema_id\":\"ehr_beta\",\"action_type\":\"ADD\",\"target_path\":\"chart.attachments\",\"source_fact_ids\":[\"e10-document\"],\"current_value\":\"[]\",\"proposed_value\":\"{\\\"title\\\":\\\"Outside chemistry report\\\",\\\"document_type\\\":\\\"laboratory_report\\\"}\",\"status\":\"PROPOSED\",\"reason\":\"Incoming event explicitly identifies an external laboratory report document that is not present in the current record.\"},{\"case_id\":\"patient-05:event-10:ehr_beta\",\"patient_id\":\"patient-05\",\"event_id\":\"event-10\",\"target_schema_id\":\"ehr_beta\",\"action_type\":\"FLAG_MISSING_CONTEXT\",\"target_path\":\"chart.work_queue.missing_context\",\"source_fact_ids\":[\"e10-result\"],\"current_value\":\"[]\",\"proposed_value\":\"{\\\"category\\\":\\\"laboratory\\\",\\\"reported_value\\\":\\\"7.1\\\",\\\"missing_context\\\":[\\\"test_name\\\",\\\"unit\\\"]}\",\"status\":\"REQUIRES_HUMAN_REVIEW\",\"reason\":\"The laboratory value cannot be safely mapped to chart.results.laboratory because the test name and unit are absent.\"}]}",
+    "error": null
+  },
+  {
+    "case_id": "patient-06:event-11:ehr_alpha",
+    "patient_id": "patient-06",
+    "event_id": "event-11",
+    "target_schema_id": "ehr_alpha",
+    "response": "{\"updates\":[{\"case_id\":\"patient-06:event-11:ehr_alpha\",\"patient_id\":\"patient-06\",\"event_id\":\"event-11\",\"target_schema_id\":\"ehr_alpha\",\"action_type\":\"ADD\",\"target_path\":\"encounter.notes.clinical_diary\",\"source_fact_ids\":[\"e11-note\"],\"current_value\":\"[{\\\"id\\\":\\\"diary-06\\\",\\\"recorded_at\\\":\\\"2026-01-10T08:00:00Z\\\",\\\"text\\\":\\\"Synthetic admission record notes mild intermittent asthma.\\\"}]\",\"proposed_value\":\"{\\\"recorded_at\\\":\\\"2026-01-16T10:00:00Z\\\",\\\"text\\\":\\\"Patient used inhaler once overnight.\\\"}\",\"status\":\"PROPOSED\",\"reason\":\"The incoming clinical note explicitly supports adding a clinical diary entry; it does not support a diagnosis, assessment, or medication change.\"}]}",
+    "error": null
+  },
+  {
+    "case_id": "patient-06:event-11:ehr_beta",
+    "patient_id": "patient-06",
+    "event_id": "event-11",
+    "target_schema_id": "ehr_beta",
+    "response": "{\"updates\":[{\"case_id\":\"patient-06:event-11:ehr_beta\",\"patient_id\":\"patient-06\",\"event_id\":\"event-11\",\"target_schema_id\":\"ehr_beta\",\"action_type\":\"ADD\",\"target_path\":\"chart.timeline.entries\",\"source_fact_ids\":[\"e11-note\"],\"current_value\":\"null\",\"proposed_value\":\"{\\\"recorded_at\\\":\\\"2026-01-16T10:00:00Z\\\",\\\"text\\\":\\\"Patient used inhaler once overnight.\\\"}\",\"status\":\"REQUIRES_HUMAN_REVIEW\",\"reason\":\"The incoming clinical note explicitly supports adding a timeline entry documenting the reported inhaler use.\"}]}",
+    "error": null
+  },
+  {
+    "case_id": "patient-06:event-12:ehr_alpha",
+    "patient_id": "patient-06",
+    "event_id": "event-12",
+    "target_schema_id": "ehr_alpha",
+    "response": "{\"updates\":[{\"case_id\":\"patient-06:event-12:ehr_alpha\",\"patient_id\":\"patient-06\",\"event_id\":\"event-12\",\"target_schema_id\":\"ehr_alpha\",\"action_type\":\"FLAG_CONFLICT\",\"target_path\":\"workflow.review.conflicts\",\"source_fact_ids\":[\"e12-source-a\",\"e12-source-b\"],\"current_value\":\"null\",\"proposed_value\":\"{\\\"field\\\":\\\"penicillin allergy status\\\",\\\"source_a\\\":\\\"Penicillin allergy recorded\\\",\\\"source_b\\\":\\\"No known penicillin allergy\\\"}\",\"status\":\"REQUIRES_HUMAN_REVIEW\",\"reason\":\"The incoming handoff sources explicitly conflict regarding penicillin allergy status, and no destination allergy field is available. The conflict cannot be reconciled without human review.\"}]}",
+    "error": null
+  },
+  {
+    "case_id": "patient-06:event-12:ehr_beta",
+    "patient_id": "patient-06",
+    "event_id": "event-12",
+    "target_schema_id": "ehr_beta",
+    "response": "{\"updates\":[{\"case_id\":\"patient-06:event-12:ehr_beta\",\"patient_id\":\"patient-06\",\"event_id\":\"event-12\",\"target_schema_id\":\"ehr_beta\",\"action_type\":\"FLAG_CONFLICT\",\"target_path\":\"chart.work_queue.data_conflicts\",\"source_fact_ids\":[\"e12-source-a\",\"e12-source-b\"],\"current_value\":\"null\",\"proposed_value\":\"{\\\"field\\\":\\\"penicillin allergy status\\\",\\\"conflicting_values\\\":[\\\"Penicillin allergy recorded\\\",\\\"No known penicillin allergy\\\"]}\",\"status\":\"REQUIRES_HUMAN_REVIEW\",\"reason\":\"The incoming handoff sources explicitly conflict regarding penicillin allergy status and cannot be reconciled without human review.\"}]}",
+    "error": null
+  },
+  {
+    "case_id": "patient-07:event-13:ehr_alpha",
+    "patient_id": "patient-07",
+    "event_id": "event-13",
+    "target_schema_id": "ehr_alpha",
+    "response": "{\"updates\":[{\"case_id\":\"patient-07:event-13:ehr_alpha\",\"patient_id\":\"patient-07\",\"event_id\":\"event-13\",\"target_schema_id\":\"ehr_alpha\",\"action_type\":\"UPDATE\",\"target_path\":\"patient.medications.active.med-07.dose\",\"source_fact_ids\":[\"e13-med\"],\"current_value\":\"\\\"5 mg\\\"\",\"proposed_value\":\"\\\"10 mg\\\"\",\"status\":\"REQUIRES_HUMAN_REVIEW\",\"reason\":\"The incoming clinician medication update explicitly increases the active amlodipine dose from 5 mg to 10 mg daily. Medication dose changes are consequential and require human review.\"}]}",
+    "error": null
+  },
+  {
+    "case_id": "patient-07:event-13:ehr_beta",
+    "patient_id": "patient-07",
+    "event_id": "event-13",
+    "target_schema_id": "ehr_beta",
+    "response": "{\"updates\":[{\"case_id\":\"patient-07:event-13:ehr_beta\",\"patient_id\":\"patient-07\",\"event_id\":\"event-13\",\"target_schema_id\":\"ehr_beta\",\"action_type\":\"UPDATE\",\"target_path\":\"chart.med_list.current.med-07.sig\",\"source_fact_ids\":[\"e13-med\"],\"current_value\":\"\\\"5 mg\\\"\",\"proposed_value\":\"\\\"10 mg\\\"\",\"status\":\"REQUIRES_HUMAN_REVIEW\",\"reason\":\"Incoming medication fact explicitly changes the active amlodipine dose from 5 mg to 10 mg. Medication changes are consequential and require human review.\"}]}",
+    "error": null
+  },
+  {
+    "case_id": "patient-07:event-14:ehr_alpha",
+    "patient_id": "patient-07",
+    "event_id": "event-14",
+    "target_schema_id": "ehr_alpha",
+    "response": "{\"updates\":[{\"case_id\":\"patient-07:event-14:ehr_alpha\",\"patient_id\":\"patient-07\",\"event_id\":\"event-14\",\"target_schema_id\":\"ehr_alpha\",\"action_type\":\"FLAG_MISSING_CONTEXT\",\"target_path\":\"workflow.review.missing_context\",\"source_fact_ids\":[\"e14-med\"],\"current_value\":\"null\",\"proposed_value\":\"{\\\"medication\\\":\\\"metoprolol\\\",\\\"instruction\\\":\\\"Start metoprolol\\\",\\\"missing_fields\\\":[\\\"dose\\\",\\\"formulation\\\"]}\",\"status\":\"REQUIRES_HUMAN_REVIEW\",\"reason\":\"The start instruction is explicit, but dose and formulation are absent, so the medication cannot be safely added to the active medication record without additional context.\"}]}",
+    "error": null
+  },
+  {
+    "case_id": "patient-07:event-14:ehr_beta",
+    "patient_id": "patient-07",
+    "event_id": "event-14",
+    "target_schema_id": "ehr_beta",
+    "response": "{\"updates\":[{\"case_id\":\"patient-07:event-14:ehr_beta\",\"patient_id\":\"patient-07\",\"event_id\":\"event-14\",\"target_schema_id\":\"ehr_beta\",\"action_type\":\"FLAG_MISSING_CONTEXT\",\"target_path\":\"chart.work_queue.missing_context\",\"source_fact_ids\":[\"e14-med\"],\"current_value\":\"null\",\"proposed_value\":\"{\\\"medication\\\":\\\"metoprolol\\\",\\\"instruction\\\":\\\"Start metoprolol\\\",\\\"missing_context\\\":[\\\"dose\\\",\\\"formulation\\\"]}\",\"status\":\"REQUIRES_HUMAN_REVIEW\",\"reason\":\"The incoming instruction explicitly supports starting metoprolol, but dose and formulation are absent, so it cannot be safely mapped to the current medication list.\"}]}",
+    "error": null
+  },
+  {
+    "case_id": "patient-08:event-15:ehr_alpha",
+    "patient_id": "patient-08",
+    "event_id": "event-15",
+    "target_schema_id": "ehr_alpha",
+    "response": "{\"updates\":[{\"case_id\":\"patient-08:event-15:ehr_alpha\",\"patient_id\":\"patient-08\",\"event_id\":\"event-15\",\"target_schema_id\":\"ehr_alpha\",\"action_type\":\"ADD\",\"target_path\":\"encounter.requests.radiology\",\"source_fact_ids\":[\"e15-request\"],\"current_value\":\"[{\\\"id\\\":\\\"request-08-existing\\\",\\\"request_type\\\":\\\"imaging\\\",\\\"description\\\":\\\"Chest radiograph\\\",\\\"status\\\":\\\"active\\\"}]\",\"proposed_value\":\"[{\\\"id\\\":\\\"request-08-existing\\\",\\\"request_type\\\":\\\"imaging\\\",\\\"description\\\":\\\"Chest radiograph\\\",\\\"status\\\":\\\"active\\\"},{\\\"request_type\\\":\\\"imaging\\\",\\\"description\\\":\\\"Ultrasound of left forearm\\\"}]\",\"status\":\"REQUIRES_HUMAN_REVIEW\",\"reason\":\"The incoming clinician event explicitly requests ultrasound imaging of the left forearm. Adding an active clinical request is consequential and requires human review.\"}]}",
+    "error": null
+  },
+  {
+    "case_id": "patient-08:event-15:ehr_beta",
+    "patient_id": "patient-08",
+    "event_id": "event-15",
+    "target_schema_id": "ehr_beta",
+    "response": "{\"updates\":[{\"case_id\":\"patient-08:event-15:ehr_beta\",\"patient_id\":\"patient-08\",\"event_id\":\"event-15\",\"target_schema_id\":\"ehr_beta\",\"action_type\":\"ADD\",\"target_path\":\"chart.orders.imaging\",\"source_fact_ids\":[\"e15-request\"],\"current_value\":\"[{\\\"id\\\":\\\"request-08-existing\\\",\\\"description\\\":\\\"Chest radiograph\\\",\\\"status\\\":\\\"active\\\"}]\",\"proposed_value\":\"{\\\"description\\\":\\\"Ultrasound of left forearm\\\"}\",\"status\":\"REQUIRES_HUMAN_REVIEW\",\"reason\":\"Incoming clinician event explicitly requests ultrasound imaging of the left forearm; adding an imaging order is consequential and requires human review.\"}]}",
+    "error": null
+  },
+  {
+    "case_id": "patient-08:event-16:ehr_alpha",
+    "patient_id": "patient-08",
+    "event_id": "event-16",
+    "target_schema_id": "ehr_alpha",
+    "response": "{\"updates\":[{\"case_id\":\"patient-08:event-16:ehr_alpha\",\"patient_id\":\"patient-08\",\"event_id\":\"event-16\",\"target_schema_id\":\"ehr_alpha\",\"action_type\":\"NO_OP\",\"target_path\":\"encounter.requests.radiology.request-08-existing\",\"source_fact_ids\":[\"e16-request\"],\"current_value\":\"{\\\"id\\\":\\\"request-08-existing\\\",\\\"request_type\\\":\\\"imaging\\\",\\\"description\\\":\\\"Chest radiograph\\\",\\\"status\\\":\\\"active\\\"}\",\"proposed_value\":\"{\\\"id\\\":\\\"request-08-existing\\\",\\\"request_type\\\":\\\"imaging\\\",\\\"description\\\":\\\"Chest radiograph\\\",\\\"status\\\":\\\"active\\\"}\",\"status\":\"INFORMATIONAL\",\"reason\":\"The retransmitted chest radiograph request is already represented correctly as the existing active radiology request.\"}]}",
+    "error": null
+  },
+  {
+    "case_id": "patient-08:event-16:ehr_beta",
+    "patient_id": "patient-08",
+    "event_id": "event-16",
+    "target_schema_id": "ehr_beta",
+    "response": "{\"updates\":[{\"case_id\":\"patient-08:event-16:ehr_beta\",\"patient_id\":\"patient-08\",\"event_id\":\"event-16\",\"target_schema_id\":\"ehr_beta\",\"action_type\":\"NO_OP\",\"target_path\":\"chart.orders.imaging.request-08-existing\",\"source_fact_ids\":[\"e16-request\"],\"current_value\":\"{\\\"id\\\":\\\"request-08-existing\\\",\\\"request_type\\\":\\\"imaging\\\",\\\"description\\\":\\\"Chest radiograph\\\",\\\"status\\\":\\\"active\\\"}\",\"proposed_value\":\"{\\\"id\\\":\\\"request-08-existing\\\",\\\"request_type\\\":\\\"imaging\\\",\\\"description\\\":\\\"Chest radiograph\\\",\\\"status\\\":\\\"active\\\"}\",\"status\":\"INFORMATIONAL\",\"reason\":\"The retransmitted chest radiograph request is already represented correctly as an active imaging request.\"}]}",
+    "error": null
+  },
+  {
+    "case_id": "patient-09:event-17:ehr_alpha",
+    "patient_id": "patient-09",
+    "event_id": "event-17",
+    "target_schema_id": "ehr_alpha",
+    "response": "{\"updates\":[{\"case_id\":\"patient-09:event-17:ehr_alpha\",\"patient_id\":\"patient-09\",\"event_id\":\"event-17\",\"target_schema_id\":\"ehr_alpha\",\"action_type\":\"ADD\",\"target_path\":\"encounter.requests.consultations\",\"source_fact_ids\":[\"e17-request\"],\"current_value\":\"[]\",\"proposed_value\":\"[\\\"Sleep medicine consultation\\\"]\",\"status\":\"REQUIRES_HUMAN_REVIEW\",\"reason\":\"Incoming clinician information explicitly requests a sleep medicine consultation; the current record has no active requests.\"}]}",
+    "error": null
+  },
+  {
+    "case_id": "patient-09:event-17:ehr_beta",
+    "patient_id": "patient-09",
+    "event_id": "event-17",
+    "target_schema_id": "ehr_beta",
+    "response": "{\"updates\":[{\"case_id\":\"patient-09:event-17:ehr_beta\",\"patient_id\":\"patient-09\",\"event_id\":\"event-17\",\"target_schema_id\":\"ehr_beta\",\"action_type\":\"ADD\",\"target_path\":\"chart.orders.consults\",\"source_fact_ids\":[\"e17-request\"],\"current_value\":\"[]\",\"proposed_value\":\"[{\\\"consultation\\\":\\\"Sleep medicine consultation\\\"}]\",\"status\":\"REQUIRES_HUMAN_REVIEW\",\"reason\":\"Incoming event explicitly requests a sleep medicine consultation; adding a consultation order is consequential and requires human review.\"}]}",
+    "error": null
+  },
+  {
+    "case_id": "patient-09:event-18:ehr_alpha",
+    "patient_id": "patient-09",
+    "event_id": "event-18",
+    "target_schema_id": "ehr_alpha",
+    "response": "{\"updates\":[{\"case_id\":\"patient-09:event-18:ehr_alpha\",\"patient_id\":\"patient-09\",\"event_id\":\"event-18\",\"target_schema_id\":\"ehr_alpha\",\"action_type\":\"FLAG_CONFLICT\",\"target_path\":\"workflow.review.conflicts\",\"source_fact_ids\":[\"e18-side\",\"e18-accession\"],\"current_value\":\"{\\\"document_id\\\":\\\"doc-09-ankle\\\",\\\"accession\\\":\\\"SYN-ACC-18\\\",\\\"reported_body_side\\\":\\\"right ankle\\\"}\",\"proposed_value\":\"{\\\"accession\\\":\\\"SYN-ACC-18\\\",\\\"incoming_reported_body_side\\\":\\\"left ankle\\\",\\\"conflict\\\":\\\"Current document reference identifies right ankle for the same accession.\\\"}\",\"status\":\"REQUIRES_HUMAN_REVIEW\",\"reason\":\"The incoming report identifies the left ankle, while the current document title identifies the right ankle for accession SYN-ACC-18; the conflict cannot be reconciled from the supplied facts.\"}]}",
+    "error": null
+  },
+  {
+    "case_id": "patient-09:event-18:ehr_beta",
+    "patient_id": "patient-09",
+    "event_id": "event-18",
+    "target_schema_id": "ehr_beta",
+    "response": "{\"updates\":[{\"case_id\":\"patient-09:event-18:ehr_beta\",\"patient_id\":\"patient-09\",\"event_id\":\"event-18\",\"target_schema_id\":\"ehr_beta\",\"action_type\":\"FLAG_CONFLICT\",\"target_path\":\"chart.attachments.doc-09-ankle\",\"source_fact_ids\":[\"e18-side\",\"e18-accession\"],\"current_value\":\"{\\\"id\\\":\\\"doc-09-ankle\\\",\\\"document_type\\\":\\\"radiology_report\\\",\\\"title\\\":\\\"Right ankle report, accession SYN-ACC-18\\\"}\",\"proposed_value\":\"{\\\"reported_body_side\\\":\\\"left ankle\\\",\\\"accession\\\":\\\"SYN-ACC-18\\\"}\",\"status\":\"REQUIRES_HUMAN_REVIEW\",\"reason\":\"The incoming report identifies the left ankle for accession SYN-ACC-18, while the existing attachment title identifies the right ankle for the same accession. The laterality conflict cannot be reconciled from the supplied information.\"}]}",
+    "error": null
+  },
+  {
+    "case_id": "patient-10:event-19:ehr_alpha",
+    "patient_id": "patient-10",
+    "event_id": "event-19",
+    "target_schema_id": "ehr_alpha",
+    "response": "{\"updates\":[{\"case_id\":\"patient-10:event-19:ehr_alpha\",\"patient_id\":\"patient-10\",\"event_id\":\"event-19\",\"target_schema_id\":\"ehr_alpha\",\"action_type\":\"ADD\",\"target_path\":\"encounter.observations.laboratory\",\"source_fact_ids\":[\"e19-result\"],\"current_value\":\"[]\",\"proposed_value\":\"[{\\\"name\\\":\\\"creatine kinase\\\",\\\"value\\\":112,\\\"unit\\\":\\\"U/L\\\",\\\"observed_at\\\":\\\"2026-01-20T11:00:00Z\\\"}]\",\"status\":\"REQUIRES_HUMAN_REVIEW\",\"reason\":\"Incoming laboratory fact explicitly reports a creatine kinase result of 112 U/L, collected at 11:00; the current record does not contain this laboratory observation.\"}]}",
+    "error": null
+  },
+  {
+    "case_id": "patient-10:event-19:ehr_beta",
+    "patient_id": "patient-10",
+    "event_id": "event-19",
+    "target_schema_id": "ehr_beta",
+    "response": "{\"updates\":[{\"case_id\":\"patient-10:event-19:ehr_beta\",\"patient_id\":\"patient-10\",\"event_id\":\"event-19\",\"target_schema_id\":\"ehr_beta\",\"action_type\":\"ADD\",\"target_path\":\"chart.results.laboratory\",\"source_fact_ids\":[\"e19-result\"],\"current_value\":\"[]\",\"proposed_value\":\"{\\\"name\\\":\\\"creatine kinase\\\",\\\"value\\\":112,\\\"unit\\\":\\\"U/L\\\"}\",\"status\":\"REQUIRES_HUMAN_REVIEW\",\"reason\":\"Incoming laboratory fact explicitly reports a creatine kinase result of 112 U/L; the current record has no corresponding laboratory result.\"}]}",
+    "error": null
+  },
+  {
+    "case_id": "patient-10:event-20:ehr_alpha",
+    "patient_id": "patient-10",
+    "event_id": "event-20",
+    "target_schema_id": "ehr_alpha",
+    "response": "{\"updates\":[{\"case_id\":\"patient-10:event-20:ehr_alpha\",\"patient_id\":\"patient-10\",\"event_id\":\"event-20\",\"target_schema_id\":\"ehr_alpha\",\"action_type\":\"ADD\",\"target_path\":\"patient.medications.active\",\"source_fact_ids\":[\"e20-med\"],\"current_value\":\"[{\\\"id\\\":\\\"med-10\\\",\\\"name\\\":\\\"ibuprofen\\\",\\\"dose\\\":\\\"400 mg\\\",\\\"status\\\":\\\"active\\\"}]\",\"proposed_value\":\"{\\\"name\\\":\\\"lidocaine patch\\\",\\\"dose\\\":\\\"4% once daily\\\",\\\"status\\\":\\\"active\\\"}\",\"status\":\"REQUIRES_HUMAN_REVIEW\",\"reason\":\"Incoming medication fact explicitly supports adding the newly ordered lidocaine 4% patch once daily to active medications.\"}]}",
+    "error": null
+  },
+  {
+    "case_id": "patient-10:event-20:ehr_beta",
+    "patient_id": "patient-10",
+    "event_id": "event-20",
+    "target_schema_id": "ehr_beta",
+    "response": "{\"updates\":[{\"case_id\":\"patient-10:event-20:ehr_beta\",\"patient_id\":\"patient-10\",\"event_id\":\"event-20\",\"target_schema_id\":\"ehr_beta\",\"action_type\":\"ADD\",\"target_path\":\"chart.med_list.current\",\"source_fact_ids\":[\"e20-med\"],\"current_value\":\"[{\\\"id\\\":\\\"med-10\\\",\\\"name\\\":\\\"ibuprofen\\\",\\\"dose\\\":\\\"400 mg\\\",\\\"status\\\":\\\"active\\\"}]\",\"proposed_value\":\"[{\\\"id\\\":\\\"med-10\\\",\\\"name\\\":\\\"ibuprofen\\\",\\\"dose\\\":\\\"400 mg\\\",\\\"status\\\":\\\"active\\\"},{\\\"name\\\":\\\"lidocaine patch\\\",\\\"dose\\\":\\\"4% once daily\\\"}]\",\"status\":\"REQUIRES_HUMAN_REVIEW\",\"reason\":\"Incoming medication fact explicitly supports adding lidocaine patch 4% once daily; medication additions are consequential and require human review.\"}]}",
+    "error": null
+  }
+]
