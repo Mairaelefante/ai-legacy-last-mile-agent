@@ -122,3 +122,15 @@ Case-level exact update set accuracy — **pending real API run**.
 
 No performance result or improvement number has been recorded. Credentials and
 external API access are required for the first real baseline run.
+
+### Infrastructure compatibility fix
+
+The initial real run was invalid because all requests failed during API
+response-schema validation before model inference. Its 0.0 metrics are not
+baseline performance.
+
+The response-only wire contract now represents flexible current and proposed
+values as JSON-encoded strings with explicit JSON Schema `type: string`, then
+losslessly decodes them into the unchanged `ProposedUpdate` benchmark model.
+This corrects OpenAI strict structured-output compatibility without changing the
+task prompt, benchmark data, model configuration, evaluator, or update semantics.

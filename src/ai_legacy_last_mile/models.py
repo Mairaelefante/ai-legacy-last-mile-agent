@@ -1,5 +1,6 @@
 """Validated data contracts shared by datasets and future mapping agents."""
 
+import json
 from datetime import datetime
 from enum import StrEnum
 from typing import Any, Literal
@@ -275,7 +276,58 @@ class StatefulSchemaExtension(StrictModel):
 class StatefulUpdateResponse(StrictModel):
     """Structured Experiment 002 output for one stateful case."""
 
-    updates: list[ProposedUpdate]
+    updates: list["StatefulOutputUpdate"]
+
+    @classmethod
+    def from_proposed_updates(
+        cls, updates: list[ProposedUpdate]
+    ) -> "StatefulUpdateResponse":
+        """Encode flexible JSON values for the strict OpenAI response boundary."""
+
+        return cls(
+            updates=[
+                StatefulOutputUpdate(
+                    **update.model_dump(exclude={"current_value", "proposed_value"}),
+                    current_value=json.dumps(update.current_value, separators=(",", ":")),
+                    proposed_value=json.dumps(update.proposed_value, separators=(",", ":")),
+                )
+                for update in updates
+            ]
+        )
+
+    def to_proposed_updates(self) -> list[ProposedUpdate]:
+        """Decode strict response-boundary values into benchmark update values."""
+
+        return [update.to_proposed_update() for update in self.updates]
+
+
+class StatefulOutputUpdate(StrictModel):
+    """OpenAI-compatible wire representation of a proposed stateful update."""
+
+    case_id: str = Field(min_length=1)
+    patient_id: str = Field(min_length=1)
+    event_id: str = Field(min_length=1)
+    target_schema_id: str = Field(min_length=1)
+    action_type: UpdateActionType
+    target_path: str | None
+    source_fact_ids: list[str] = Field(min_length=1)
+    current_value: str = Field(
+        description="Current value encoded as a JSON string, including JSON null."
+    )
+    proposed_value: str = Field(
+        description="Proposed value encoded as a JSON string, including JSON null."
+    )
+    status: UpdateStatus
+    reason: str = Field(min_length=1)
+
+    def to_proposed_update(self) -> ProposedUpdate:
+        """Convert wire values without altering their JSON semantics."""
+
+        return ProposedUpdate(
+            **self.model_dump(exclude={"current_value", "proposed_value"}),
+            current_value=json.loads(self.current_value),
+            proposed_value=json.loads(self.proposed_value),
+        )
 
 
 class StatefulBaselineFailure(StrictModel):

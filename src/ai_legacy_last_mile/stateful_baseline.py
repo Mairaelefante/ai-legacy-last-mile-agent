@@ -74,7 +74,7 @@ def _update_signature(update: ProposedUpdate) -> tuple[str, str | None, str, tup
 
 
 def _validate_response(
-    response: StatefulUpdateResponse,
+    updates: list[ProposedUpdate],
     case: UpdateCase,
     event: IncomingEvent,
     schema: TargetSchema,
@@ -88,7 +88,7 @@ def _validate_response(
         case.event_id,
         case.target_schema_id,
     )
-    for update in response.updates:
+    for update in updates:
         identity = (
             update.case_id,
             update.patient_id,
@@ -104,7 +104,7 @@ def _validate_response(
     invalid_paths = sorted(
         {
             update.target_path
-            for update in response.updates
+            for update in updates
             if update.target_path not in valid_paths
         },
         key=lambda path: path or "",
@@ -116,7 +116,7 @@ def _validate_response(
     unknown_fact_ids = sorted(
         {
             fact_id
-            for update in response.updates
+            for update in updates
             for fact_id in update.source_fact_ids
             if fact_id not in valid_fact_ids
         }
@@ -124,7 +124,7 @@ def _validate_response(
     if unknown_fact_ids:
         raise ValueError(f"source fact IDs are not in the incoming event: {unknown_fact_ids}")
 
-    signatures = [_update_signature(update) for update in response.updates]
+    signatures = [_update_signature(update) for update in updates]
     duplicates = [signature for signature, count in Counter(signatures).items() if count > 1]
     if duplicates:
         raise ValueError("response contains duplicate update objects")
@@ -161,8 +161,9 @@ def run_stateful_baseline(
             )
             raw_text = completion.raw_text
             response = StatefulUpdateResponse.model_validate(completion.parsed)
-            _validate_response(response, case, event, schema, extension)
-            predictions.extend(response.updates)
+            proposed_updates = response.to_proposed_updates()
+            _validate_response(proposed_updates, case, event, schema, extension)
+            predictions.extend(proposed_updates)
             raw_responses.append(
                 RawStatefulResponse(
                     **case.model_dump(),

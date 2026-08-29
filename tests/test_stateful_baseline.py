@@ -27,7 +27,11 @@ class FakeLLMClient:
 
     def complete(self, prompt: str, response_model: type[Any]) -> LLMCompletion:
         self.prompts.append(prompt)
-        response = next(self.responses) if self.responses is not None else StatefulUpdateResponse(updates=[])
+        response = (
+            next(self.responses)
+            if self.responses is not None
+            else StatefulUpdateResponse.from_proposed_updates([])
+        )
         if isinstance(response, Exception):
             raise response
         raw_text = response.model_dump_json() if hasattr(response, "model_dump_json") else str(response)
@@ -97,7 +101,7 @@ def test_prompt_contains_complete_case_inputs_but_no_evaluation_inputs() -> None
 def test_multi_action_structured_response_is_preserved() -> None:
     case = next(case for case in load_update_cases() if case.event_id == "event-02")
     expected = updates_for(case.case_id)
-    client = FakeLLMClient([StatefulUpdateResponse(updates=expected)])
+    client = FakeLLMClient([StatefulUpdateResponse.from_proposed_updates(expected)])
 
     result = run_stateful_baseline(
         load_patient_records(),
@@ -124,7 +128,7 @@ def test_multi_action_structured_response_is_preserved() -> None:
 def test_invalid_model_update_is_rejected(change, message) -> None:
     case = load_update_cases()[0]
     invalid = updates_for(case.case_id)[0].model_copy(update=change)
-    client = FakeLLMClient([StatefulUpdateResponse(updates=[invalid])])
+    client = FakeLLMClient([StatefulUpdateResponse.from_proposed_updates([invalid])])
 
     result = run_stateful_baseline(*inputs_for(), client)
 
@@ -145,7 +149,9 @@ def test_malformed_response_becomes_recorded_failure() -> None:
 def test_duplicate_update_objects_are_rejected() -> None:
     case = load_update_cases()[0]
     update = updates_for(case.case_id)[0]
-    client = FakeLLMClient([StatefulUpdateResponse(updates=[update, update])])
+    client = FakeLLMClient(
+        [StatefulUpdateResponse.from_proposed_updates([update, update])]
+    )
 
     result = run_stateful_baseline(*inputs_for(), client)
 
