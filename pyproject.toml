@@ -1,0 +1,27 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "ai-legacy-last-mile-agent"
+version = "0.1.0"
+description = "Evaluation scaffolding for reliable AI-to-legacy-system field transfer"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = ["openai>=1.66,<3", "pydantic>=2.7,<3"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<9"]
+
+[project.scripts]
+evaluate-mappings = "ai_legacy_last_mile.evaluator:main"
+run-baseline = "ai_legacy_last_mile.run_baseline:main"
+evaluate-updates = "ai_legacy_last_mile.update_evaluator:main"
+run-stateful-baseline = "ai_legacy_last_mile.run_stateful_baseline:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/ai_legacy_last_mile"]
+
+[tool.pytest.ini_options]
+addopts = "-ra"
+testpaths = ["tests"]

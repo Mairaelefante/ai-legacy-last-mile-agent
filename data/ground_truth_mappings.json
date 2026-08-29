@@ -1,0 +1,622 @@
+[
+  {
+    "document_id": "synthetic-doc-01",
+    "target_schema_id": "ehr_alpha",
+    "mappings": [
+      {
+        "source_fact_id": "patient_name",
+        "target_field_path": "patient.demographics.full_name",
+        "value": "Avery Quill"
+      },
+      {
+        "source_fact_id": "date_of_birth",
+        "target_field_path": "patient.demographics.birth_date",
+        "value": "1981-02-14"
+      },
+      {
+        "source_fact_id": "primary_diagnosis",
+        "target_field_path": "encounter.assessment.primary_diagnosis",
+        "value": "seasonal allergic rhinitis"
+      },
+      {
+        "source_fact_id": "bp_systolic",
+        "target_field_path": "encounter.observations.systolic_bp",
+        "value": 118
+      },
+      {
+        "source_fact_id": "bp_diastolic",
+        "target_field_path": "encounter.observations.diastolic_bp",
+        "value": 76
+      }
+    ]
+  },
+  {
+    "document_id": "synthetic-doc-01",
+    "target_schema_id": "ehr_beta",
+    "mappings": [
+      {
+        "source_fact_id": "patient_name",
+        "target_field_path": "chart.subject.display",
+        "value": "Avery Quill"
+      },
+      {
+        "source_fact_id": "date_of_birth",
+        "target_field_path": "chart.subject.dob",
+        "value": "1981-02-14"
+      },
+      {
+        "source_fact_id": "primary_diagnosis",
+        "target_field_path": "chart.visits.current.problem_list.0.term",
+        "value": "seasonal allergic rhinitis"
+      },
+      {
+        "source_fact_id": "bp_systolic",
+        "target_field_path": "chart.visits.current.vitals.blood_pressure.top",
+        "value": 118
+      },
+      {
+        "source_fact_id": "bp_diastolic",
+        "target_field_path": "chart.visits.current.vitals.blood_pressure.bottom",
+        "value": 76
+      }
+    ]
+  },
+  {
+    "document_id": "synthetic-doc-02",
+    "target_schema_id": "ehr_alpha",
+    "mappings": [
+      {
+        "source_fact_id": "patient_name",
+        "target_field_path": "patient.demographics.full_name",
+        "value": "Morgan Lark"
+      },
+      {
+        "source_fact_id": "date_of_birth",
+        "target_field_path": "patient.demographics.birth_date",
+        "value": "1975-09-03"
+      },
+      {
+        "source_fact_id": "primary_diagnosis",
+        "target_field_path": "encounter.assessment.primary_diagnosis",
+        "value": "tension headache"
+      },
+      {
+        "source_fact_id": "bp_systolic",
+        "target_field_path": "encounter.observations.systolic_bp",
+        "value": 124
+      },
+      {
+        "source_fact_id": "bp_diastolic",
+        "target_field_path": "encounter.observations.diastolic_bp",
+        "value": 80
+      }
+    ]
+  },
+  {
+    "document_id": "synthetic-doc-02",
+    "target_schema_id": "ehr_beta",
+    "mappings": [
+      {
+        "source_fact_id": "patient_name",
+        "target_field_path": "chart.subject.display",
+        "value": "Morgan Lark"
+      },
+      {
+        "source_fact_id": "date_of_birth",
+        "target_field_path": "chart.subject.dob",
+        "value": "1975-09-03"
+      },
+      {
+        "source_fact_id": "primary_diagnosis",
+        "target_field_path": "chart.visits.current.problem_list.0.term",
+        "value": "tension headache"
+      },
+      {
+        "source_fact_id": "bp_systolic",
+        "target_field_path": "chart.visits.current.vitals.blood_pressure.top",
+        "value": 124
+      },
+      {
+        "source_fact_id": "bp_diastolic",
+        "target_field_path": "chart.visits.current.vitals.blood_pressure.bottom",
+        "value": 80
+      }
+    ]
+  },
+  {
+    "document_id": "synthetic-doc-03",
+    "target_schema_id": "ehr_alpha",
+    "mappings": [
+      {
+        "source_fact_id": "patient_name",
+        "target_field_path": "patient.demographics.full_name",
+        "value": "Riley Ember"
+      },
+      {
+        "source_fact_id": "date_of_birth",
+        "target_field_path": "patient.demographics.birth_date",
+        "value": "1992-11-21"
+      },
+      {
+        "source_fact_id": "primary_diagnosis",
+        "target_field_path": "encounter.assessment.primary_diagnosis",
+        "value": "gastroesophageal reflux"
+      },
+      {
+        "source_fact_id": "bp_systolic",
+        "target_field_path": "encounter.observations.systolic_bp",
+        "value": 116
+      },
+      {
+        "source_fact_id": "bp_diastolic",
+        "target_field_path": "encounter.observations.diastolic_bp",
+        "value": 72
+      }
+    ]
+  },
+  {
+    "document_id": "synthetic-doc-03",
+    "target_schema_id": "ehr_beta",
+    "mappings": [
+      {
+        "source_fact_id": "patient_name",
+        "target_field_path": "chart.subject.display",
+        "value": "Riley Ember"
+      },
+      {
+        "source_fact_id": "date_of_birth",
+        "target_field_path": "chart.subject.dob",
+        "value": "1992-11-21"
+      },
+      {
+        "source_fact_id": "primary_diagnosis",
+        "target_field_path": "chart.visits.current.problem_list.0.term",
+        "value": "gastroesophageal reflux"
+      },
+      {
+        "source_fact_id": "bp_systolic",
+        "target_field_path": "chart.visits.current.vitals.blood_pressure.top",
+        "value": 116
+      },
+      {
+        "source_fact_id": "bp_diastolic",
+        "target_field_path": "chart.visits.current.vitals.blood_pressure.bottom",
+        "value": 72
+      }
+    ]
+  },
+  {
+    "document_id": "synthetic-doc-04",
+    "target_schema_id": "ehr_alpha",
+    "mappings": [
+      {
+        "source_fact_id": "patient_name",
+        "target_field_path": "patient.demographics.full_name",
+        "value": "Jordan Vale"
+      },
+      {
+        "source_fact_id": "date_of_birth",
+        "target_field_path": "patient.demographics.birth_date",
+        "value": "1968-06-30"
+      },
+      {
+        "source_fact_id": "primary_diagnosis",
+        "target_field_path": "encounter.assessment.primary_diagnosis",
+        "value": "osteoarthritis of knee"
+      },
+      {
+        "source_fact_id": "bp_systolic",
+        "target_field_path": "encounter.observations.systolic_bp",
+        "value": 132
+      },
+      {
+        "source_fact_id": "bp_diastolic",
+        "target_field_path": "encounter.observations.diastolic_bp",
+        "value": 84
+      }
+    ]
+  },
+  {
+    "document_id": "synthetic-doc-04",
+    "target_schema_id": "ehr_beta",
+    "mappings": [
+      {
+        "source_fact_id": "patient_name",
+        "target_field_path": "chart.subject.display",
+        "value": "Jordan Vale"
+      },
+      {
+        "source_fact_id": "date_of_birth",
+        "target_field_path": "chart.subject.dob",
+        "value": "1968-06-30"
+      },
+      {
+        "source_fact_id": "primary_diagnosis",
+        "target_field_path": "chart.visits.current.problem_list.0.term",
+        "value": "osteoarthritis of knee"
+      },
+      {
+        "source_fact_id": "bp_systolic",
+        "target_field_path": "chart.visits.current.vitals.blood_pressure.top",
+        "value": 132
+      },
+      {
+        "source_fact_id": "bp_diastolic",
+        "target_field_path": "chart.visits.current.vitals.blood_pressure.bottom",
+        "value": 84
+      }
+    ]
+  },
+  {
+    "document_id": "synthetic-doc-05",
+    "target_schema_id": "ehr_alpha",
+    "mappings": [
+      {
+        "source_fact_id": "patient_name",
+        "target_field_path": "patient.demographics.full_name",
+        "value": "Casey Finch"
+      },
+      {
+        "source_fact_id": "date_of_birth",
+        "target_field_path": "patient.demographics.birth_date",
+        "value": "2001-01-08"
+      },
+      {
+        "source_fact_id": "primary_diagnosis",
+        "target_field_path": "encounter.assessment.primary_diagnosis",
+        "value": "viral upper respiratory infection"
+      },
+      {
+        "source_fact_id": "bp_systolic",
+        "target_field_path": "encounter.observations.systolic_bp",
+        "value": 110
+      },
+      {
+        "source_fact_id": "bp_diastolic",
+        "target_field_path": "encounter.observations.diastolic_bp",
+        "value": 70
+      }
+    ]
+  },
+  {
+    "document_id": "synthetic-doc-05",
+    "target_schema_id": "ehr_beta",
+    "mappings": [
+      {
+        "source_fact_id": "patient_name",
+        "target_field_path": "chart.subject.display",
+        "value": "Casey Finch"
+      },
+      {
+        "source_fact_id": "date_of_birth",
+        "target_field_path": "chart.subject.dob",
+        "value": "2001-01-08"
+      },
+      {
+        "source_fact_id": "primary_diagnosis",
+        "target_field_path": "chart.visits.current.problem_list.0.term",
+        "value": "viral upper respiratory infection"
+      },
+      {
+        "source_fact_id": "bp_systolic",
+        "target_field_path": "chart.visits.current.vitals.blood_pressure.top",
+        "value": 110
+      },
+      {
+        "source_fact_id": "bp_diastolic",
+        "target_field_path": "chart.visits.current.vitals.blood_pressure.bottom",
+        "value": 70
+      }
+    ]
+  },
+  {
+    "document_id": "synthetic-doc-06",
+    "target_schema_id": "ehr_alpha",
+    "mappings": [
+      {
+        "source_fact_id": "patient_name",
+        "target_field_path": "patient.demographics.full_name",
+        "value": "Taylor Moss"
+      },
+      {
+        "source_fact_id": "date_of_birth",
+        "target_field_path": "patient.demographics.birth_date",
+        "value": "1987-04-17"
+      },
+      {
+        "source_fact_id": "primary_diagnosis",
+        "target_field_path": "encounter.assessment.primary_diagnosis",
+        "value": "mild intermittent asthma"
+      },
+      {
+        "source_fact_id": "bp_systolic",
+        "target_field_path": "encounter.observations.systolic_bp",
+        "value": 122
+      },
+      {
+        "source_fact_id": "bp_diastolic",
+        "target_field_path": "encounter.observations.diastolic_bp",
+        "value": 78
+      }
+    ]
+  },
+  {
+    "document_id": "synthetic-doc-06",
+    "target_schema_id": "ehr_beta",
+    "mappings": [
+      {
+        "source_fact_id": "patient_name",
+        "target_field_path": "chart.subject.display",
+        "value": "Taylor Moss"
+      },
+      {
+        "source_fact_id": "date_of_birth",
+        "target_field_path": "chart.subject.dob",
+        "value": "1987-04-17"
+      },
+      {
+        "source_fact_id": "primary_diagnosis",
+        "target_field_path": "chart.visits.current.problem_list.0.term",
+        "value": "mild intermittent asthma"
+      },
+      {
+        "source_fact_id": "bp_systolic",
+        "target_field_path": "chart.visits.current.vitals.blood_pressure.top",
+        "value": 122
+      },
+      {
+        "source_fact_id": "bp_diastolic",
+        "target_field_path": "chart.visits.current.vitals.blood_pressure.bottom",
+        "value": 78
+      }
+    ]
+  },
+  {
+    "document_id": "synthetic-doc-07",
+    "target_schema_id": "ehr_alpha",
+    "mappings": [
+      {
+        "source_fact_id": "patient_name",
+        "target_field_path": "patient.demographics.full_name",
+        "value": "Quinn Harbor"
+      },
+      {
+        "source_fact_id": "date_of_birth",
+        "target_field_path": "patient.demographics.birth_date",
+        "value": "1959-12-12"
+      },
+      {
+        "source_fact_id": "primary_diagnosis",
+        "target_field_path": "encounter.assessment.primary_diagnosis",
+        "value": "essential hypertension"
+      },
+      {
+        "source_fact_id": "bp_systolic",
+        "target_field_path": "encounter.observations.systolic_bp",
+        "value": 138
+      },
+      {
+        "source_fact_id": "bp_diastolic",
+        "target_field_path": "encounter.observations.diastolic_bp",
+        "value": 86
+      }
+    ]
+  },
+  {
+    "document_id": "synthetic-doc-07",
+    "target_schema_id": "ehr_beta",
+    "mappings": [
+      {
+        "source_fact_id": "patient_name",
+        "target_field_path": "chart.subject.display",
+        "value": "Quinn Harbor"
+      },
+      {
+        "source_fact_id": "date_of_birth",
+        "target_field_path": "chart.subject.dob",
+        "value": "1959-12-12"
+      },
+      {
+        "source_fact_id": "primary_diagnosis",
+        "target_field_path": "chart.visits.current.problem_list.0.term",
+        "value": "essential hypertension"
+      },
+      {
+        "source_fact_id": "bp_systolic",
+        "target_field_path": "chart.visits.current.vitals.blood_pressure.top",
+        "value": 138
+      },
+      {
+        "source_fact_id": "bp_diastolic",
+        "target_field_path": "chart.visits.current.vitals.blood_pressure.bottom",
+        "value": 86
+      }
+    ]
+  },
+  {
+    "document_id": "synthetic-doc-08",
+    "target_schema_id": "ehr_alpha",
+    "mappings": [
+      {
+        "source_fact_id": "patient_name",
+        "target_field_path": "patient.demographics.full_name",
+        "value": "Skyler Wren"
+      },
+      {
+        "source_fact_id": "date_of_birth",
+        "target_field_path": "patient.demographics.birth_date",
+        "value": "1996-07-25"
+      },
+      {
+        "source_fact_id": "primary_diagnosis",
+        "target_field_path": "encounter.assessment.primary_diagnosis",
+        "value": "atopic dermatitis"
+      },
+      {
+        "source_fact_id": "bp_systolic",
+        "target_field_path": "encounter.observations.systolic_bp",
+        "value": 114
+      },
+      {
+        "source_fact_id": "bp_diastolic",
+        "target_field_path": "encounter.observations.diastolic_bp",
+        "value": 74
+      }
+    ]
+  },
+  {
+    "document_id": "synthetic-doc-08",
+    "target_schema_id": "ehr_beta",
+    "mappings": [
+      {
+        "source_fact_id": "patient_name",
+        "target_field_path": "chart.subject.display",
+        "value": "Skyler Wren"
+      },
+      {
+        "source_fact_id": "date_of_birth",
+        "target_field_path": "chart.subject.dob",
+        "value": "1996-07-25"
+      },
+      {
+        "source_fact_id": "primary_diagnosis",
+        "target_field_path": "chart.visits.current.problem_list.0.term",
+        "value": "atopic dermatitis"
+      },
+      {
+        "source_fact_id": "bp_systolic",
+        "target_field_path": "chart.visits.current.vitals.blood_pressure.top",
+        "value": 114
+      },
+      {
+        "source_fact_id": "bp_diastolic",
+        "target_field_path": "chart.visits.current.vitals.blood_pressure.bottom",
+        "value": 74
+      }
+    ]
+  },
+  {
+    "document_id": "synthetic-doc-09",
+    "target_schema_id": "ehr_alpha",
+    "mappings": [
+      {
+        "source_fact_id": "patient_name",
+        "target_field_path": "patient.demographics.full_name",
+        "value": "Rowan Frost"
+      },
+      {
+        "source_fact_id": "date_of_birth",
+        "target_field_path": "patient.demographics.birth_date",
+        "value": "1972-03-19"
+      },
+      {
+        "source_fact_id": "primary_diagnosis",
+        "target_field_path": "encounter.assessment.primary_diagnosis",
+        "value": "insomnia"
+      },
+      {
+        "source_fact_id": "bp_systolic",
+        "target_field_path": "encounter.observations.systolic_bp",
+        "value": 126
+      },
+      {
+        "source_fact_id": "bp_diastolic",
+        "target_field_path": "encounter.observations.diastolic_bp",
+        "value": 82
+      }
+    ]
+  },
+  {
+    "document_id": "synthetic-doc-09",
+    "target_schema_id": "ehr_beta",
+    "mappings": [
+      {
+        "source_fact_id": "patient_name",
+        "target_field_path": "chart.subject.display",
+        "value": "Rowan Frost"
+      },
+      {
+        "source_fact_id": "date_of_birth",
+        "target_field_path": "chart.subject.dob",
+        "value": "1972-03-19"
+      },
+      {
+        "source_fact_id": "primary_diagnosis",
+        "target_field_path": "chart.visits.current.problem_list.0.term",
+        "value": "insomnia"
+      },
+      {
+        "source_fact_id": "bp_systolic",
+        "target_field_path": "chart.visits.current.vitals.blood_pressure.top",
+        "value": 126
+      },
+      {
+        "source_fact_id": "bp_diastolic",
+        "target_field_path": "chart.visits.current.vitals.blood_pressure.bottom",
+        "value": 82
+      }
+    ]
+  },
+  {
+    "document_id": "synthetic-doc-10",
+    "target_schema_id": "ehr_alpha",
+    "mappings": [
+      {
+        "source_fact_id": "patient_name",
+        "target_field_path": "patient.demographics.full_name",
+        "value": "Parker Bloom"
+      },
+      {
+        "source_fact_id": "date_of_birth",
+        "target_field_path": "patient.demographics.birth_date",
+        "value": "1984-10-05"
+      },
+      {
+        "source_fact_id": "primary_diagnosis",
+        "target_field_path": "encounter.assessment.primary_diagnosis",
+        "value": "low back strain"
+      },
+      {
+        "source_fact_id": "bp_systolic",
+        "target_field_path": "encounter.observations.systolic_bp",
+        "value": 120
+      },
+      {
+        "source_fact_id": "bp_diastolic",
+        "target_field_path": "encounter.observations.diastolic_bp",
+        "value": 76
+      }
+    ]
+  },
+  {
+    "document_id": "synthetic-doc-10",
+    "target_schema_id": "ehr_beta",
+    "mappings": [
+      {
+        "source_fact_id": "patient_name",
+        "target_field_path": "chart.subject.display",
+        "value": "Parker Bloom"
+      },
+      {
+        "source_fact_id": "date_of_birth",
+        "target_field_path": "chart.subject.dob",
+        "value": "1984-10-05"
+      },
+      {
+        "source_fact_id": "primary_diagnosis",
+        "target_field_path": "chart.visits.current.problem_list.0.term",
+        "value": "low back strain"
+      },
+      {
+        "source_fact_id": "bp_systolic",
+        "target_field_path": "chart.visits.current.vitals.blood_pressure.top",
+        "value": 120
+      },
+      {
+        "source_fact_id": "bp_diastolic",
+        "target_field_path": "chart.visits.current.vitals.blood_pressure.bottom",
+        "value": 76
+      }
+    ]
+  }
+]

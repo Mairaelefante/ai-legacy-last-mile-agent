@@ -1,0 +1,392 @@
+[
+  {
+    "id": "synthetic-doc-01",
+    "document_type": "outpatient_note",
+    "text": "SYNTHETIC TEST RECORD. Avery Quill, born 1981-02-14, attended a fictional outpatient visit. Assessment: seasonal allergic rhinitis. Blood pressure was 118/76 mmHg.",
+    "facts": [
+      {
+        "id": "patient_name",
+        "category": "demographics",
+        "name": "full_name",
+        "value": "Avery Quill"
+      },
+      {
+        "id": "date_of_birth",
+        "category": "demographics",
+        "name": "birth_date",
+        "value": "1981-02-14"
+      },
+      {
+        "id": "primary_diagnosis",
+        "category": "assessment",
+        "name": "diagnosis",
+        "value": "seasonal allergic rhinitis"
+      },
+      {
+        "id": "bp_systolic",
+        "category": "vital_sign",
+        "name": "systolic_blood_pressure",
+        "value": 118,
+        "unit": "mmHg"
+      },
+      {
+        "id": "bp_diastolic",
+        "category": "vital_sign",
+        "name": "diastolic_blood_pressure",
+        "value": 76,
+        "unit": "mmHg"
+      }
+    ]
+  },
+  {
+    "id": "synthetic-doc-02",
+    "document_type": "outpatient_note",
+    "text": "SYNTHETIC TEST RECORD. Morgan Lark, born 1975-09-03, attended a fictional outpatient visit. Assessment: tension headache. Blood pressure was 124/80 mmHg.",
+    "facts": [
+      {
+        "id": "patient_name",
+        "category": "demographics",
+        "name": "full_name",
+        "value": "Morgan Lark"
+      },
+      {
+        "id": "date_of_birth",
+        "category": "demographics",
+        "name": "birth_date",
+        "value": "1975-09-03"
+      },
+      {
+        "id": "primary_diagnosis",
+        "category": "assessment",
+        "name": "diagnosis",
+        "value": "tension headache"
+      },
+      {
+        "id": "bp_systolic",
+        "category": "vital_sign",
+        "name": "systolic_blood_pressure",
+        "value": 124,
+        "unit": "mmHg"
+      },
+      {
+        "id": "bp_diastolic",
+        "category": "vital_sign",
+        "name": "diastolic_blood_pressure",
+        "value": 80,
+        "unit": "mmHg"
+      }
+    ]
+  },
+  {
+    "id": "synthetic-doc-03",
+    "document_type": "outpatient_note",
+    "text": "SYNTHETIC TEST RECORD. Riley Ember, born 1992-11-21, attended a fictional outpatient visit. Assessment: gastroesophageal reflux. Blood pressure was 116/72 mmHg.",
+    "facts": [
+      {
+        "id": "patient_name",
+        "category": "demographics",
+        "name": "full_name",
+        "value": "Riley Ember"
+      },
+      {
+        "id": "date_of_birth",
+        "category": "demographics",
+        "name": "birth_date",
+        "value": "1992-11-21"
+      },
+      {
+        "id": "primary_diagnosis",
+        "category": "assessment",
+        "name": "diagnosis",
+        "value": "gastroesophageal reflux"
+      },
+      {
+        "id": "bp_systolic",
+        "category": "vital_sign",
+        "name": "systolic_blood_pressure",
+        "value": 116,
+        "unit": "mmHg"
+      },
+      {
+        "id": "bp_diastolic",
+        "category": "vital_sign",
+        "name": "diastolic_blood_pressure",
+        "value": 72,
+        "unit": "mmHg"
+      }
+    ]
+  },
+  {
+    "id": "synthetic-doc-04",
+    "document_type": "outpatient_note",
+    "text": "SYNTHETIC TEST RECORD. Jordan Vale, born 1968-06-30, attended a fictional outpatient visit. Assessment: osteoarthritis of knee. Blood pressure was 132/84 mmHg.",
+    "facts": [
+      {
+        "id": "patient_name",
+        "category": "demographics",
+        "name": "full_name",
+        "value": "Jordan Vale"
+      },
+      {
+        "id": "date_of_birth",
+        "category": "demographics",
+        "name": "birth_date",
+        "value": "1968-06-30"
+      },
+      {
+        "id": "primary_diagnosis",
+        "category": "assessment",
+        "name": "diagnosis",
+        "value": "osteoarthritis of knee"
+      },
+      {
+        "id": "bp_systolic",
+        "category": "vital_sign",
+        "name": "systolic_blood_pressure",
+        "value": 132,
+        "unit": "mmHg"
+      },
+      {
+        "id": "bp_diastolic",
+        "category": "vital_sign",
+        "name": "diastolic_blood_pressure",
+        "value": 84,
+        "unit": "mmHg"
+      }
+    ]
+  },
+  {
+    "id": "synthetic-doc-05",
+    "document_type": "outpatient_note",
+    "text": "SYNTHETIC TEST RECORD. Casey Finch, born 2001-01-08, attended a fictional outpatient visit. Assessment: viral upper respiratory infection. Blood pressure was 110/70 mmHg.",
+    "facts": [
+      {
+        "id": "patient_name",
+        "category": "demographics",
+        "name": "full_name",
+        "value": "Casey Finch"
+      },
+      {
+        "id": "date_of_birth",
+        "category": "demographics",
+        "name": "birth_date",
+        "value": "2001-01-08"
+      },
+      {
+        "id": "primary_diagnosis",
+        "category": "assessment",
+        "name": "diagnosis",
+        "value": "viral upper respiratory infection"
+      },
+      {
+        "id": "bp_systolic",
+        "category": "vital_sign",
+        "name": "systolic_blood_pressure",
+        "value": 110,
+        "unit": "mmHg"
+      },
+      {
+        "id": "bp_diastolic",
+        "category": "vital_sign",
+        "name": "diastolic_blood_pressure",
+        "value": 70,
+        "unit": "mmHg"
+      }
+    ]
+  },
+  {
+    "id": "synthetic-doc-06",
+    "document_type": "outpatient_note",
+    "text": "SYNTHETIC TEST RECORD. Taylor Moss, born 1987-04-17, attended a fictional outpatient visit. Assessment: mild intermittent asthma. Blood pressure was 122/78 mmHg.",
+    "facts": [
+      {
+        "id": "patient_name",
+        "category": "demographics",
+        "name": "full_name",
+        "value": "Taylor Moss"
+      },
+      {
+        "id": "date_of_birth",
+        "category": "demographics",
+        "name": "birth_date",
+        "value": "1987-04-17"
+      },
+      {
+        "id": "primary_diagnosis",
+        "category": "assessment",
+        "name": "diagnosis",
+        "value": "mild intermittent asthma"
+      },
+      {
+        "id": "bp_systolic",
+        "category": "vital_sign",
+        "name": "systolic_blood_pressure",
+        "value": 122,
+        "unit": "mmHg"
+      },
+      {
+        "id": "bp_diastolic",
+        "category": "vital_sign",
+        "name": "diastolic_blood_pressure",
+        "value": 78,
+        "unit": "mmHg"
+      }
+    ]
+  },
+  {
+    "id": "synthetic-doc-07",
+    "document_type": "outpatient_note",
+    "text": "SYNTHETIC TEST RECORD. Quinn Harbor, born 1959-12-12, attended a fictional outpatient visit. Assessment: essential hypertension. Blood pressure was 138/86 mmHg.",
+    "facts": [
+      {
+        "id": "patient_name",
+        "category": "demographics",
+        "name": "full_name",
+        "value": "Quinn Harbor"
+      },
+      {
+        "id": "date_of_birth",
+        "category": "demographics",
+        "name": "birth_date",
+        "value": "1959-12-12"
+      },
+      {
+        "id": "primary_diagnosis",
+        "category": "assessment",
+        "name": "diagnosis",
+        "value": "essential hypertension"
+      },
+      {
+        "id": "bp_systolic",
+        "category": "vital_sign",
+        "name": "systolic_blood_pressure",
+        "value": 138,
+        "unit": "mmHg"
+      },
+      {
+        "id": "bp_diastolic",
+        "category": "vital_sign",
+        "name": "diastolic_blood_pressure",
+        "value": 86,
+        "unit": "mmHg"
+      }
+    ]
+  },
+  {
+    "id": "synthetic-doc-08",
+    "document_type": "outpatient_note",
+    "text": "SYNTHETIC TEST RECORD. Skyler Wren, born 1996-07-25, attended a fictional outpatient visit. Assessment: atopic dermatitis. Blood pressure was 114/74 mmHg.",
+    "facts": [
+      {
+        "id": "patient_name",
+        "category": "demographics",
+        "name": "full_name",
+        "value": "Skyler Wren"
+      },
+      {
+        "id": "date_of_birth",
+        "category": "demographics",
+        "name": "birth_date",
+        "value": "1996-07-25"
+      },
+      {
+        "id": "primary_diagnosis",
+        "category": "assessment",
+        "name": "diagnosis",
+        "value": "atopic dermatitis"
+      },
+      {
+        "id": "bp_systolic",
+        "category": "vital_sign",
+        "name": "systolic_blood_pressure",
+        "value": 114,
+        "unit": "mmHg"
+      },
+      {
+        "id": "bp_diastolic",
+        "category": "vital_sign",
+        "name": "diastolic_blood_pressure",
+        "value": 74,
+        "unit": "mmHg"
+      }
+    ]
+  },
+  {
+    "id": "synthetic-doc-09",
+    "document_type": "outpatient_note",
+    "text": "SYNTHETIC TEST RECORD. Rowan Frost, born 1972-03-19, attended a fictional outpatient visit. Assessment: insomnia. Blood pressure was 126/82 mmHg.",
+    "facts": [
+      {
+        "id": "patient_name",
+        "category": "demographics",
+        "name": "full_name",
+        "value": "Rowan Frost"
+      },
+      {
+        "id": "date_of_birth",
+        "category": "demographics",
+        "name": "birth_date",
+        "value": "1972-03-19"
+      },
+      {
+        "id": "primary_diagnosis",
+        "category": "assessment",
+        "name": "diagnosis",
+        "value": "insomnia"
+      },
+      {
+        "id": "bp_systolic",
+        "category": "vital_sign",
+        "name": "systolic_blood_pressure",
+        "value": 126,
+        "unit": "mmHg"
+      },
+      {
+        "id": "bp_diastolic",
+        "category": "vital_sign",
+        "name": "diastolic_blood_pressure",
+        "value": 82,
+        "unit": "mmHg"
+      }
+    ]
+  },
+  {
+    "id": "synthetic-doc-10",
+    "document_type": "outpatient_note",
+    "text": "SYNTHETIC TEST RECORD. Parker Bloom, born 1984-10-05, attended a fictional outpatient visit. Assessment: low back strain. Blood pressure was 120/76 mmHg.",
+    "facts": [
+      {
+        "id": "patient_name",
+        "category": "demographics",
+        "name": "full_name",
+        "value": "Parker Bloom"
+      },
+      {
+        "id": "date_of_birth",
+        "category": "demographics",
+        "name": "birth_date",
+        "value": "1984-10-05"
+      },
+      {
+        "id": "primary_diagnosis",
+        "category": "assessment",
+        "name": "diagnosis",
+        "value": "low back strain"
+      },
+      {
+        "id": "bp_systolic",
+        "category": "vital_sign",
+        "name": "systolic_blood_pressure",
+        "value": 120,
+        "unit": "mmHg"
+      },
+      {
+        "id": "bp_diastolic",
+        "category": "vital_sign",
+        "name": "diastolic_blood_pressure",
+        "value": 76,
+        "unit": "mmHg"
+      }
+    ]
+  }
+]
