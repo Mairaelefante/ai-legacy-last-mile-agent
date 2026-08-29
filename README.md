@@ -1,5 +1,32 @@
 # AI Legacy Last-Mile Agent
 
+## Frozen reconciliation stress benchmark (v1.0.0)
+
+Experiment 002 was useful but its apparent failures were overwhelmingly JSON
+representation mismatches, while action selection and traceability were already
+semantically strong. The separate `data/stress_benchmark/` suite therefore tests
+the operational bottleneck: cross-source temporal history, explicit unit
+equivalence, duplicates and partial duplicates, true conflicts, encounter
+selection, provenance, dependent facts, ambiguity, and heterogeneous actions.
+It does not alter or replace any Experiment 002 input, evaluator, or result.
+
+The baseline makes exactly one general provider-neutral LLM request per case,
+with no verifier, agent team, retry, or deterministic answer generator. Its
+prompt receives a current record, incoming facts, target schema, allowed actions,
+and task rules. Categories, expected updates, scoring labels, evaluator output,
+and ground truth are excluded and covered by automated leakage tests.
+
+```bash
+python -m ai_legacy_last_mile.run_stress_baseline
+python -m ai_legacy_last_mile.stress_evaluator results/stress_baseline_predictions.json
+cat results/stress_baseline_metrics.json
+```
+
+See `data/stress_benchmark/README.md` for frozen normalization/scoring rules and
+`freeze_manifest.json` for v1.0.0 integrity hashes and statistics.
+
+Research prototype. Synthetic data only. No autonomous clinical decisions. No production EHR deployment. Human approval required for consequential write actions.
+
 A Python 3.12 hackathon scaffold for testing whether AI-generated structured
 information can be transferred reliably into heterogeneous legacy systems.
 The project defines validated data contracts, wholly synthetic fixtures, a

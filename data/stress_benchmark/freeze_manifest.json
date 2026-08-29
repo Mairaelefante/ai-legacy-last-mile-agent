@@ -1,0 +1,51 @@
+{
+  "benchmark_version": "stress-v1.0.0",
+  "frozen_at_utc": "2026-08-29T00:00:00Z",
+  "primary_metric": "case-level semantic update-set accuracy: a case passes only when its complete expected semantic update multiset matches and no extra update exists",
+  "statistics": {
+    "cases": 20,
+    "expected_updates": 24,
+    "schema_case_counts": {
+      "ehr_alpha": 10,
+      "ehr_beta": 10
+    },
+    "single_action_cases": 17,
+    "multi_action_cases": 3,
+    "category_case_counts": {
+      "cross_institution_temporal": 3,
+      "document_identity": 4,
+      "encounter_disambiguation": 4,
+      "missing_context": 4,
+      "multi_action": 3,
+      "multi_fact_dependency": 4,
+      "partial_duplicate": 3,
+      "provenance_history": 4,
+      "semantic_duplicate": 6,
+      "true_conflict": 4,
+      "unit_equivalence": 2
+    },
+    "expected_action_distribution": {
+      "ADD": 6,
+      "FLAG_CONFLICT": 4,
+      "FLAG_MISSING_CONTEXT": 4,
+      "LINK": 2,
+      "NO_OP": 4,
+      "UPDATE": 4
+    }
+  },
+  "evaluation_rules": [
+    "object key order ignored",
+    "order ignored only for values and aliases set fields",
+    "case and whitespace folded only for description, title, test_name, and document_type",
+    "creatinine: 1 mg/dL = 88.4 umol/L; glucose: 1 mg/dL = 0.0555 mmol/L; compare converted values to 0.001",
+    "source_fact_ids treated as a set",
+    "actions, target paths, record IDs, encounters, timestamps, provenance, reconciliation/temporal classifications, extra and missing updates remain meaningful"
+  ],
+  "sha256": {
+    "patient_records.json": "1678b362c03b0d81d109f4bb1cbe9a94cb7614f7e05b93d0fcbfa056d9f585fb",
+    "incoming_events.json": "4f842bad12ff9066b25acc4daba0fb611406cfecd57648846dbce969b9d719bf",
+    "cases.json": "e9726633d58c5d2a7c49bc3774066af8554100ac8166cb900eb5349cc2e84359",
+    "target_schemas.json": "716d05308c38d57a13143c7d7169d7b870a3b4a7d6caee7294ffe3fa5334f8a3",
+    "ground_truth_updates.json": "0d5d3e5f182dcdffacd17bf68446b271b3f84c1f44adec409b7dd0767a315dc8"
+  }
+}

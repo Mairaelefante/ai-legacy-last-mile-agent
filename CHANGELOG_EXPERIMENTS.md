@@ -134,3 +134,27 @@ values as JSON-encoded strings with explicit JSON Schema `type: string`, then
 losslessly decodes them into the unchanged `ProposedUpdate` benchmark model.
 This corrects OpenAI strict structured-output compatibility without changing the
 task prompt, benchmark data, model configuration, evaluator, or update semantics.
+# Stress benchmark v1.0.0 — benchmark hardening
+
+## Invalid stress baseline attempt — structured-output schema failure
+
+Invalid stress baseline attempt — structured-output schema failure. All 20 calls
+were rejected by the API before model inference because StressResponse.value
+generated an invalid JSON Schema without an explicit type. The resulting 0%
+metrics are not considered a valid baseline and are excluded from performance
+comparison.
+
+This transport-only correction encodes flexible response values as JSON strings
+and does not change stress-v1.0.0.
+
+Experiment 002 showed that the original benchmark's apparent failures were
+overwhelmingly output-representation mismatches rather than failures of semantic
+reconciliation. Instead of claiming an artificial improvement by adding a
+formatter, the next benchmark was created to test the real operational
+bottleneck: reconciliation of fragmented, temporally distinct, cross-source
+patient-record information.
+
+This release adds a completely separate, frozen 20-case synthetic stress suite,
+semantic evaluator, one-call baseline, leakage/integrity tests, explicit
+normalization contract, benchmark statistics, and SHA-256 manifest. Experiment
+002 data, evaluation behavior, prompts, and results remain unchanged.
