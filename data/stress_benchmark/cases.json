@@ -1,0 +1,203 @@
+[
+  {
+    "case_id": "stress-p01:stress-e01:ehr_alpha",
+    "patient_id": "stress-p01",
+    "event_id": "stress-e01",
+    "target_schema_id": "ehr_alpha",
+    "categories": [
+      "cross_institution_temporal",
+      "provenance_history"
+    ]
+  },
+  {
+    "case_id": "stress-p02:stress-e02:ehr_beta",
+    "patient_id": "stress-p02",
+    "event_id": "stress-e02",
+    "target_schema_id": "ehr_beta",
+    "categories": [
+      "encounter_disambiguation",
+      "cross_institution_temporal"
+    ]
+  },
+  {
+    "case_id": "stress-p03:stress-e03:ehr_alpha",
+    "patient_id": "stress-p03",
+    "event_id": "stress-e03",
+    "target_schema_id": "ehr_alpha",
+    "categories": [
+      "unit_equivalence",
+      "semantic_duplicate"
+    ]
+  },
+  {
+    "case_id": "stress-p04:stress-e04:ehr_beta",
+    "patient_id": "stress-p04",
+    "event_id": "stress-e04",
+    "target_schema_id": "ehr_beta",
+    "categories": [
+      "unit_equivalence",
+      "semantic_duplicate"
+    ]
+  },
+  {
+    "case_id": "stress-p05:stress-e05:ehr_alpha",
+    "patient_id": "stress-p05",
+    "event_id": "stress-e05",
+    "target_schema_id": "ehr_alpha",
+    "categories": [
+      "true_conflict",
+      "multi_fact_dependency"
+    ]
+  },
+  {
+    "case_id": "stress-p06:stress-e06:ehr_beta",
+    "patient_id": "stress-p06",
+    "event_id": "stress-e06",
+    "target_schema_id": "ehr_beta",
+    "categories": [
+      "true_conflict",
+      "document_identity"
+    ]
+  },
+  {
+    "case_id": "stress-p07:stress-e07:ehr_alpha",
+    "patient_id": "stress-p07",
+    "event_id": "stress-e07",
+    "target_schema_id": "ehr_alpha",
+    "categories": [
+      "semantic_duplicate"
+    ]
+  },
+  {
+    "case_id": "stress-p08:stress-e08:ehr_beta",
+    "patient_id": "stress-p08",
+    "event_id": "stress-e08",
+    "target_schema_id": "ehr_beta",
+    "categories": [
+      "semantic_duplicate",
+      "document_identity"
+    ]
+  },
+  {
+    "case_id": "stress-p09:stress-e09:ehr_alpha",
+    "patient_id": "stress-p09",
+    "event_id": "stress-e09",
+    "target_schema_id": "ehr_alpha",
+    "categories": [
+      "partial_duplicate"
+    ]
+  },
+  {
+    "case_id": "stress-p10:stress-e10:ehr_beta",
+    "patient_id": "stress-p10",
+    "event_id": "stress-e10",
+    "target_schema_id": "ehr_beta",
+    "categories": [
+      "partial_duplicate",
+      "provenance_history"
+    ]
+  },
+  {
+    "case_id": "stress-p11:stress-e11:ehr_alpha",
+    "patient_id": "stress-p11",
+    "event_id": "stress-e11",
+    "target_schema_id": "ehr_alpha",
+    "categories": [
+      "missing_context",
+      "encounter_disambiguation"
+    ]
+  },
+  {
+    "case_id": "stress-p12:stress-e12:ehr_beta",
+    "patient_id": "stress-p12",
+    "event_id": "stress-e12",
+    "target_schema_id": "ehr_beta",
+    "categories": [
+      "missing_context"
+    ]
+  },
+  {
+    "case_id": "stress-p13:stress-e13:ehr_alpha",
+    "patient_id": "stress-p13",
+    "event_id": "stress-e13",
+    "target_schema_id": "ehr_alpha",
+    "categories": [
+      "multi_fact_dependency",
+      "document_identity"
+    ]
+  },
+  {
+    "case_id": "stress-p14:stress-e14:ehr_beta",
+    "patient_id": "stress-p14",
+    "event_id": "stress-e14",
+    "target_schema_id": "ehr_beta",
+    "categories": [
+      "multi_fact_dependency",
+      "encounter_disambiguation"
+    ]
+  },
+  {
+    "case_id": "stress-p15:stress-e15:ehr_alpha",
+    "patient_id": "stress-p15",
+    "event_id": "stress-e15",
+    "target_schema_id": "ehr_alpha",
+    "categories": [
+      "multi_action",
+      "true_conflict",
+      "semantic_duplicate",
+      "missing_context"
+    ]
+  },
+  {
+    "case_id": "stress-p16:stress-e16:ehr_beta",
+    "patient_id": "stress-p16",
+    "event_id": "stress-e16",
+    "target_schema_id": "ehr_beta",
+    "categories": [
+      "multi_action",
+      "partial_duplicate",
+      "provenance_history"
+    ]
+  },
+  {
+    "case_id": "stress-p17:stress-e17:ehr_alpha",
+    "patient_id": "stress-p17",
+    "event_id": "stress-e17",
+    "target_schema_id": "ehr_alpha",
+    "categories": [
+      "multi_action",
+      "encounter_disambiguation",
+      "semantic_duplicate"
+    ]
+  },
+  {
+    "case_id": "stress-p18:stress-e18:ehr_beta",
+    "patient_id": "stress-p18",
+    "event_id": "stress-e18",
+    "target_schema_id": "ehr_beta",
+    "categories": [
+      "cross_institution_temporal",
+      "provenance_history"
+    ]
+  },
+  {
+    "case_id": "stress-p19:stress-e19:ehr_alpha",
+    "patient_id": "stress-p19",
+    "event_id": "stress-e19",
+    "target_schema_id": "ehr_alpha",
+    "categories": [
+      "true_conflict",
+      "multi_fact_dependency"
+    ]
+  },
+  {
+    "case_id": "stress-p20:stress-e20:ehr_beta",
+    "patient_id": "stress-p20",
+    "event_id": "stress-e20",
+    "target_schema_id": "ehr_beta",
+    "categories": [
+      "missing_context",
+      "document_identity"
+    ]
+  }
+]
