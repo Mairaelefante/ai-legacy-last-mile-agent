@@ -1,0 +1,381 @@
+[
+  {
+    "patient_id": "patient-01",
+    "demographics": {
+      "full_name": "Avery Quill",
+      "birth_date": "1981-02-14"
+    },
+    "clinical_framing": [
+      "seasonal allergic rhinitis"
+    ],
+    "active_medications": [
+      {
+        "id": "med-01",
+        "name": "cetirizine",
+        "dose": "10 mg",
+        "status": "active"
+      }
+    ],
+    "clinical_diary_entries": [
+      {
+        "id": "diary-01",
+        "recorded_at": "2026-01-10T08:00:00Z",
+        "text": "Synthetic admission record notes seasonal allergic rhinitis."
+      }
+    ],
+    "observations": [
+      {
+        "id": "obs-01",
+        "name": "body temperature",
+        "value": 36.6,
+        "unit": "C",
+        "observed_at": "2026-01-10T08:15:00Z"
+      }
+    ],
+    "active_requests": [],
+    "available_documents": []
+  },
+  {
+    "patient_id": "patient-02",
+    "demographics": {
+      "full_name": "Morgan Lark",
+      "birth_date": "1975-09-03"
+    },
+    "clinical_framing": [
+      "tension headache"
+    ],
+    "active_medications": [
+      {
+        "id": "med-02",
+        "name": "acetaminophen",
+        "dose": "500 mg",
+        "status": "active"
+      }
+    ],
+    "clinical_diary_entries": [
+      {
+        "id": "diary-02",
+        "recorded_at": "2026-01-10T08:00:00Z",
+        "text": "Synthetic admission record notes tension headache."
+      }
+    ],
+    "observations": [
+      {
+        "id": "obs-02",
+        "name": "body temperature",
+        "value": 36.7,
+        "unit": "C",
+        "observed_at": "2026-01-10T08:15:00Z"
+      }
+    ],
+    "active_requests": [],
+    "available_documents": []
+  },
+  {
+    "patient_id": "patient-03",
+    "demographics": {
+      "full_name": "Riley Ember",
+      "birth_date": "1992-11-21"
+    },
+    "clinical_framing": [
+      "gastroesophageal reflux"
+    ],
+    "active_medications": [
+      {
+        "id": "med-03",
+        "name": "omeprazole",
+        "dose": "20 mg",
+        "status": "active"
+      }
+    ],
+    "clinical_diary_entries": [
+      {
+        "id": "diary-03",
+        "recorded_at": "2026-01-10T08:00:00Z",
+        "text": "Synthetic admission record notes gastroesophageal reflux."
+      }
+    ],
+    "observations": [
+      {
+        "id": "obs-03",
+        "name": "body temperature",
+        "value": 36.5,
+        "unit": "C",
+        "observed_at": "2026-01-10T08:15:00Z"
+      }
+    ],
+    "active_requests": [],
+    "available_documents": []
+  },
+  {
+    "patient_id": "patient-04",
+    "demographics": {
+      "full_name": "Jordan Vale",
+      "birth_date": "1968-06-30"
+    },
+    "clinical_framing": [
+      "osteoarthritis of knee"
+    ],
+    "active_medications": [
+      {
+        "id": "med-04",
+        "name": "naproxen",
+        "dose": "250 mg",
+        "status": "active"
+      }
+    ],
+    "clinical_diary_entries": [
+      {
+        "id": "diary-04",
+        "recorded_at": "2026-01-10T08:00:00Z",
+        "text": "Synthetic admission record notes osteoarthritis of knee."
+      }
+    ],
+    "observations": [
+      {
+        "id": "obs-04",
+        "name": "body temperature",
+        "value": 36.6,
+        "unit": "C",
+        "observed_at": "2026-01-10T08:15:00Z"
+      }
+    ],
+    "active_requests": [],
+    "available_documents": [
+      {
+        "id": "doc-04-existing",
+        "document_type": "radiology_report",
+        "title": "Right knee radiograph report"
+      }
+    ]
+  },
+  {
+    "patient_id": "patient-05",
+    "demographics": {
+      "full_name": "Casey Finch",
+      "birth_date": "2001-01-08"
+    },
+    "clinical_framing": [
+      "viral upper respiratory infection"
+    ],
+    "active_medications": [
+      {
+        "id": "med-05",
+        "name": "saline nasal spray",
+        "dose": "2 sprays",
+        "status": "active"
+      }
+    ],
+    "clinical_diary_entries": [
+      {
+        "id": "diary-05",
+        "recorded_at": "2026-01-10T08:00:00Z",
+        "text": "Synthetic admission record notes viral upper respiratory infection."
+      }
+    ],
+    "observations": [
+      {
+        "id": "obs-05",
+        "name": "body temperature",
+        "value": 36.7,
+        "unit": "C",
+        "observed_at": "2026-01-10T08:15:00Z"
+      }
+    ],
+    "active_requests": [],
+    "available_documents": []
+  },
+  {
+    "patient_id": "patient-06",
+    "demographics": {
+      "full_name": "Taylor Moss",
+      "birth_date": "1987-04-17"
+    },
+    "clinical_framing": [
+      "mild intermittent asthma"
+    ],
+    "active_medications": [
+      {
+        "id": "med-06",
+        "name": "albuterol inhaler",
+        "dose": "2 puffs",
+        "status": "active"
+      }
+    ],
+    "clinical_diary_entries": [
+      {
+        "id": "diary-06",
+        "recorded_at": "2026-01-10T08:00:00Z",
+        "text": "Synthetic admission record notes mild intermittent asthma."
+      }
+    ],
+    "observations": [
+      {
+        "id": "obs-06",
+        "name": "body temperature",
+        "value": 36.5,
+        "unit": "C",
+        "observed_at": "2026-01-10T08:15:00Z"
+      }
+    ],
+    "active_requests": [],
+    "available_documents": []
+  },
+  {
+    "patient_id": "patient-07",
+    "demographics": {
+      "full_name": "Quinn Harbor",
+      "birth_date": "1959-12-12"
+    },
+    "clinical_framing": [
+      "essential hypertension"
+    ],
+    "active_medications": [
+      {
+        "id": "med-07",
+        "name": "amlodipine",
+        "dose": "5 mg",
+        "status": "active"
+      }
+    ],
+    "clinical_diary_entries": [
+      {
+        "id": "diary-07",
+        "recorded_at": "2026-01-10T08:00:00Z",
+        "text": "Synthetic admission record notes essential hypertension."
+      }
+    ],
+    "observations": [
+      {
+        "id": "obs-07",
+        "name": "body temperature",
+        "value": 36.6,
+        "unit": "C",
+        "observed_at": "2026-01-10T08:15:00Z"
+      }
+    ],
+    "active_requests": [],
+    "available_documents": []
+  },
+  {
+    "patient_id": "patient-08",
+    "demographics": {
+      "full_name": "Skyler Wren",
+      "birth_date": "1996-07-25"
+    },
+    "clinical_framing": [
+      "atopic dermatitis"
+    ],
+    "active_medications": [
+      {
+        "id": "med-08",
+        "name": "hydrocortisone cream",
+        "dose": "1% topical",
+        "status": "active"
+      }
+    ],
+    "clinical_diary_entries": [
+      {
+        "id": "diary-08",
+        "recorded_at": "2026-01-10T08:00:00Z",
+        "text": "Synthetic admission record notes atopic dermatitis."
+      }
+    ],
+    "observations": [
+      {
+        "id": "obs-08",
+        "name": "body temperature",
+        "value": 36.7,
+        "unit": "C",
+        "observed_at": "2026-01-10T08:15:00Z"
+      }
+    ],
+    "active_requests": [
+      {
+        "id": "request-08-existing",
+        "request_type": "imaging",
+        "description": "Chest radiograph",
+        "status": "active"
+      }
+    ],
+    "available_documents": []
+  },
+  {
+    "patient_id": "patient-09",
+    "demographics": {
+      "full_name": "Rowan Frost",
+      "birth_date": "1972-03-19"
+    },
+    "clinical_framing": [
+      "insomnia"
+    ],
+    "active_medications": [
+      {
+        "id": "med-09",
+        "name": "melatonin",
+        "dose": "3 mg",
+        "status": "active"
+      }
+    ],
+    "clinical_diary_entries": [
+      {
+        "id": "diary-09",
+        "recorded_at": "2026-01-10T08:00:00Z",
+        "text": "Synthetic admission record notes insomnia."
+      }
+    ],
+    "observations": [
+      {
+        "id": "obs-09",
+        "name": "body temperature",
+        "value": 36.5,
+        "unit": "C",
+        "observed_at": "2026-01-10T08:15:00Z"
+      }
+    ],
+    "active_requests": [],
+    "available_documents": [
+      {
+        "id": "doc-09-ankle",
+        "document_type": "radiology_report",
+        "title": "Right ankle report, accession SYN-ACC-18"
+      }
+    ]
+  },
+  {
+    "patient_id": "patient-10",
+    "demographics": {
+      "full_name": "Parker Bloom",
+      "birth_date": "1984-10-05"
+    },
+    "clinical_framing": [
+      "low back strain"
+    ],
+    "active_medications": [
+      {
+        "id": "med-10",
+        "name": "ibuprofen",
+        "dose": "400 mg",
+        "status": "active"
+      }
+    ],
+    "clinical_diary_entries": [
+      {
+        "id": "diary-10",
+        "recorded_at": "2026-01-10T08:00:00Z",
+        "text": "Synthetic admission record notes low back strain."
+      }
+    ],
+    "observations": [
+      {
+        "id": "obs-10",
+        "name": "body temperature",
+        "value": 36.6,
+        "unit": "C",
+        "observed_at": "2026-01-10T08:15:00Z"
+      }
+    ],
+    "active_requests": [],
+    "available_documents": []
+  }
+]

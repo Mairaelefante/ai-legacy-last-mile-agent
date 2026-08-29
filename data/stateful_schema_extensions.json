@@ -1,0 +1,116 @@
+[
+  {
+    "target_schema_id": "ehr_alpha",
+    "fields": [
+      {
+        "path": "encounter.documents.available",
+        "label": "encounter / documents / available"
+      },
+      {
+        "path": "encounter.documents.available.doc-04-existing",
+        "label": "encounter / documents / available / doc-04-existing"
+      },
+      {
+        "path": "encounter.documents.available.doc-09-ankle",
+        "label": "encounter / documents / available / doc-09-ankle"
+      },
+      {
+        "path": "encounter.notes.clinical_diary",
+        "label": "encounter / notes / clinical diary"
+      },
+      {
+        "path": "encounter.observations.laboratory",
+        "label": "encounter / observations / laboratory"
+      },
+      {
+        "path": "encounter.requests.consultations",
+        "label": "encounter / requests / consultations"
+      },
+      {
+        "path": "encounter.requests.radiology",
+        "label": "encounter / requests / radiology"
+      },
+      {
+        "path": "encounter.requests.radiology.request-08-existing",
+        "label": "encounter / requests / radiology / request-08-existing"
+      },
+      {
+        "path": "patient.medications.active",
+        "label": "patient / medications / active"
+      },
+      {
+        "path": "patient.medications.active.med-01.dose",
+        "label": "patient / medications / active / med-01 / dose"
+      },
+      {
+        "path": "patient.medications.active.med-07.dose",
+        "label": "patient / medications / active / med-07 / dose"
+      },
+      {
+        "path": "workflow.review.conflicts",
+        "label": "workflow / review / conflicts"
+      },
+      {
+        "path": "workflow.review.missing_context",
+        "label": "workflow / review / missing context"
+      }
+    ]
+  },
+  {
+    "target_schema_id": "ehr_beta",
+    "fields": [
+      {
+        "path": "chart.attachments",
+        "label": "chart / attachments"
+      },
+      {
+        "path": "chart.attachments.doc-04-existing",
+        "label": "chart / attachments / doc-04-existing"
+      },
+      {
+        "path": "chart.attachments.doc-09-ankle",
+        "label": "chart / attachments / doc-09-ankle"
+      },
+      {
+        "path": "chart.med_list.current",
+        "label": "chart / med list / current"
+      },
+      {
+        "path": "chart.med_list.current.med-01.sig",
+        "label": "chart / med list / current / med-01 / sig"
+      },
+      {
+        "path": "chart.med_list.current.med-07.sig",
+        "label": "chart / med list / current / med-07 / sig"
+      },
+      {
+        "path": "chart.orders.consults",
+        "label": "chart / orders / consults"
+      },
+      {
+        "path": "chart.orders.imaging",
+        "label": "chart / orders / imaging"
+      },
+      {
+        "path": "chart.orders.imaging.request-08-existing",
+        "label": "chart / orders / imaging / request-08-existing"
+      },
+      {
+        "path": "chart.results.laboratory",
+        "label": "chart / results / laboratory"
+      },
+      {
+        "path": "chart.timeline.entries",
+        "label": "chart / timeline / entries"
+      },
+      {
+        "path": "chart.work_queue.data_conflicts",
+        "label": "chart / work queue / data conflicts"
+      },
+      {
+        "path": "chart.work_queue.missing_context",
+        "label": "chart / work queue / missing context"
+      }
+    ]
+  }
+]

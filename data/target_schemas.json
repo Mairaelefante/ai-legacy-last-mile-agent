@@ -1,0 +1,74 @@
+[
+  {
+    "id": "ehr_alpha",
+    "name": "Northstar Clinical Archive (Synthetic)",
+    "version": "1.0",
+    "fields": [
+      {
+        "path": "patient.demographics.full_name",
+        "label": "Patient full name",
+        "data_type": "string",
+        "required": true
+      },
+      {
+        "path": "patient.demographics.birth_date",
+        "label": "Date of birth",
+        "data_type": "date",
+        "required": true
+      },
+      {
+        "path": "encounter.assessment.primary_diagnosis",
+        "label": "Primary diagnosis",
+        "data_type": "string"
+      },
+      {
+        "path": "encounter.observations.systolic_bp",
+        "label": "Systolic blood pressure",
+        "data_type": "integer",
+        "description": "mmHg"
+      },
+      {
+        "path": "encounter.observations.diastolic_bp",
+        "label": "Diastolic blood pressure",
+        "data_type": "integer",
+        "description": "mmHg"
+      }
+    ]
+  },
+  {
+    "id": "ehr_beta",
+    "name": "Cedar Ledger EHR (Synthetic)",
+    "version": "2026.1",
+    "fields": [
+      {
+        "path": "chart.subject.display",
+        "label": "Chart display name",
+        "data_type": "string",
+        "required": true
+      },
+      {
+        "path": "chart.subject.dob",
+        "label": "Birth date",
+        "data_type": "date",
+        "required": true
+      },
+      {
+        "path": "chart.visits.current.problem_list.0.term",
+        "label": "Current problem term",
+        "data_type": "string"
+      },
+      {
+        "path": "chart.visits.current.vitals.blood_pressure.top",
+        "label": "Blood pressure top value",
+        "data_type": "integer",
+        "description": "mmHg"
+      },
+      {
+        "path": "chart.visits.current.vitals.blood_pressure.bottom",
+        "label": "Blood pressure bottom value",
+        "data_type": "integer",
+        "description": "mmHg"
+      }
+    ]
+  }
+]

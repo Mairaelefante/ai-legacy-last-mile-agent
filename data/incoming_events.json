@@ -1,0 +1,479 @@
+[
+  {
+    "event_id": "event-01",
+    "patient_id": "patient-01",
+    "event_type": "MEDICATION_UPDATE",
+    "occurred_at": "2026-01-11T10:00:00Z",
+    "source": {
+      "source_id": "source-01",
+      "source_type": "clinician",
+      "author": "Dr. Synthetic Alpha"
+    },
+    "summary": "Continue cetirizine 10 mg.",
+    "facts": [
+      {
+        "id": "e01-med",
+        "category": "medication",
+        "name": "cetirizine dose",
+        "value": "10 mg"
+      }
+    ]
+  },
+  {
+    "event_id": "event-02",
+    "patient_id": "patient-01",
+    "event_type": "MEDICATION_UPDATE",
+    "occurred_at": "2026-01-11T11:00:00Z",
+    "source": {
+      "source_id": "source-02",
+      "source_type": "clinician",
+      "author": "Dr. Synthetic Alpha"
+    },
+    "summary": "Change cetirizine to 20 mg, add fluticasone nasal spray, and request CT sinus.",
+    "facts": [
+      {
+        "id": "e02-med",
+        "category": "medication",
+        "name": "cetirizine dose",
+        "value": "20 mg"
+      },
+      {
+        "id": "e02-new-med",
+        "category": "medication",
+        "name": "new medication",
+        "value": {
+          "name": "fluticasone nasal spray",
+          "dose": "1 spray each nostril daily"
+        }
+      },
+      {
+        "id": "e02-request",
+        "category": "request",
+        "name": "imaging request",
+        "value": "CT sinus without contrast"
+      }
+    ]
+  },
+  {
+    "event_id": "event-03",
+    "patient_id": "patient-02",
+    "event_type": "IMAGING_REQUEST",
+    "occurred_at": "2026-01-12T12:00:00Z",
+    "source": {
+      "source_id": "source-03",
+      "source_type": "clinician",
+      "author": "Dr. Synthetic Beta"
+    },
+    "summary": "Request CT head without contrast and MRI brain without contrast.",
+    "facts": [
+      {
+        "id": "e03-request-ct",
+        "category": "request",
+        "name": "imaging request",
+        "value": "CT head without contrast"
+      },
+      {
+        "id": "e03-request-mri",
+        "category": "request",
+        "name": "imaging request",
+        "value": "MRI brain without contrast"
+      }
+    ]
+  },
+  {
+    "event_id": "event-04",
+    "patient_id": "patient-02",
+    "event_type": "CONSULTATION_REQUEST",
+    "occurred_at": "2026-01-12T13:00:00Z",
+    "source": {
+      "source_id": "source-04",
+      "source_type": "clinician",
+      "author": "Dr. Synthetic Beta"
+    },
+    "summary": "Request neurology consultation for headache review.",
+    "facts": [
+      {
+        "id": "e04-request",
+        "category": "request",
+        "name": "consultation request",
+        "value": "Neurology consultation for headache review"
+      }
+    ]
+  },
+  {
+    "event_id": "event-05",
+    "patient_id": "patient-03",
+    "event_type": "LAB_RESULT",
+    "occurred_at": "2026-01-13T09:00:00Z",
+    "source": {
+      "source_id": "source-05",
+      "source_type": "laboratory",
+      "author": "Synthetic Central Laboratory"
+    },
+    "summary": "Magnesium result 1.9 mg/dL; laboratory feed explicitly includes a result-posted diary message.",
+    "facts": [
+      {
+        "id": "e05-result",
+        "category": "laboratory",
+        "name": "magnesium",
+        "value": "1.9",
+        "unit": "mg/dL"
+      },
+      {
+        "id": "e05-diary",
+        "category": "clinical_note",
+        "name": "diary text",
+        "value": "Magnesium result 1.9 mg/dL received from Synthetic Central Laboratory."
+      }
+    ]
+  },
+  {
+    "event_id": "event-06",
+    "patient_id": "patient-03",
+    "event_type": "LAB_RESULT",
+    "occurred_at": "2026-01-13T10:00:00Z",
+    "source": {
+      "source_id": "source-06",
+      "source_type": "external_system",
+      "author": "Synthetic Reconciliation Feed"
+    },
+    "summary": "Sodium is reported as 139 mmol/L; two source feeds disagree on potassium, reporting 3.1 and 4.8 mmol/L.",
+    "facts": [
+      {
+        "id": "e06-sodium",
+        "category": "laboratory",
+        "name": "sodium",
+        "value": 139,
+        "unit": "mmol/L"
+      },
+      {
+        "id": "e06-source-a",
+        "category": "source_a",
+        "name": "potassium",
+        "value": "3.1",
+        "unit": "mmol/L"
+      },
+      {
+        "id": "e06-source-b",
+        "category": "source_b",
+        "name": "potassium",
+        "value": "4.8",
+        "unit": "mmol/L"
+      }
+    ]
+  },
+  {
+    "event_id": "event-07",
+    "patient_id": "patient-04",
+    "event_type": "RADIOLOGY_REPORT",
+    "occurred_at": "2026-01-14T11:00:00Z",
+    "source": {
+      "source_id": "source-07",
+      "source_type": "radiology",
+      "author": "Dr. Synthetic Radiologist"
+    },
+    "summary": "Final left knee radiograph report received.",
+    "facts": [
+      {
+        "id": "e07-report",
+        "category": "document",
+        "name": "radiology report",
+        "value": {
+          "title": "Left knee radiograph report",
+          "status": "final"
+        }
+      }
+    ]
+  },
+  {
+    "event_id": "event-08",
+    "patient_id": "patient-04",
+    "event_type": "RADIOLOGY_REPORT",
+    "occurred_at": "2026-01-14T12:00:00Z",
+    "source": {
+      "source_id": "source-08",
+      "source_type": "radiology",
+      "author": "Dr. Synthetic Radiologist"
+    },
+    "summary": "Right knee radiograph report already present is retransmitted.",
+    "facts": [
+      {
+        "id": "e08-report",
+        "category": "document",
+        "name": "radiology report",
+        "value": {
+          "title": "Right knee radiograph report",
+          "status": "final"
+        }
+      }
+    ]
+  },
+  {
+    "event_id": "event-09",
+    "patient_id": "patient-05",
+    "event_type": "EXTERNAL_DOCUMENT",
+    "occurred_at": "2026-01-15T13:00:00Z",
+    "source": {
+      "source_id": "source-09",
+      "source_type": "external_system",
+      "author": "Synthetic Community Clinic"
+    },
+    "summary": "Discharge summary document received from a fictional external clinic.",
+    "facts": [
+      {
+        "id": "e09-document",
+        "category": "document",
+        "name": "external document",
+        "value": {
+          "title": "Community clinic discharge summary",
+          "document_type": "discharge_summary"
+        }
+      }
+    ]
+  },
+  {
+    "event_id": "event-10",
+    "patient_id": "patient-05",
+    "event_type": "EXTERNAL_DOCUMENT",
+    "occurred_at": "2026-01-15T09:00:00Z",
+    "source": {
+      "source_id": "source-10",
+      "source_type": "external_system",
+      "author": "Synthetic Outside Results Feed"
+    },
+    "summary": "Outside chemistry report document arrives; one result states 7.1 but omits test name and unit.",
+    "facts": [
+      {
+        "id": "e10-document",
+        "category": "document",
+        "name": "external document",
+        "value": {
+          "title": "Outside chemistry report",
+          "document_type": "laboratory_report"
+        }
+      },
+      {
+        "id": "e10-result",
+        "category": "laboratory",
+        "name": "unnamed result",
+        "value": "7.1"
+      }
+    ]
+  },
+  {
+    "event_id": "event-11",
+    "patient_id": "patient-06",
+    "event_type": "CLINICAL_NOTE",
+    "occurred_at": "2026-01-16T10:00:00Z",
+    "source": {
+      "source_id": "source-11",
+      "source_type": "clinician",
+      "author": "Dr. Synthetic Gamma"
+    },
+    "summary": "Patient used inhaler once overnight; no other assessment stated.",
+    "facts": [
+      {
+        "id": "e11-note",
+        "category": "clinical_note",
+        "name": "diary text",
+        "value": "Patient used inhaler once overnight."
+      }
+    ]
+  },
+  {
+    "event_id": "event-12",
+    "patient_id": "patient-06",
+    "event_type": "EXTERNAL_DOCUMENT",
+    "occurred_at": "2026-01-16T11:00:00Z",
+    "source": {
+      "source_id": "source-12",
+      "source_type": "external_system",
+      "author": "Synthetic Handoff Reconciliation"
+    },
+    "summary": "Two handoff sources disagree about penicillin allergy status.",
+    "facts": [
+      {
+        "id": "e12-source-a",
+        "category": "source_a",
+        "name": "allergy status",
+        "value": "Penicillin allergy recorded"
+      },
+      {
+        "id": "e12-source-b",
+        "category": "source_b",
+        "name": "allergy status",
+        "value": "No known penicillin allergy"
+      }
+    ]
+  },
+  {
+    "event_id": "event-13",
+    "patient_id": "patient-07",
+    "event_type": "MEDICATION_UPDATE",
+    "occurred_at": "2026-01-17T12:00:00Z",
+    "source": {
+      "source_id": "source-13",
+      "source_type": "clinician",
+      "author": "Dr. Synthetic Delta"
+    },
+    "summary": "Increase amlodipine from 5 mg to 10 mg daily.",
+    "facts": [
+      {
+        "id": "e13-med",
+        "category": "medication",
+        "name": "amlodipine dose",
+        "value": "10 mg"
+      }
+    ]
+  },
+  {
+    "event_id": "event-14",
+    "patient_id": "patient-07",
+    "event_type": "MEDICATION_UPDATE",
+    "occurred_at": "2026-01-17T13:00:00Z",
+    "source": {
+      "source_id": "source-14",
+      "source_type": "clinician",
+      "author": "Dr. Synthetic Delta"
+    },
+    "summary": "Start metoprolol; dose and formulation are not provided.",
+    "facts": [
+      {
+        "id": "e14-med",
+        "category": "medication",
+        "name": "metoprolol instruction",
+        "value": "Start metoprolol"
+      }
+    ]
+  },
+  {
+    "event_id": "event-15",
+    "patient_id": "patient-08",
+    "event_type": "IMAGING_REQUEST",
+    "occurred_at": "2026-01-18T09:00:00Z",
+    "source": {
+      "source_id": "source-15",
+      "source_type": "clinician",
+      "author": "Dr. Synthetic Epsilon"
+    },
+    "summary": "Request ultrasound of left forearm.",
+    "facts": [
+      {
+        "id": "e15-request",
+        "category": "request",
+        "name": "imaging request",
+        "value": "Ultrasound of left forearm"
+      }
+    ]
+  },
+  {
+    "event_id": "event-16",
+    "patient_id": "patient-08",
+    "event_type": "IMAGING_REQUEST",
+    "occurred_at": "2026-01-18T10:00:00Z",
+    "source": {
+      "source_id": "source-16",
+      "source_type": "clinician",
+      "author": "Dr. Synthetic Epsilon"
+    },
+    "summary": "Chest radiograph request retransmitted without changes.",
+    "facts": [
+      {
+        "id": "e16-request",
+        "category": "request",
+        "name": "imaging request",
+        "value": "Chest radiograph"
+      }
+    ]
+  },
+  {
+    "event_id": "event-17",
+    "patient_id": "patient-09",
+    "event_type": "CONSULTATION_REQUEST",
+    "occurred_at": "2026-01-19T11:00:00Z",
+    "source": {
+      "source_id": "source-17",
+      "source_type": "clinician",
+      "author": "Dr. Synthetic Zeta"
+    },
+    "summary": "Request sleep medicine consultation.",
+    "facts": [
+      {
+        "id": "e17-request",
+        "category": "request",
+        "name": "consultation request",
+        "value": "Sleep medicine consultation"
+      }
+    ]
+  },
+  {
+    "event_id": "event-18",
+    "patient_id": "patient-09",
+    "event_type": "RADIOLOGY_REPORT",
+    "occurred_at": "2026-01-19T12:00:00Z",
+    "source": {
+      "source_id": "source-18",
+      "source_type": "external_system",
+      "author": "Synthetic Report Reconciliation"
+    },
+    "summary": "Incoming report says left ankle while current report reference says right ankle for the same accession.",
+    "facts": [
+      {
+        "id": "e18-side",
+        "category": "document",
+        "name": "reported body side",
+        "value": "left ankle"
+      },
+      {
+        "id": "e18-accession",
+        "category": "document",
+        "name": "accession",
+        "value": "SYN-ACC-18"
+      }
+    ]
+  },
+  {
+    "event_id": "event-19",
+    "patient_id": "patient-10",
+    "event_type": "LAB_RESULT",
+    "occurred_at": "2026-01-20T13:00:00Z",
+    "source": {
+      "source_id": "source-19",
+      "source_type": "laboratory",
+      "author": "Synthetic Central Laboratory"
+    },
+    "summary": "Creatine kinase result 112 U/L collected at 11:00.",
+    "facts": [
+      {
+        "id": "e19-result",
+        "category": "laboratory",
+        "name": "creatine kinase",
+        "value": 112,
+        "unit": "U/L"
+      }
+    ]
+  },
+  {
+    "event_id": "event-20",
+    "patient_id": "patient-10",
+    "event_type": "MEDICATION_UPDATE",
+    "occurred_at": "2026-01-20T09:00:00Z",
+    "source": {
+      "source_id": "source-20",
+      "source_type": "clinician",
+      "author": "Dr. Synthetic Eta"
+    },
+    "summary": "Add explicitly ordered lidocaine 4% patch once daily.",
+    "facts": [
+      {
+        "id": "e20-med",
+        "category": "medication",
+        "name": "new medication",
+        "value": {
+          "name": "lidocaine patch",
+          "dose": "4% once daily"
+        }
+      }
+    ]
+  }
+]
