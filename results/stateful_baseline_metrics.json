@@ -1,0 +1,14 @@
+{
+  "expected_cases": 40,
+  "predicted_cases": 40,
+  "expected_updates": 52,
+  "predicted_updates": 52,
+  "case_level_exact_update_set_accuracy": 0.2,
+  "exact_update_accuracy": 0.23076923076923078,
+  "action_type_accuracy": 1.0,
+  "target_path_accuracy": 0.9807692307692307,
+  "value_accuracy": 0.23076923076923078,
+  "source_traceability_accuracy": 1.0,
+  "conflict_detection_recall": 1.0,
+  "missing_context_detection_recall": 1.0
+}
