@@ -1,0 +1,17 @@
+[
+  {
+    "case_id": "patient-01:event-01:ehr_alpha",
+    "patient_id": "patient-01",
+    "event_id": "event-01",
+    "target_schema_id": "ehr_alpha",
+    "action_type": "NO_OP",
+    "target_path": "patient.medications.active.med-01.dose",
+    "source_fact_ids": [
+      "e01-med"
+    ],
+    "current_value": "10 mg",
+    "proposed_value": "10 mg",
+    "status": "INFORMATIONAL",
+    "reason": "The incoming cetirizine dose of 10 mg is already represented correctly for active medication med-01."
+  }
+]
