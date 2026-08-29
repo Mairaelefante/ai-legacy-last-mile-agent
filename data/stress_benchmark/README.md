@@ -19,6 +19,8 @@ The primary metric is **case-level semantic update-set accuracy**: every
 expected update must match semantically and no extra update may be present.
 Secondary metrics report their actual applicable denominators through the
 per-case artifact. `freeze_manifest.json` records statistics, rules, and SHA-256
-digests for every inference input and ground-truth file.
+digests for every inference input and ground-truth file. For cross-platform
+reproducibility, integrity checks hash canonical LF serialization by replacing
+CRLF line endings with LF before calculating SHA-256.
 
 Research prototype. Synthetic data only. No autonomous clinical decisions. No production EHR deployment. Human approval required for consequential write actions.

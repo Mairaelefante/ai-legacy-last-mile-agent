@@ -3,6 +3,7 @@ from pathlib import Path
 
 from ai_legacy_last_mile.stress_baseline import build_prompt
 from ai_legacy_last_mile.stress_evaluator import DATA, evaluate, semantic_value_equal
+from ai_legacy_last_mile.stress_integrity import canonical_file_sha256
 
 load=lambda name: json.loads((DATA/name).read_text())
 
@@ -17,7 +18,18 @@ def test_integrity_references_uniqueness_and_synthetic():
 
 def test_frozen_hashes():
     manifest=load("freeze_manifest.json")
-    for name,digest in manifest["sha256"].items(): assert hashlib.sha256((DATA/name).read_bytes()).hexdigest()==digest
+    for name,digest in manifest["sha256"].items(): assert canonical_file_sha256(DATA/name)==digest
+
+def test_canonical_hash_accepts_lf_and_crlf_but_rejects_content_changes(tmp_path):
+    lf_path=tmp_path/"lf.json"; crlf_path=tmp_path/"crlf.json"; changed_path=tmp_path/"changed.json"
+    lf_content=b'{\n  "synthetic": true\n}\n'
+    lf_path.write_bytes(lf_content)
+    crlf_path.write_bytes(lf_content.replace(b"\n", b"\r\n"))
+    changed_path.write_bytes(lf_content.replace(b"true", b"false"))
+    recorded_hash=hashlib.sha256(lf_content).hexdigest()
+    assert canonical_file_sha256(lf_path)==recorded_hash
+    assert canonical_file_sha256(crlf_path)==recorded_hash
+    assert canonical_file_sha256(changed_path)!=recorded_hash
 
 def test_no_ground_truth_leakage_into_prompt():
     case=load("cases.json")[0]; record=load("patient_records.json")[0]; event=load("incoming_events.json")[0]; schema=load("target_schemas.json")[0]
