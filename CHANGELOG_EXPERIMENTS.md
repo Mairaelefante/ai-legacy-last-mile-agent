@@ -206,3 +206,52 @@ semantic reconciliation. On the harder benchmark, the useful boundary is not
 “add more agents”: the LLM is used for ambiguous reconciliation and deterministic
 code enforces the write contract. Whether that boundary improves the primary
 metric remains an empirical question for the pending run.
+
+## Experiment 004 — Narrow canonicalization and identity normalization
+
+### Hypothesis
+
+Most remaining Experiment 003 failures appear to come from canonical contract
+mismatches plus a small normalization/reasoning error class, rather than from a
+need for additional agents. A narrowly revised one-call planner and deterministic
+compiler should address those observed classes without expanding the system
+architecture.
+
+### Changes
+
+The Experiment 004 planner explicitly treats case, surrounding whitespace, and
+repeated internal whitespace in document titles and request descriptions as
+superficial identity formatting. A narrow deterministic guard applies the same
+normalization only when every supplied meaningful field is already represented;
+it does not perform fuzzy matching or discard a new identifier or metadata field.
+
+The Experiment 004 compiler retains the Experiment 003 compiler's action,
+schema-path, record/encounter validation, provenance, approval-policy, and
+deduplication behavior. It adds three general canonical rules:
+
+1. temporal classification is emitted only for result reconciliation where
+   same-measurement, distinct-later, historical-encounter, or ambiguous timing
+   materially distinguishes the action;
+2. missing-context payloads are derived from absent result identity/unit/time,
+   absent stable document identity, or—only after intrinsic fields are present—
+   ambiguous encounter context;
+3. conflict payloads are derived from the actual existing and incoming values,
+   statuses, or document-side text rather than planner prose.
+
+A separate runner writes only `stress_exp004_*` artifacts. It still makes one
+structured planning call per case and evaluates only after inference finishes.
+
+### Deliberate non-changes
+
+Experiment 004 does not modify the frozen benchmark, labels, evaluator,
+Experiment 003 pipeline or artifacts, provider boundary, ground truth, or safety
+policy. It adds no case-specific rules, answer-derived identifier generation,
+retry, verifier, second model call, multi-agent orchestration, retrieval, external
+tool, or fine-tuning. Stable identifiers unavailable in the supplied input remain
+an explicit benchmark limitation.
+
+### Evaluation status
+
+No Experiment 004 API run has been performed and no metric improvement is
+claimed. The new behavior is covered by deterministic tests; a valid one-time
+20-case run is still required to measure the hypothesis.

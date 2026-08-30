@@ -21,6 +21,7 @@ run-stateful-baseline = "ai_legacy_last_mile.run_stateful_baseline:main"
 run-stress-baseline = "ai_legacy_last_mile.run_stress_baseline:main"
 evaluate-stress = "ai_legacy_last_mile.stress_evaluator:main"
 run-reconciliation-agent = "ai_legacy_last_mile.run_reconciliation_agent:main"
+run-reconciliation-agent-exp004 = "ai_legacy_last_mile.run_reconciliation_agent_exp004:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/ai_legacy_last_mile"]
