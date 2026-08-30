@@ -25,6 +25,52 @@ cat results/stress_baseline_metrics.json
 See `data/stress_benchmark/README.md` for frozen normalization/scoring rules and
 `freeze_manifest.json` for v1.0.0 integrity hashes and statistics.
 
+## Experiment 003: plan reconciliation, compile the write contract
+
+The valid direct stress baseline made 33 predictions for 24 expected updates.
+Its conflict and missing-context detection were strong, but its primary
+case-level semantic update-set accuracy was 0.0: it emitted extra operational
+actions and used noncanonical values, provenance, temporal classes, and
+reconciliation labels. This evidence supports a narrow boundary change rather
+than a multi-agent system.
+
+Experiment 003 makes exactly one LLM call per frozen case. The call returns an
+auditable `ReconciliationPlan` containing fact groups, matched record and
+encounter identities, identity/temporal enums, intended action, evidence, and
+approval policy. Deterministic Python then selects a path from the supplied
+schema, preserves existing identities, constructs values and provenance from
+the supplied facts, canonicalizes benchmark labels, and removes identical
+actions. Human approval remains execution-policy metadata and never becomes a
+separate clinical update.
+
+The run writes separate `stress_exp003_*` artifacts and leaves every baseline
+artifact untouched. `stress_exp003_plans.json` preserves the input, plan,
+compiler decision, final action, policy, and evaluator result for every
+successful case, so at least three different behavior trajectories can be used
+in the demo without cherry-picking the aggregate evaluation.
+
+```bash
+export OPENAI_API_KEY='your-api-key'
+export OPENAI_MODEL='gpt-5.6-sol'
+python -m ai_legacy_last_mile.run_reconciliation_agent
+cat results/stress_exp003_metrics.json
+```
+
+No Experiment 003 score is claimed until those artifacts come from one valid
+20-case API run. The inference runner never reads ground truth; evaluation is
+performed only after all predictions have been produced. This remains a
+synthetic research prototype, not evidence of clinical or deployment readiness.
+
+For Windows PowerShell, the complete run and metric print is one block:
+
+```powershell
+$env:OPENAI_API_KEY = "your-api-key"
+$env:OPENAI_MODEL = "gpt-5.6-sol"
+python -m ai_legacy_last_mile.run_reconciliation_agent
+if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+Get-Content results/stress_exp003_metrics.json
+```
+
 Research prototype. Synthetic data only. No autonomous clinical decisions. No production EHR deployment. Human approval required for consequential write actions.
 
 A Python 3.12 hackathon scaffold for testing whether AI-generated structured

@@ -158,3 +158,100 @@ This release adds a completely separate, frozen 20-case synthetic stress suite,
 semantic evaluator, one-call baseline, leakage/integrity tests, explicit
 normalization contract, benchmark statistics, and SHA-256 manifest. Experiment
 002 data, evaluation behavior, prompts, and results remain unchanged.
+
+## Experiment 003 — Structured reconciliation planner and canonical compiler
+
+### Evidence and hypothesis
+
+The valid one-call stress baseline completed all 20 calls but produced 33
+updates against 24 expected updates. Action accuracy was 0.625, while canonical
+value, provenance, and temporal metrics were 0.0. Inspection showed both genuine
+identity/duplicate/temporal mistakes and output-contract failures: free-form
+labels, richer-than-canonical payloads, decomposed partial duplicates, and
+separate approval/review actions. Conflict classification and missing-context
+recall were already 1.0.
+
+The hypothesis is therefore not that more agents are needed. One LLM should
+make the ambiguous reconciliation decision, while deterministic code should
+enforce the operational write representation and action cardinality.
+
+### Architecture
+
+Each frozen case makes one provider-neutral structured-output call. The model
+returns explicit fact groups, entity type, matched identities, identity and
+temporal relationships, write decision, intended action, target collection,
+provenance sources, evidence, and approval policy. The response model contains
+only constrained scalars, lists, and enums—no unconstrained `Any` at the OpenAI
+schema boundary.
+
+A deterministic compiler then maps those decisions to schema-declared target
+paths, existing/new record identities, encounters, canonical values,
+source-derived provenance, reconciliation labels, and temporal labels. It
+collapses identical updates and represents human approval only as execution
+policy. It reads the current record, incoming event, target schema, and plan; it
+does not read ground truth, evaluator output, or case-specific answer tables.
+
+### Evaluation status
+
+Implementation and local deterministic tests are complete. A new measured score
+is pending a valid 20-case API run because this development environment has no
+`OPENAI_API_KEY`. Until then, the frozen direct baseline remains the only result
+and no improvement claim is made.
+
+### Research interpretation
+
+A low exact-match score can be a benchmark bug rather than an intelligence
+failure. We rejected a formatter-driven win and redesigned evaluation around
+semantic reconciliation. On the harder benchmark, the useful boundary is not
+“add more agents”: the LLM is used for ambiguous reconciliation and deterministic
+code enforces the write contract. Whether that boundary improves the primary
+metric remains an empirical question for the pending run.
+
+## Experiment 004 — Narrow canonicalization and identity normalization
+
+### Hypothesis
+
+Most remaining Experiment 003 failures appear to come from canonical contract
+mismatches plus a small normalization/reasoning error class, rather than from a
+need for additional agents. A narrowly revised one-call planner and deterministic
+compiler should address those observed classes without expanding the system
+architecture.
+
+### Changes
+
+The Experiment 004 planner explicitly treats case, surrounding whitespace, and
+repeated internal whitespace in document titles and request descriptions as
+superficial identity formatting. A narrow deterministic guard applies the same
+normalization only when every supplied meaningful field is already represented;
+it does not perform fuzzy matching or discard a new identifier or metadata field.
+
+The Experiment 004 compiler retains the Experiment 003 compiler's action,
+schema-path, record/encounter validation, provenance, approval-policy, and
+deduplication behavior. It adds three general canonical rules:
+
+1. temporal classification is emitted only for result reconciliation where
+   same-measurement, distinct-later, historical-encounter, or ambiguous timing
+   materially distinguishes the action;
+2. missing-context payloads are derived from absent result identity/unit/time,
+   absent stable document identity, or—only after intrinsic fields are present—
+   ambiguous encounter context;
+3. conflict payloads are derived from the actual existing and incoming values,
+   statuses, or document-side text rather than planner prose.
+
+A separate runner writes only `stress_exp004_*` artifacts. It still makes one
+structured planning call per case and evaluates only after inference finishes.
+
+### Deliberate non-changes
+
+Experiment 004 does not modify the frozen benchmark, labels, evaluator,
+Experiment 003 pipeline or artifacts, provider boundary, ground truth, or safety
+policy. It adds no case-specific rules, answer-derived identifier generation,
+retry, verifier, second model call, multi-agent orchestration, retrieval, external
+tool, or fine-tuning. Stable identifiers unavailable in the supplied input remain
+an explicit benchmark limitation.
+
+### Evaluation status
+
+No Experiment 004 API run has been performed and no metric improvement is
+claimed. The new behavior is covered by deterministic tests; a valid one-time
+20-case run is still required to measure the hypothesis.
