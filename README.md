@@ -1,127 +1,51 @@
 # AI Legacy Last-Mile Agent
 
-Clinical information often arrives as fragmented updates that must be reconciled
-against an evolving record. The operational question is not only what a source
-says, but whether it is new information, a duplicate, a partial update, a
-conflict, missing context, or a distinct later event.
+## Offline-safe synthetic FHIR demo
 
-The central engineering contribution is a boundary between **probabilistic
-semantic reconciliation** and **deterministic operational write compilation**.
-The model has freedom where semantic reasoning is ambiguous; deterministic code
-constrains exact actions, identities, paths, provenance, temporal labels, and
-approval policy where operational consequences matter. Every measured experiment
-used the same base model: the improvement came from system architecture, not
-fine-tuning or changed model weights.
+The demo places the unchanged Experiment 004 planner and deterministic compiler
+behind a deliberately narrow FHIR R4-style adapter. It supports one wholly
+synthetic patient and only `Patient`, `Encounter`, `Observation`, and
+`DiagnosticReport`. The deterministic tool requires synthetic markers, resolves
+local patient/encounter references, and rejects unsupported or inconsistent input
+before inference. Proposed additions pass through a separate simulated approval
+gate and are applied only to an in-memory copy of the synthetic Bundle. Conflicts
+and no-op decisions never change clinical state. No external EHR write is made,
+and the workflow does not diagnose or recommend treatment.
 
-Research prototype. Synthetic data only. No clinical recommendations. No
-external EHR writes. Consequential simulated writes require separate human
-approval. This is not evidence of clinical deployment readiness.
+Primary live mode makes exactly one structured Experiment 004 planner call for
+each of four events and never silently falls back to replay:
 
-## Hot take
+```bash
+export OPENAI_API_KEY='your-api-key'
+export OPENAI_MODEL='gpt-5.6-sol'  # optional
+run-fhir-demo --live
+```
 
-> More agentic behavior is not always better. Give the model freedom where
-> reasoning is ambiguous, and constraints where actions have consequences.
+The deterministic fallback uses committed recorded-plan fixtures and makes no API
+calls. Its output is explicitly labeled as replay rather than live inference:
 
-> A low exact-match score can sometimes expose a benchmark problem rather than
-> an intelligence problem. We rejected a formatter-driven win and redesigned the
-> evaluation to measure reconciliation.
+```bash
+run-fhir-demo --replay
+```
 
-## Experiment history
+This is a synthetic research demonstration, not a general FHIR implementation,
+FHIR server, autonomous clinical system, or production EHR integration.
 
-### Early stateful baseline and benchmark redesign
+## Frozen reconciliation stress benchmark (v1.0.0)
 
-The early stateful benchmark produced an apparently low exact-match score, but
-failure analysis showed that most failures were representation and serialization
-mismatches rather than genuine reconciliation failures. We rejected the tempting
-formatter-only score improvement. Instead, we designed and froze the harder
-20-case `stress-v1.0.0` benchmark to measure actual temporal, identity, duplicate,
-conflict, missing-context, and provenance decisions. Its hashes and evaluation
-contract are recorded in `data/stress_benchmark/freeze_manifest.json`.
+Experiment 002 was useful but its apparent failures were overwhelmingly JSON
+representation mismatches, while action selection and traceability were already
+semantically strong. The separate `data/stress_benchmark/` suite therefore tests
+the operational bottleneck: cross-source temporal history, explicit unit
+equivalence, duplicates and partial duplicates, true conflicts, encounter
+selection, provenance, dependent facts, ambiguity, and heterogeneous actions.
+It does not alter or replace any Experiment 002 input, evaluator, or result.
 
-### Frozen stress baseline
-
-The same base model produced 33 proposed updates for 24 expected updates:
-
-| Metric | Result |
-|---|---:|
-| Case-level semantic update-set accuracy | 0.0 |
-| Semantic update accuracy | 0.0 |
-| Action decision accuracy | 0.625 |
-| Target record identity accuracy | 0.5833333333 |
-| Encounter association accuracy | 0.7826086957 |
-| Duplicate reconciliation decision accuracy | 0.0416666667 |
-| Conflict classification accuracy | 1.0 |
-| Missing-context detection recall | 1.0 |
-| Extra update rate | 0.375 |
-| Missing update rate | 0.0 |
-
-The baseline understood conflicts and missing context, but decomposed actions and
-used noncanonical operational representations. That failure analysis did not
-justify adding more agents.
-
-### Experiment 003 — structured planner and deterministic compiler
-
-Experiment 003 introduced the final architectural boundary: one structured
-`ReconciliationPlan` call decides fact groups, identity and temporal relationships,
-and intended actions; deterministic Python compiles those decisions into the
-canonical update contract. Human approval is execution-policy metadata, never a
-fake clinical update.
-
-| Metric | Experiment 003 |
-|---|---:|
-| Case-level semantic update-set accuracy | 0.35 |
-| Semantic update accuracy | 0.4166666667 |
-| Action decision accuracy | 0.9583333333 |
-| Target record identity accuracy | 0.9166666667 |
-| Encounter association accuracy | 0.8695652174 |
-| Value accuracy | 0.875 |
-| Provenance source attribution accuracy | 0.9166666667 |
-| Temporal reconciliation accuracy | 0.8461538462 |
-| Duplicate reconciliation decision accuracy | 0.9583333333 |
-| Conflict classification accuracy | 1.0 |
-| Missing-context detection recall | 1.0 |
-| Extra update rate | 0.0 |
-| Missing update rate | 0.0 |
-
-### Experiment 004 — final reconciliation architecture
-
-Experiment 004 retained the planner/compiler architecture and added narrow,
-generic normalization and deterministic canonicalization for superficial identity
-formatting, material temporal labels, missing-context payloads, and conflicts.
-
-| Metric | Experiment 003 | Experiment 004 |
-|---|---:|---:|
-| Case-level semantic update-set accuracy | 0.35 | **0.65** |
-| Semantic update accuracy | 0.4166666667 | **0.6666666667** |
-| Action decision accuracy | **0.9583333333** | 0.875 |
-| Target record identity accuracy | **0.9166666667** | 0.8333333333 |
-| Encounter association accuracy | 0.8695652174 | **0.9130434783** |
-| Value accuracy | 0.875 | **0.9166666667** |
-| Provenance source attribution accuracy | 0.9166666667 | 0.9166666667 |
-| Temporal reconciliation accuracy | **0.8461538462** | 0.7692307692 |
-| Duplicate reconciliation decision accuracy | **0.9583333333** | 0.875 |
-| Conflict classification accuracy | 1.0 | 1.0 |
-| Missing-context detection recall | **1.0** | 0.75 |
-| Extra update rate | 0.0 | 0.0 |
-| Missing update rate | 0.0 | 0.0 |
-
-The primary case-level result improved from 7/20 (35%) to 13/20 (65%), while
-several component metrics regressed. The runs used fresh model calls: comparative
-failure analysis found 7 cases exact in both, 6 failure-to-exact transitions, no
-exact-to-failure transition, and 7 failures in both. Five of the six newly exact
-cases were primarily deterministic representation/canonicalization improvements;
-one was a genuine planner/reconciliation improvement. The observed component
-regressions came from fresh-call planner variance, not the deterministic
-Experiment 004 transformations.
-
-Two benchmark targets also require stable identifiers unavailable in the agent's
-inference input. We did not hard-code them or expose ground truth to inference to
-inflate the score.
-
-## Final synthetic FHIR live demo
-
-The hackathon demo places the unchanged Experiment 004 architecture behind a
-small standards-shaped adapter:
+The baseline makes exactly one general provider-neutral LLM request per case,
+with no verifier, agent team, retry, or deterministic answer generator. Its
+prompt receives a current record, incoming facts, target schema, allowed actions,
+and task rules. Categories, expected updates, scoring labels, evaluator output,
+and ground truth are excluded and covered by automated leakage tests.
 
 ```text
 Synthetic FHIR Bundle
