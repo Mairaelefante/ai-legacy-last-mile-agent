@@ -1,0 +1,90 @@
+[
+  {
+    "case_id": "patient-demo-001:demo-event-01:fhir_demo",
+    "items": [
+      {
+        "source_fact_ids": ["incoming-sodium-001"],
+        "entity_type": "RESULT",
+        "matched_record_id": null,
+        "matched_encounter_id": "encounter-demo-001",
+        "proposed_record_id": "incoming-sodium-001",
+        "identity_relationship": "NEW",
+        "temporal_relationship": "NOT_APPLICABLE",
+        "new_write_needed": true,
+        "intended_action": "ADD",
+        "target_collection": "encounters[].results[]",
+        "provenance_fact_ids": ["incoming-sodium-001"],
+        "reason": "The sodium result is new information for the supplied encounter.",
+        "evidence": ["No existing sodium observation is present."],
+        "human_approval_required": true
+      }
+    ],
+    "summary": "Propose adding the new sodium observation."
+  },
+  {
+    "case_id": "patient-demo-001:demo-event-02:fhir_demo",
+    "items": [
+      {
+        "source_fact_ids": ["incoming-creatinine-001"],
+        "entity_type": "RESULT",
+        "matched_record_id": "observation-creatinine-001",
+        "matched_encounter_id": "encounter-demo-001",
+        "proposed_record_id": null,
+        "identity_relationship": "EQUIVALENT_UNIT_DUPLICATE",
+        "temporal_relationship": "SAME_MEASUREMENT",
+        "new_write_needed": false,
+        "intended_action": "NO_OP",
+        "target_collection": "encounters[].results[]",
+        "provenance_fact_ids": ["incoming-creatinine-001"],
+        "reason": "The same-time creatinine value is equivalent after unit conversion.",
+        "evidence": ["1.0 mg/dL creatinine equals 88.4 umol/L."],
+        "human_approval_required": false
+      }
+    ],
+    "summary": "Avoid a duplicate creatinine observation."
+  },
+  {
+    "case_id": "patient-demo-001:demo-event-03:fhir_demo",
+    "items": [
+      {
+        "source_fact_ids": ["incoming-knee-report-001"],
+        "entity_type": "DOCUMENT",
+        "matched_record_id": "report-knee-001",
+        "matched_encounter_id": "encounter-demo-001",
+        "proposed_record_id": null,
+        "identity_relationship": "TRUE_CONFLICT",
+        "temporal_relationship": "NOT_APPLICABLE",
+        "new_write_needed": false,
+        "intended_action": "FLAG_CONFLICT",
+        "target_collection": "encounters[].documents[]",
+        "provenance_fact_ids": ["incoming-knee-report-001"],
+        "reason": "The same accession identifies reports with conflicting laterality.",
+        "evidence": ["ACC-DEMO-001 is right knee locally and left knee incoming."],
+        "human_approval_required": true
+      }
+    ],
+    "summary": "Route the report laterality conflict for review."
+  },
+  {
+    "case_id": "patient-demo-001:demo-event-04:fhir_demo",
+    "items": [
+      {
+        "source_fact_ids": ["incoming-potassium-002"],
+        "entity_type": "RESULT",
+        "matched_record_id": null,
+        "matched_encounter_id": "encounter-demo-001",
+        "proposed_record_id": "incoming-potassium-002",
+        "identity_relationship": "NEW",
+        "temporal_relationship": "DISTINCT_LATER",
+        "new_write_needed": true,
+        "intended_action": "ADD",
+        "target_collection": "encounters[].results[]",
+        "provenance_fact_ids": ["incoming-potassium-002"],
+        "reason": "The later potassium value is distinct longitudinal history.",
+        "evidence": ["4.4 mmol/L at 15:00 follows 3.9 mmol/L at 09:15."],
+        "human_approval_required": true
+      }
+    ],
+    "summary": "Propose preserving the later potassium observation."
+  }
+]

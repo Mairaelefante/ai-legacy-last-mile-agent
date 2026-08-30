@@ -1,5 +1,36 @@
 # AI Legacy Last-Mile Agent
 
+## Offline-safe synthetic FHIR demo
+
+The demo places the unchanged Experiment 004 planner and deterministic compiler
+behind a deliberately narrow FHIR R4-style adapter. It supports one wholly
+synthetic patient and only `Patient`, `Encounter`, `Observation`, and
+`DiagnosticReport`. The deterministic tool requires synthetic markers, resolves
+local patient/encounter references, and rejects unsupported or inconsistent input
+before inference. Proposed additions pass through a separate simulated approval
+gate and are applied only to an in-memory copy of the synthetic Bundle. Conflicts
+and no-op decisions never change clinical state. No external EHR write is made,
+and the workflow does not diagnose or recommend treatment.
+
+Primary live mode makes exactly one structured Experiment 004 planner call for
+each of four events and never silently falls back to replay:
+
+```bash
+export OPENAI_API_KEY='your-api-key'
+export OPENAI_MODEL='gpt-5.6-sol'  # optional
+run-fhir-demo --live
+```
+
+The deterministic fallback uses committed recorded-plan fixtures and makes no API
+calls. Its output is explicitly labeled as replay rather than live inference:
+
+```bash
+run-fhir-demo --replay
+```
+
+This is a synthetic research demonstration, not a general FHIR implementation,
+FHIR server, autonomous clinical system, or production EHR integration.
+
 ## Frozen reconciliation stress benchmark (v1.0.0)
 
 Experiment 002 was useful but its apparent failures were overwhelmingly JSON
