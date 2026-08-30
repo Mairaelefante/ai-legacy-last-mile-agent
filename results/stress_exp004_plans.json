@@ -1,0 +1,3332 @@
+[
+  {
+    "case_id": "stress-p01:stress-e01:ehr_alpha",
+    "input": {
+      "case": {
+        "case_id": "stress-p01:stress-e01:ehr_alpha",
+        "patient_id": "stress-p01",
+        "event_id": "stress-e01",
+        "target_schema_id": "ehr_alpha"
+      },
+      "current_patient_record": {
+        "patient_id": "stress-p01",
+        "synthetic": true,
+        "active_encounter_id": "enc-new",
+        "encounters": [
+          {
+            "id": "enc-new",
+            "results": [
+              {
+                "id": "k10",
+                "test_name": "potassium",
+                "value": "3.1",
+                "unit": "mmol/L",
+                "timestamp": "2026-01-01T10:00:00Z",
+                "institution": "A"
+              }
+            ]
+          }
+        ]
+      },
+      "incoming_event": {
+        "patient_id": "stress-p01",
+        "event_id": "stress-e01",
+        "synthetic": true,
+        "facts": [
+          {
+            "id": "f1",
+            "kind": "result",
+            "test_name": "potassium",
+            "value": "4.8",
+            "unit": "mmol/L",
+            "timestamp": "2026-01-01T16:00:00Z",
+            "institution": "B",
+            "encounter_id": "enc-new"
+          }
+        ]
+      },
+      "target_schema": {
+        "id": "ehr_alpha",
+        "fields": [
+          "encounters[].results[]",
+          "encounters[].requests[]",
+          "encounters[].documents[]",
+          "workflow.review"
+        ]
+      }
+    },
+    "plan": {
+      "case_id": "stress-p01:stress-e01:ehr_alpha",
+      "items": [
+        {
+          "source_fact_ids": [
+            "f1"
+          ],
+          "entity_type": "RESULT",
+          "matched_record_id": null,
+          "matched_encounter_id": "enc-new",
+          "proposed_record_id": null,
+          "identity_relationship": "NEW",
+          "temporal_relationship": "DISTINCT_LATER",
+          "new_write_needed": true,
+          "intended_action": "ADD",
+          "target_collection": "encounters[].results[]",
+          "provenance_fact_ids": [
+            "f1"
+          ],
+          "reason": "The incoming potassium result is a distinct later measurement and should be preserved as new history.",
+          "evidence": [
+            "Incoming potassium is 4.8 mmol/L at 2026-01-01T16:00:00Z from institution B.",
+            "Existing result k10 is potassium 3.1 mmol/L at 2026-01-01T10:00:00Z from institution A.",
+            "The incoming fact explicitly identifies encounter enc-new."
+          ],
+          "human_approval_required": false
+        }
+      ],
+      "summary": "Add the later potassium measurement to encounter enc-new as a new result; it does not conflict with the earlier measurement."
+    },
+    "compiler_decisions": [
+      {
+        "source_fact_ids": [
+          "f1"
+        ],
+        "planned_action": "ADD",
+        "compiled_action": "ADD",
+        "target_path": "encounters[].results[]",
+        "record_id": "f1",
+        "encounter_id": "enc-new",
+        "emitted": true,
+        "reason": "The incoming potassium result is a distinct later measurement and should be preserved as new history."
+      }
+    ],
+    "execution_policy": {
+      "human_approval_required": false
+    },
+    "final_updates": [
+      {
+        "case_id": "stress-p01:stress-e01:ehr_alpha",
+        "action_type": "ADD",
+        "target_path": "encounters[].results[]",
+        "record_id": "f1",
+        "encounter_id": "enc-new",
+        "value": {
+          "test_name": "potassium",
+          "value": "4.8",
+          "unit": "mmol/L"
+        },
+        "timestamp": "2026-01-01T16:00:00Z",
+        "provenance": {
+          "institution": "B",
+          "external_id": null
+        },
+        "source_fact_ids": [
+          "f1"
+        ],
+        "reconciliation_kind": "new_observation",
+        "temporal_classification": "distinct_time"
+      }
+    ],
+    "evaluator_result": {
+      "case_id": "stress-p01:stress-e01:ehr_alpha",
+      "target_schema_id": "ehr_alpha",
+      "categories": [
+        "cross_institution_temporal",
+        "provenance_history"
+      ],
+      "expected_updates": 1,
+      "predicted_updates": 1,
+      "semantic_update_set_correct": false,
+      "action_matches": 1,
+      "action_denominator": 1,
+      "target_matches": 0,
+      "target_denominator": 1,
+      "encounter_matches": 1,
+      "encounter_denominator": 1,
+      "value_matches": 1,
+      "value_denominator": 1,
+      "provenance_matches": 0,
+      "provenance_denominator": 1,
+      "temporal_matches": 1,
+      "temporal_denominator": 1,
+      "reconciliation_matches": 1,
+      "reconciliation_denominator": 1,
+      "semantic_matches": 0
+    }
+  },
+  {
+    "case_id": "stress-p02:stress-e02:ehr_beta",
+    "input": {
+      "case": {
+        "case_id": "stress-p02:stress-e02:ehr_beta",
+        "patient_id": "stress-p02",
+        "event_id": "stress-e02",
+        "target_schema_id": "ehr_beta"
+      },
+      "current_patient_record": {
+        "patient_id": "stress-p02",
+        "synthetic": true,
+        "active_encounter_id": "enc-new",
+        "encounters": [
+          {
+            "id": "enc-old",
+            "date": "2025-12-01",
+            "results": []
+          },
+          {
+            "id": "enc-new",
+            "date": "2026-01-01",
+            "results": []
+          }
+        ]
+      },
+      "incoming_event": {
+        "patient_id": "stress-p02",
+        "event_id": "stress-e02",
+        "synthetic": true,
+        "facts": [
+          {
+            "id": "f2",
+            "kind": "result",
+            "test_name": "sodium",
+            "value": "139",
+            "unit": "mmol/L",
+            "timestamp": "2025-12-01T09:00:00Z",
+            "institution": "B",
+            "encounter_id": "enc-old"
+          }
+        ]
+      },
+      "target_schema": {
+        "id": "ehr_beta",
+        "fields": [
+          "visits[].observations[]",
+          "visits[].orders[]",
+          "visits[].documents[]",
+          "review_queue"
+        ]
+      }
+    },
+    "plan": {
+      "case_id": "stress-p02:stress-e02:ehr_beta",
+      "items": [
+        {
+          "source_fact_ids": [
+            "f2"
+          ],
+          "entity_type": "RESULT",
+          "matched_record_id": null,
+          "matched_encounter_id": "enc-old",
+          "proposed_record_id": null,
+          "identity_relationship": "NEW",
+          "temporal_relationship": "DISTINCT_LATER",
+          "new_write_needed": true,
+          "intended_action": "ADD",
+          "target_collection": "visits[].observations[]",
+          "provenance_fact_ids": [
+            "f2"
+          ],
+          "reason": "The sodium result is not present in the supplied record and explicitly belongs to the existing historical encounter enc-old.",
+          "evidence": [
+            "f2 reports sodium 139 mmol/L at 2025-12-01T09:00:00Z.",
+            "f2 explicitly identifies encounter_id enc-old.",
+            "The supplied enc-old encounter is dated 2025-12-01 and has no existing results."
+          ],
+          "human_approval_required": false
+        }
+      ],
+      "summary": "Add one new sodium observation to the existing historical encounter enc-old."
+    },
+    "compiler_decisions": [
+      {
+        "source_fact_ids": [
+          "f2"
+        ],
+        "planned_action": "ADD",
+        "compiled_action": "ADD",
+        "target_path": "visits[].observations[]",
+        "record_id": "f2",
+        "encounter_id": "enc-old",
+        "emitted": true,
+        "reason": "The sodium result is not present in the supplied record and explicitly belongs to the existing historical encounter enc-old."
+      }
+    ],
+    "execution_policy": {
+      "human_approval_required": false
+    },
+    "final_updates": [
+      {
+        "case_id": "stress-p02:stress-e02:ehr_beta",
+        "action_type": "ADD",
+        "target_path": "visits[].observations[]",
+        "record_id": "f2",
+        "encounter_id": "enc-old",
+        "value": {
+          "test_name": "sodium",
+          "value": "139",
+          "unit": "mmol/L"
+        },
+        "timestamp": "2025-12-01T09:00:00Z",
+        "provenance": {
+          "institution": "B",
+          "external_id": null
+        },
+        "source_fact_ids": [
+          "f2"
+        ],
+        "reconciliation_kind": "new_observation",
+        "temporal_classification": "distinct_time"
+      }
+    ],
+    "evaluator_result": {
+      "case_id": "stress-p02:stress-e02:ehr_beta",
+      "target_schema_id": "ehr_beta",
+      "categories": [
+        "encounter_disambiguation",
+        "cross_institution_temporal"
+      ],
+      "expected_updates": 1,
+      "predicted_updates": 1,
+      "semantic_update_set_correct": false,
+      "action_matches": 1,
+      "action_denominator": 1,
+      "target_matches": 0,
+      "target_denominator": 1,
+      "encounter_matches": 1,
+      "encounter_denominator": 1,
+      "value_matches": 1,
+      "value_denominator": 1,
+      "provenance_matches": 0,
+      "provenance_denominator": 1,
+      "temporal_matches": 0,
+      "temporal_denominator": 1,
+      "reconciliation_matches": 1,
+      "reconciliation_denominator": 1,
+      "semantic_matches": 0
+    }
+  },
+  {
+    "case_id": "stress-p03:stress-e03:ehr_alpha",
+    "input": {
+      "case": {
+        "case_id": "stress-p03:stress-e03:ehr_alpha",
+        "patient_id": "stress-p03",
+        "event_id": "stress-e03",
+        "target_schema_id": "ehr_alpha"
+      },
+      "current_patient_record": {
+        "patient_id": "stress-p03",
+        "synthetic": true,
+        "active_encounter_id": "enc-new",
+        "encounters": [
+          {
+            "id": "enc-new",
+            "results": [
+              {
+                "id": "cr1",
+                "test_name": "creatinine",
+                "value": "1.0",
+                "unit": "mg/dL",
+                "timestamp": "2026-02-01T10:00:00Z"
+              }
+            ]
+          }
+        ]
+      },
+      "incoming_event": {
+        "patient_id": "stress-p03",
+        "event_id": "stress-e03",
+        "synthetic": true,
+        "facts": [
+          {
+            "id": "f3",
+            "kind": "result",
+            "test_name": "Creatinine",
+            "value": "88.4",
+            "unit": "umol/L",
+            "timestamp": "2026-02-01T10:00:00Z",
+            "institution": "B",
+            "external_id": "cr-x"
+          }
+        ]
+      },
+      "target_schema": {
+        "id": "ehr_alpha",
+        "fields": [
+          "encounters[].results[]",
+          "encounters[].requests[]",
+          "encounters[].documents[]",
+          "workflow.review"
+        ]
+      }
+    },
+    "plan": {
+      "case_id": "stress-p03:stress-e03:ehr_alpha",
+      "items": [
+        {
+          "source_fact_ids": [
+            "f3"
+          ],
+          "entity_type": "RESULT",
+          "matched_record_id": "cr1",
+          "matched_encounter_id": "enc-new",
+          "proposed_record_id": "cr1",
+          "identity_relationship": "EQUIVALENT_UNIT_DUPLICATE",
+          "temporal_relationship": "SAME_MEASUREMENT",
+          "new_write_needed": true,
+          "intended_action": "LINK",
+          "target_collection": "encounters[].results[]",
+          "provenance_fact_ids": [
+            "f3"
+          ],
+          "reason": "The incoming creatinine result is equivalent to the existing same-time measurement after unit conversion, but it adds the external identity cr-x from institution B.",
+          "evidence": [
+            "Existing cr1: creatinine 1.0 mg/dL at 2026-02-01T10:00:00Z.",
+            "Incoming f3: Creatinine 88.4 umol/L at 2026-02-01T10:00:00Z.",
+            "1.0 mg/dL creatinine equals 88.4 umol/L.",
+            "Incoming external_id cr-x is not represented on the matched record."
+          ],
+          "human_approval_required": false
+        }
+      ],
+      "summary": "Link the new external identity from f3 to existing result cr1; do not add a duplicate measurement."
+    },
+    "compiler_decisions": [
+      {
+        "source_fact_ids": [
+          "f3"
+        ],
+        "planned_action": "LINK",
+        "compiled_action": "LINK",
+        "target_path": "encounters[].results[]",
+        "record_id": "cr1",
+        "encounter_id": "enc-new",
+        "emitted": true,
+        "reason": "The incoming creatinine result is equivalent to the existing same-time measurement after unit conversion, but it adds the external identity cr-x from institution B."
+      }
+    ],
+    "execution_policy": {
+      "human_approval_required": false
+    },
+    "final_updates": [
+      {
+        "case_id": "stress-p03:stress-e03:ehr_alpha",
+        "action_type": "LINK",
+        "target_path": "encounters[].results[]",
+        "record_id": "cr1",
+        "encounter_id": "enc-new",
+        "value": {
+          "test_name": "creatinine",
+          "value": "1.0",
+          "unit": "mg/dL"
+        },
+        "timestamp": "2026-02-01T10:00:00Z",
+        "provenance": {
+          "institution": "B",
+          "external_id": "cr-x"
+        },
+        "source_fact_ids": [
+          "f3"
+        ],
+        "reconciliation_kind": "equivalent_duplicate",
+        "temporal_classification": "same_measurement"
+      }
+    ],
+    "evaluator_result": {
+      "case_id": "stress-p03:stress-e03:ehr_alpha",
+      "target_schema_id": "ehr_alpha",
+      "categories": [
+        "unit_equivalence",
+        "semantic_duplicate"
+      ],
+      "expected_updates": 1,
+      "predicted_updates": 1,
+      "semantic_update_set_correct": true,
+      "action_matches": 1,
+      "action_denominator": 1,
+      "target_matches": 1,
+      "target_denominator": 1,
+      "encounter_matches": 1,
+      "encounter_denominator": 1,
+      "value_matches": 1,
+      "value_denominator": 1,
+      "provenance_matches": 1,
+      "provenance_denominator": 1,
+      "temporal_matches": 1,
+      "temporal_denominator": 1,
+      "reconciliation_matches": 1,
+      "reconciliation_denominator": 1,
+      "semantic_matches": 1
+    }
+  },
+  {
+    "case_id": "stress-p04:stress-e04:ehr_beta",
+    "input": {
+      "case": {
+        "case_id": "stress-p04:stress-e04:ehr_beta",
+        "patient_id": "stress-p04",
+        "event_id": "stress-e04",
+        "target_schema_id": "ehr_beta"
+      },
+      "current_patient_record": {
+        "patient_id": "stress-p04",
+        "synthetic": true,
+        "active_encounter_id": "enc-new",
+        "encounters": [
+          {
+            "id": "enc-new",
+            "results": [
+              {
+                "id": "glu1",
+                "test_name": "glucose",
+                "value": "100",
+                "unit": "mg/dL",
+                "timestamp": "2026-02-02T10:00:00Z"
+              }
+            ]
+          }
+        ]
+      },
+      "incoming_event": {
+        "patient_id": "stress-p04",
+        "event_id": "stress-e04",
+        "synthetic": true,
+        "facts": [
+          {
+            "id": "f4",
+            "kind": "result",
+            "test_name": "glucose",
+            "value": "5.55",
+            "unit": "mmol/L",
+            "timestamp": "2026-02-02T10:00:00Z",
+            "institution": "C"
+          }
+        ]
+      },
+      "target_schema": {
+        "id": "ehr_beta",
+        "fields": [
+          "visits[].observations[]",
+          "visits[].orders[]",
+          "visits[].documents[]",
+          "review_queue"
+        ]
+      }
+    },
+    "plan": {
+      "case_id": "stress-p04:stress-e04:ehr_beta",
+      "items": [
+        {
+          "source_fact_ids": [
+            "f4"
+          ],
+          "entity_type": "RESULT",
+          "matched_record_id": "glu1",
+          "matched_encounter_id": "enc-new",
+          "proposed_record_id": "glu1",
+          "identity_relationship": "EQUIVALENT_UNIT_DUPLICATE",
+          "temporal_relationship": "SAME_MEASUREMENT",
+          "new_write_needed": false,
+          "intended_action": "NO_OP",
+          "target_collection": "visits[].observations[]",
+          "provenance_fact_ids": [
+            "f4"
+          ],
+          "reason": "The incoming glucose result is equivalent to the existing same-time measurement after unit conversion, so no new write is needed.",
+          "evidence": [
+            "Incoming f4: glucose 5.55 mmol/L at 2026-02-02T10:00:00Z.",
+            "Existing glu1: glucose 100 mg/dL at 2026-02-02T10:00:00Z.",
+            "Using 1 mg/dL = 0.0555 mmol/L, 100 mg/dL equals 5.55 mmol/L."
+          ],
+          "human_approval_required": false
+        }
+      ],
+      "summary": "The incoming result is an equivalent-unit duplicate of existing observation glu1 in encounter enc-new; no write is planned."
+    },
+    "compiler_decisions": [
+      {
+        "source_fact_ids": [
+          "f4"
+        ],
+        "planned_action": "NO_OP",
+        "compiled_action": "NO_OP",
+        "target_path": "visits[].observations[]",
+        "record_id": "glu1",
+        "encounter_id": "enc-new",
+        "emitted": true,
+        "reason": "The incoming glucose result is equivalent to the existing same-time measurement after unit conversion, so no new write is needed."
+      }
+    ],
+    "execution_policy": {
+      "human_approval_required": false
+    },
+    "final_updates": [
+      {
+        "case_id": "stress-p04:stress-e04:ehr_beta",
+        "action_type": "NO_OP",
+        "target_path": "visits[].observations[]",
+        "record_id": "glu1",
+        "encounter_id": "enc-new",
+        "value": {
+          "test_name": "glucose",
+          "value": "100",
+          "unit": "mg/dL"
+        },
+        "timestamp": "2026-02-02T10:00:00Z",
+        "provenance": {
+          "institution": "C",
+          "external_id": null
+        },
+        "source_fact_ids": [
+          "f4"
+        ],
+        "reconciliation_kind": "equivalent_duplicate",
+        "temporal_classification": "same_measurement"
+      }
+    ],
+    "evaluator_result": {
+      "case_id": "stress-p04:stress-e04:ehr_beta",
+      "target_schema_id": "ehr_beta",
+      "categories": [
+        "unit_equivalence",
+        "semantic_duplicate"
+      ],
+      "expected_updates": 1,
+      "predicted_updates": 1,
+      "semantic_update_set_correct": true,
+      "action_matches": 1,
+      "action_denominator": 1,
+      "target_matches": 1,
+      "target_denominator": 1,
+      "encounter_matches": 1,
+      "encounter_denominator": 1,
+      "value_matches": 1,
+      "value_denominator": 1,
+      "provenance_matches": 1,
+      "provenance_denominator": 1,
+      "temporal_matches": 1,
+      "temporal_denominator": 1,
+      "reconciliation_matches": 1,
+      "reconciliation_denominator": 1,
+      "semantic_matches": 1
+    }
+  },
+  {
+    "case_id": "stress-p05:stress-e05:ehr_alpha",
+    "input": {
+      "case": {
+        "case_id": "stress-p05:stress-e05:ehr_alpha",
+        "patient_id": "stress-p05",
+        "event_id": "stress-e05",
+        "target_schema_id": "ehr_alpha"
+      },
+      "current_patient_record": {
+        "patient_id": "stress-p05",
+        "synthetic": true,
+        "active_encounter_id": "enc-new",
+        "encounters": [
+          {
+            "id": "enc-new",
+            "results": []
+          }
+        ]
+      },
+      "incoming_event": {
+        "patient_id": "stress-p05",
+        "event_id": "stress-e05",
+        "synthetic": true,
+        "facts": [
+          {
+            "id": "f5a",
+            "kind": "result",
+            "test_name": "potassium",
+            "value": "3.1",
+            "unit": "mmol/L",
+            "timestamp": "2026-03-01T10:00:00Z",
+            "institution": "A",
+            "external_id": "spec-5"
+          },
+          {
+            "id": "f5b",
+            "kind": "result",
+            "test_name": "potassium",
+            "value": "4.8",
+            "unit": "mmol/L",
+            "timestamp": "2026-03-01T10:00:00Z",
+            "institution": "B",
+            "external_id": "spec-5"
+          }
+        ]
+      },
+      "target_schema": {
+        "id": "ehr_alpha",
+        "fields": [
+          "encounters[].results[]",
+          "encounters[].requests[]",
+          "encounters[].documents[]",
+          "workflow.review"
+        ]
+      }
+    },
+    "plan": {
+      "case_id": "stress-p05:stress-e05:ehr_alpha",
+      "items": [
+        {
+          "source_fact_ids": [
+            "f5a",
+            "f5b"
+          ],
+          "entity_type": "RESULT",
+          "matched_record_id": null,
+          "matched_encounter_id": "enc-new",
+          "proposed_record_id": null,
+          "identity_relationship": "TRUE_CONFLICT",
+          "temporal_relationship": "SAME_MEASUREMENT",
+          "new_write_needed": false,
+          "intended_action": "FLAG_CONFLICT",
+          "target_collection": "workflow.review",
+          "provenance_fact_ids": [
+            "f5a",
+            "f5b"
+          ],
+          "reason": "The facts assert different potassium values for the same timestamp and external specimen identity, so they form one same-measurement conflict.",
+          "evidence": [
+            "f5a: potassium 3.1 mmol/L at 2026-03-01T10:00:00Z, institution A, external_id spec-5",
+            "f5b: potassium 4.8 mmol/L at 2026-03-01T10:00:00Z, institution B, external_id spec-5"
+          ],
+          "human_approval_required": true
+        }
+      ],
+      "summary": "Flag one true conflict for review; do not add either potassium result until the shared external identity with conflicting same-time values is resolved."
+    },
+    "compiler_decisions": [
+      {
+        "source_fact_ids": [
+          "f5a",
+          "f5b"
+        ],
+        "planned_action": "FLAG_CONFLICT",
+        "compiled_action": "FLAG_CONFLICT",
+        "target_path": "workflow.review",
+        "record_id": null,
+        "encounter_id": "enc-new",
+        "emitted": true,
+        "reason": "The facts assert different potassium values for the same timestamp and external specimen identity, so they form one same-measurement conflict."
+      }
+    ],
+    "execution_policy": {
+      "human_approval_required": true
+    },
+    "final_updates": [
+      {
+        "case_id": "stress-p05:stress-e05:ehr_alpha",
+        "action_type": "FLAG_CONFLICT",
+        "target_path": "workflow.review",
+        "record_id": null,
+        "encounter_id": "enc-new",
+        "value": {
+          "test_name": "potassium",
+          "values": [
+            "3.1",
+            "4.8"
+          ],
+          "unit": "mmol/L"
+        },
+        "timestamp": "2026-03-01T10:00:00Z",
+        "provenance": {
+          "institutions": [
+            "A",
+            "B"
+          ],
+          "external_id": "spec-5"
+        },
+        "source_fact_ids": [
+          "f5a",
+          "f5b"
+        ],
+        "reconciliation_kind": "true_conflict",
+        "temporal_classification": "same_measurement"
+      }
+    ],
+    "evaluator_result": {
+      "case_id": "stress-p05:stress-e05:ehr_alpha",
+      "target_schema_id": "ehr_alpha",
+      "categories": [
+        "true_conflict",
+        "multi_fact_dependency"
+      ],
+      "expected_updates": 1,
+      "predicted_updates": 1,
+      "semantic_update_set_correct": true,
+      "action_matches": 1,
+      "action_denominator": 1,
+      "target_matches": 1,
+      "target_denominator": 1,
+      "encounter_matches": 1,
+      "encounter_denominator": 1,
+      "value_matches": 1,
+      "value_denominator": 1,
+      "provenance_matches": 1,
+      "provenance_denominator": 1,
+      "temporal_matches": 1,
+      "temporal_denominator": 1,
+      "reconciliation_matches": 1,
+      "reconciliation_denominator": 1,
+      "semantic_matches": 1
+    }
+  },
+  {
+    "case_id": "stress-p06:stress-e06:ehr_beta",
+    "input": {
+      "case": {
+        "case_id": "stress-p06:stress-e06:ehr_beta",
+        "patient_id": "stress-p06",
+        "event_id": "stress-e06",
+        "target_schema_id": "ehr_beta"
+      },
+      "current_patient_record": {
+        "patient_id": "stress-p06",
+        "synthetic": true,
+        "active_encounter_id": "enc-new",
+        "encounters": [
+          {
+            "id": "enc-new",
+            "documents": [
+              {
+                "id": "doc6",
+                "accession": "ACC-6",
+                "title": "Right knee report"
+              }
+            ]
+          }
+        ]
+      },
+      "incoming_event": {
+        "patient_id": "stress-p06",
+        "event_id": "stress-e06",
+        "synthetic": true,
+        "facts": [
+          {
+            "id": "f6a",
+            "kind": "document",
+            "accession": "ACC-6",
+            "title": "Left knee report",
+            "institution": "B"
+          },
+          {
+            "id": "f6b",
+            "kind": "identity",
+            "accession": "ACC-6",
+            "encounter_id": "enc-new"
+          }
+        ]
+      },
+      "target_schema": {
+        "id": "ehr_beta",
+        "fields": [
+          "visits[].observations[]",
+          "visits[].orders[]",
+          "visits[].documents[]",
+          "review_queue"
+        ]
+      }
+    },
+    "plan": {
+      "case_id": "stress-p06:stress-e06:ehr_beta",
+      "items": [
+        {
+          "source_fact_ids": [
+            "f6a",
+            "f6b"
+          ],
+          "entity_type": "DOCUMENT",
+          "matched_record_id": "doc6",
+          "matched_encounter_id": "enc-new",
+          "proposed_record_id": "doc6",
+          "identity_relationship": "TRUE_CONFLICT",
+          "temporal_relationship": "SAME_EVENT",
+          "new_write_needed": false,
+          "intended_action": "FLAG_CONFLICT",
+          "target_collection": "review_queue",
+          "provenance_fact_ids": [
+            "f6a",
+            "f6b"
+          ],
+          "reason": "The incoming document and existing document share accession ACC-6 and encounter enc-new but have conflicting titles that identify different laterality.",
+          "evidence": [
+            "Existing doc6: accession ACC-6, title 'Right knee report', encounter enc-new.",
+            "Incoming f6a: accession ACC-6, title 'Left knee report', institution B.",
+            "Incoming f6b links accession ACC-6 to encounter enc-new."
+          ],
+          "human_approval_required": true
+        }
+      ],
+      "summary": "Flag one same-identity document title conflict for human review; do not write or update a document automatically."
+    },
+    "compiler_decisions": [
+      {
+        "source_fact_ids": [
+          "f6a",
+          "f6b"
+        ],
+        "planned_action": "FLAG_CONFLICT",
+        "compiled_action": "FLAG_CONFLICT",
+        "target_path": "visits[].documents[]",
+        "record_id": "doc6",
+        "encounter_id": "enc-new",
+        "emitted": true,
+        "reason": "The incoming document and existing document share accession ACC-6 and encounter enc-new but have conflicting titles that identify different laterality."
+      }
+    ],
+    "execution_policy": {
+      "human_approval_required": true
+    },
+    "final_updates": [
+      {
+        "case_id": "stress-p06:stress-e06:ehr_beta",
+        "action_type": "FLAG_CONFLICT",
+        "target_path": "visits[].documents[]",
+        "record_id": "doc6",
+        "encounter_id": "enc-new",
+        "value": {
+          "accession": "ACC-6",
+          "incoming_side": "left",
+          "existing_side": "right"
+        },
+        "timestamp": null,
+        "provenance": {
+          "institution": "B",
+          "external_id": "ACC-6"
+        },
+        "source_fact_ids": [
+          "f6a",
+          "f6b"
+        ],
+        "reconciliation_kind": "true_conflict",
+        "temporal_classification": null
+      }
+    ],
+    "evaluator_result": {
+      "case_id": "stress-p06:stress-e06:ehr_beta",
+      "target_schema_id": "ehr_beta",
+      "categories": [
+        "true_conflict",
+        "document_identity"
+      ],
+      "expected_updates": 1,
+      "predicted_updates": 1,
+      "semantic_update_set_correct": true,
+      "action_matches": 1,
+      "action_denominator": 1,
+      "target_matches": 1,
+      "target_denominator": 1,
+      "encounter_matches": 1,
+      "encounter_denominator": 1,
+      "value_matches": 1,
+      "value_denominator": 1,
+      "provenance_matches": 1,
+      "provenance_denominator": 1,
+      "temporal_matches": 0,
+      "temporal_denominator": 0,
+      "reconciliation_matches": 1,
+      "reconciliation_denominator": 1,
+      "semantic_matches": 1
+    }
+  },
+  {
+    "case_id": "stress-p07:stress-e07:ehr_alpha",
+    "input": {
+      "case": {
+        "case_id": "stress-p07:stress-e07:ehr_alpha",
+        "patient_id": "stress-p07",
+        "event_id": "stress-e07",
+        "target_schema_id": "ehr_alpha"
+      },
+      "current_patient_record": {
+        "patient_id": "stress-p07",
+        "synthetic": true,
+        "active_encounter_id": "enc-new",
+        "encounters": [
+          {
+            "id": "enc-new",
+            "requests": [
+              {
+                "id": "req7",
+                "description": "CT head without contrast",
+                "status": "active"
+              }
+            ]
+          }
+        ]
+      },
+      "incoming_event": {
+        "patient_id": "stress-p07",
+        "event_id": "stress-e07",
+        "synthetic": true,
+        "facts": [
+          {
+            "id": "f7",
+            "kind": "request",
+            "description": "Non-contrast CT of head",
+            "status": "active",
+            "external_id": "R7",
+            "institution": "B"
+          }
+        ]
+      },
+      "target_schema": {
+        "id": "ehr_alpha",
+        "fields": [
+          "encounters[].results[]",
+          "encounters[].requests[]",
+          "encounters[].documents[]",
+          "workflow.review"
+        ]
+      }
+    },
+    "plan": {
+      "case_id": "stress-p07:stress-e07:ehr_alpha",
+      "items": [
+        {
+          "source_fact_ids": [
+            "f7"
+          ],
+          "entity_type": "REQUEST",
+          "matched_record_id": null,
+          "matched_encounter_id": "enc-new",
+          "proposed_record_id": "R7",
+          "identity_relationship": "NEW",
+          "temporal_relationship": "NOT_APPLICABLE",
+          "new_write_needed": true,
+          "intended_action": "ADD",
+          "target_collection": "encounters[].requests[]",
+          "provenance_fact_ids": [
+            "f7"
+          ],
+          "reason": "The incoming active request has a distinct description and external identity; broader fuzzy matching to req7 is not permitted.",
+          "evidence": [
+            "Incoming f7 description is \"Non-contrast CT of head\" with external_id \"R7\" and institution \"B\".",
+            "Existing req7 description is \"CT head without contrast\" and has no supplied matching external identifier.",
+            "The active encounter is enc-new."
+          ],
+          "human_approval_required": false
+        }
+      ],
+      "summary": "Add the incoming request to active encounter enc-new as a new request; do not treat it as a duplicate of req7 based on broad clinical similarity."
+    },
+    "compiler_decisions": [
+      {
+        "source_fact_ids": [
+          "f7"
+        ],
+        "planned_action": "ADD",
+        "compiled_action": "ADD",
+        "target_path": "encounters[].requests[]",
+        "record_id": "R7",
+        "encounter_id": "enc-new",
+        "emitted": true,
+        "reason": "The incoming active request has a distinct description and external identity; broader fuzzy matching to req7 is not permitted."
+      }
+    ],
+    "execution_policy": {
+      "human_approval_required": false
+    },
+    "final_updates": [
+      {
+        "case_id": "stress-p07:stress-e07:ehr_alpha",
+        "action_type": "ADD",
+        "target_path": "encounters[].requests[]",
+        "record_id": "R7",
+        "encounter_id": "enc-new",
+        "value": {
+          "description": "Non-contrast CT of head",
+          "status": "active",
+          "external_id": "R7"
+        },
+        "timestamp": null,
+        "provenance": {
+          "institution": "B",
+          "external_id": "R7"
+        },
+        "source_fact_ids": [
+          "f7"
+        ],
+        "reconciliation_kind": "new_request",
+        "temporal_classification": null
+      }
+    ],
+    "evaluator_result": {
+      "case_id": "stress-p07:stress-e07:ehr_alpha",
+      "target_schema_id": "ehr_alpha",
+      "categories": [
+        "semantic_duplicate"
+      ],
+      "expected_updates": 1,
+      "predicted_updates": 1,
+      "semantic_update_set_correct": false,
+      "action_matches": 0,
+      "action_denominator": 1,
+      "target_matches": 0,
+      "target_denominator": 1,
+      "encounter_matches": 1,
+      "encounter_denominator": 1,
+      "value_matches": 0,
+      "value_denominator": 1,
+      "provenance_matches": 1,
+      "provenance_denominator": 1,
+      "temporal_matches": 0,
+      "temporal_denominator": 0,
+      "reconciliation_matches": 0,
+      "reconciliation_denominator": 1,
+      "semantic_matches": 0
+    }
+  },
+  {
+    "case_id": "stress-p08:stress-e08:ehr_beta",
+    "input": {
+      "case": {
+        "case_id": "stress-p08:stress-e08:ehr_beta",
+        "patient_id": "stress-p08",
+        "event_id": "stress-e08",
+        "target_schema_id": "ehr_beta"
+      },
+      "current_patient_record": {
+        "patient_id": "stress-p08",
+        "synthetic": true,
+        "active_encounter_id": "enc-new",
+        "encounters": [
+          {
+            "id": "enc-new",
+            "documents": [
+              {
+                "id": "doc8",
+                "accession": "A8",
+                "title": "Discharge Summary"
+              }
+            ]
+          }
+        ]
+      },
+      "incoming_event": {
+        "patient_id": "stress-p08",
+        "event_id": "stress-e08",
+        "synthetic": true,
+        "facts": [
+          {
+            "id": "f8",
+            "kind": "document",
+            "accession": "A8",
+            "title": "  discharge   summary ",
+            "institution": "C"
+          }
+        ]
+      },
+      "target_schema": {
+        "id": "ehr_beta",
+        "fields": [
+          "visits[].observations[]",
+          "visits[].orders[]",
+          "visits[].documents[]",
+          "review_queue"
+        ]
+      }
+    },
+    "plan": {
+      "case_id": "stress-p08:stress-e08:ehr_beta",
+      "items": [
+        {
+          "source_fact_ids": [
+            "f8"
+          ],
+          "entity_type": "DOCUMENT",
+          "matched_record_id": "doc8",
+          "matched_encounter_id": "enc-new",
+          "proposed_record_id": "doc8",
+          "identity_relationship": "SEMANTIC_DUPLICATE",
+          "temporal_relationship": "NOT_APPLICABLE",
+          "new_write_needed": false,
+          "intended_action": "NO_OP",
+          "target_collection": "visits[].documents[]",
+          "provenance_fact_ids": [
+            "f8"
+          ],
+          "reason": "The incoming document matches doc8 by accession A8, and its title differs only by ignored case and whitespace formatting. The incoming institution C is meaningful metadata not represented on the existing document.",
+          "evidence": [
+            "Incoming accession A8 exactly matches doc8 accession A8.",
+            "Normalized incoming title 'discharge summary' matches existing title 'Discharge Summary'.",
+            "Incoming fact f8 supplies institution C, which is absent from doc8."
+          ],
+          "human_approval_required": false
+        }
+      ],
+      "summary": "Update existing document doc8 in encounter enc-new with institution C; accession and normalized title identify a partial duplicate rather than a new document."
+    },
+    "compiler_decisions": [
+      {
+        "source_fact_ids": [
+          "f8"
+        ],
+        "planned_action": "NO_OP",
+        "compiled_action": "NO_OP",
+        "target_path": "visits[].documents[]",
+        "record_id": "doc8",
+        "encounter_id": "enc-new",
+        "emitted": true,
+        "reason": "The incoming document matches doc8 by accession A8, and its title differs only by ignored case and whitespace formatting. The incoming institution C is meaningful metadata not represented on the existing document."
+      }
+    ],
+    "execution_policy": {
+      "human_approval_required": false
+    },
+    "final_updates": [
+      {
+        "case_id": "stress-p08:stress-e08:ehr_beta",
+        "action_type": "NO_OP",
+        "target_path": "visits[].documents[]",
+        "record_id": "doc8",
+        "encounter_id": "enc-new",
+        "value": {
+          "accession": "A8",
+          "title": "Discharge Summary"
+        },
+        "timestamp": null,
+        "provenance": {
+          "institution": "C",
+          "external_id": "A8"
+        },
+        "source_fact_ids": [
+          "f8"
+        ],
+        "reconciliation_kind": "semantic_duplicate",
+        "temporal_classification": null
+      }
+    ],
+    "evaluator_result": {
+      "case_id": "stress-p08:stress-e08:ehr_beta",
+      "target_schema_id": "ehr_beta",
+      "categories": [
+        "semantic_duplicate",
+        "document_identity"
+      ],
+      "expected_updates": 1,
+      "predicted_updates": 1,
+      "semantic_update_set_correct": true,
+      "action_matches": 1,
+      "action_denominator": 1,
+      "target_matches": 1,
+      "target_denominator": 1,
+      "encounter_matches": 1,
+      "encounter_denominator": 1,
+      "value_matches": 1,
+      "value_denominator": 1,
+      "provenance_matches": 1,
+      "provenance_denominator": 1,
+      "temporal_matches": 0,
+      "temporal_denominator": 0,
+      "reconciliation_matches": 1,
+      "reconciliation_denominator": 1,
+      "semantic_matches": 1
+    }
+  },
+  {
+    "case_id": "stress-p09:stress-e09:ehr_alpha",
+    "input": {
+      "case": {
+        "case_id": "stress-p09:stress-e09:ehr_alpha",
+        "patient_id": "stress-p09",
+        "event_id": "stress-e09",
+        "target_schema_id": "ehr_alpha"
+      },
+      "current_patient_record": {
+        "patient_id": "stress-p09",
+        "synthetic": true,
+        "active_encounter_id": "enc-new",
+        "encounters": [
+          {
+            "id": "enc-new",
+            "requests": [
+              {
+                "id": "req9",
+                "description": "MRI lumbar spine",
+                "status": "ordered"
+              }
+            ]
+          }
+        ]
+      },
+      "incoming_event": {
+        "patient_id": "stress-p09",
+        "event_id": "stress-e09",
+        "synthetic": true,
+        "facts": [
+          {
+            "id": "f9",
+            "kind": "request",
+            "description": "MRI lumbar spine",
+            "status": "scheduled",
+            "scheduled_at": "2026-04-02T09:00:00Z",
+            "institution": "B"
+          }
+        ]
+      },
+      "target_schema": {
+        "id": "ehr_alpha",
+        "fields": [
+          "encounters[].results[]",
+          "encounters[].requests[]",
+          "encounters[].documents[]",
+          "workflow.review"
+        ]
+      }
+    },
+    "plan": {
+      "case_id": "stress-p09:stress-e09:ehr_alpha",
+      "items": [
+        {
+          "source_fact_ids": [
+            "f9"
+          ],
+          "entity_type": "REQUEST",
+          "matched_record_id": "req9",
+          "matched_encounter_id": "enc-new",
+          "proposed_record_id": "req9",
+          "identity_relationship": "PARTIAL_DUPLICATE",
+          "temporal_relationship": "SAME_EVENT",
+          "new_write_needed": true,
+          "intended_action": "UPDATE",
+          "target_collection": "encounters[].requests[]",
+          "provenance_fact_ids": [
+            "f9"
+          ],
+          "reason": "The incoming request matches the existing request by normalized description and adds meaningful scheduling metadata and a changed workflow status.",
+          "evidence": [
+            "Existing req9 description is 'MRI lumbar spine' with status 'ordered'.",
+            "Fact f9 has the same description, status 'scheduled', scheduled_at '2026-04-02T09:00:00Z', and institution 'B'.",
+            "The active encounter is enc-new and contains the matching request."
+          ],
+          "human_approval_required": false
+        }
+      ],
+      "summary": "Update existing request req9 in encounter enc-new with the incoming scheduling metadata and status."
+    },
+    "compiler_decisions": [
+      {
+        "source_fact_ids": [
+          "f9"
+        ],
+        "planned_action": "UPDATE",
+        "compiled_action": "UPDATE",
+        "target_path": "encounters[].requests[]",
+        "record_id": "req9",
+        "encounter_id": "enc-new",
+        "emitted": true,
+        "reason": "The incoming request matches the existing request by normalized description and adds meaningful scheduling metadata and a changed workflow status."
+      }
+    ],
+    "execution_policy": {
+      "human_approval_required": false
+    },
+    "final_updates": [
+      {
+        "case_id": "stress-p09:stress-e09:ehr_alpha",
+        "action_type": "UPDATE",
+        "target_path": "encounters[].requests[]",
+        "record_id": "req9",
+        "encounter_id": "enc-new",
+        "value": {
+          "description": "MRI lumbar spine",
+          "status": "scheduled",
+          "scheduled_at": "2026-04-02T09:00:00Z"
+        },
+        "timestamp": null,
+        "provenance": {
+          "institution": "B",
+          "external_id": null
+        },
+        "source_fact_ids": [
+          "f9"
+        ],
+        "reconciliation_kind": "partial_duplicate",
+        "temporal_classification": null
+      }
+    ],
+    "evaluator_result": {
+      "case_id": "stress-p09:stress-e09:ehr_alpha",
+      "target_schema_id": "ehr_alpha",
+      "categories": [
+        "partial_duplicate"
+      ],
+      "expected_updates": 1,
+      "predicted_updates": 1,
+      "semantic_update_set_correct": true,
+      "action_matches": 1,
+      "action_denominator": 1,
+      "target_matches": 1,
+      "target_denominator": 1,
+      "encounter_matches": 1,
+      "encounter_denominator": 1,
+      "value_matches": 1,
+      "value_denominator": 1,
+      "provenance_matches": 1,
+      "provenance_denominator": 1,
+      "temporal_matches": 0,
+      "temporal_denominator": 0,
+      "reconciliation_matches": 1,
+      "reconciliation_denominator": 1,
+      "semantic_matches": 1
+    }
+  },
+  {
+    "case_id": "stress-p10:stress-e10:ehr_beta",
+    "input": {
+      "case": {
+        "case_id": "stress-p10:stress-e10:ehr_beta",
+        "patient_id": "stress-p10",
+        "event_id": "stress-e10",
+        "target_schema_id": "ehr_beta"
+      },
+      "current_patient_record": {
+        "patient_id": "stress-p10",
+        "synthetic": true,
+        "active_encounter_id": "enc-new",
+        "encounters": [
+          {
+            "id": "enc-new",
+            "documents": [
+              {
+                "id": "doc10",
+                "accession": "A10",
+                "title": "Operative note"
+              }
+            ]
+          }
+        ]
+      },
+      "incoming_event": {
+        "patient_id": "stress-p10",
+        "event_id": "stress-e10",
+        "synthetic": true,
+        "facts": [
+          {
+            "id": "f10",
+            "kind": "document",
+            "accession": "A10",
+            "title": "Operative note",
+            "signed_at": "2026-04-03T12:00:00Z",
+            "institution": "B"
+          }
+        ]
+      },
+      "target_schema": {
+        "id": "ehr_beta",
+        "fields": [
+          "visits[].observations[]",
+          "visits[].orders[]",
+          "visits[].documents[]",
+          "review_queue"
+        ]
+      }
+    },
+    "plan": {
+      "case_id": "stress-p10:stress-e10:ehr_beta",
+      "items": [
+        {
+          "source_fact_ids": [
+            "f10"
+          ],
+          "entity_type": "DOCUMENT",
+          "matched_record_id": "doc10",
+          "matched_encounter_id": "enc-new",
+          "proposed_record_id": "doc10",
+          "identity_relationship": "PARTIAL_DUPLICATE",
+          "temporal_relationship": "SAME_EVENT",
+          "new_write_needed": true,
+          "intended_action": "UPDATE",
+          "target_collection": "visits[].documents[]",
+          "provenance_fact_ids": [
+            "f10"
+          ],
+          "reason": "The incoming document matches doc10 by accession A10 and title, while adding meaningful metadata not present on the existing record.",
+          "evidence": [
+            "Existing doc10 has accession A10 and title \"Operative note\".",
+            "Incoming fact f10 has the same accession and title.",
+            "Incoming fact f10 additionally supplies signed_at 2026-04-03T12:00:00Z and institution B."
+          ],
+          "human_approval_required": false
+        }
+      ],
+      "summary": "Update the existing matched document with the newly supplied signature timestamp and institution metadata."
+    },
+    "compiler_decisions": [
+      {
+        "source_fact_ids": [
+          "f10"
+        ],
+        "planned_action": "UPDATE",
+        "compiled_action": "UPDATE",
+        "target_path": "visits[].documents[]",
+        "record_id": "doc10",
+        "encounter_id": "enc-new",
+        "emitted": true,
+        "reason": "The incoming document matches doc10 by accession A10 and title, while adding meaningful metadata not present on the existing record."
+      }
+    ],
+    "execution_policy": {
+      "human_approval_required": false
+    },
+    "final_updates": [
+      {
+        "case_id": "stress-p10:stress-e10:ehr_beta",
+        "action_type": "UPDATE",
+        "target_path": "visits[].documents[]",
+        "record_id": "doc10",
+        "encounter_id": "enc-new",
+        "value": {
+          "accession": "A10",
+          "title": "Operative note",
+          "signed_at": "2026-04-03T12:00:00Z"
+        },
+        "timestamp": null,
+        "provenance": {
+          "institution": "B",
+          "external_id": "A10"
+        },
+        "source_fact_ids": [
+          "f10"
+        ],
+        "reconciliation_kind": "partial_duplicate",
+        "temporal_classification": null
+      }
+    ],
+    "evaluator_result": {
+      "case_id": "stress-p10:stress-e10:ehr_beta",
+      "target_schema_id": "ehr_beta",
+      "categories": [
+        "partial_duplicate",
+        "provenance_history"
+      ],
+      "expected_updates": 1,
+      "predicted_updates": 1,
+      "semantic_update_set_correct": true,
+      "action_matches": 1,
+      "action_denominator": 1,
+      "target_matches": 1,
+      "target_denominator": 1,
+      "encounter_matches": 1,
+      "encounter_denominator": 1,
+      "value_matches": 1,
+      "value_denominator": 1,
+      "provenance_matches": 1,
+      "provenance_denominator": 1,
+      "temporal_matches": 0,
+      "temporal_denominator": 0,
+      "reconciliation_matches": 1,
+      "reconciliation_denominator": 1,
+      "semantic_matches": 1
+    }
+  },
+  {
+    "case_id": "stress-p11:stress-e11:ehr_alpha",
+    "input": {
+      "case": {
+        "case_id": "stress-p11:stress-e11:ehr_alpha",
+        "patient_id": "stress-p11",
+        "event_id": "stress-e11",
+        "target_schema_id": "ehr_alpha"
+      },
+      "current_patient_record": {
+        "patient_id": "stress-p11",
+        "synthetic": true,
+        "active_encounter_id": "enc-new",
+        "encounters": [
+          {
+            "id": "enc-a",
+            "date": "2026-05-01"
+          },
+          {
+            "id": "enc-b",
+            "date": "2026-05-01"
+          }
+        ]
+      },
+      "incoming_event": {
+        "patient_id": "stress-p11",
+        "event_id": "stress-e11",
+        "synthetic": true,
+        "facts": [
+          {
+            "id": "f11",
+            "kind": "result",
+            "test_name": "hemoglobin",
+            "value": "12",
+            "unit": "g/dL",
+            "timestamp": "2026-05-01T11:00:00Z",
+            "institution": "B"
+          }
+        ]
+      },
+      "target_schema": {
+        "id": "ehr_alpha",
+        "fields": [
+          "encounters[].results[]",
+          "encounters[].requests[]",
+          "encounters[].documents[]",
+          "workflow.review"
+        ]
+      }
+    },
+    "plan": {
+      "case_id": "stress-p11:stress-e11:ehr_alpha",
+      "items": [
+        {
+          "source_fact_ids": [
+            "f11"
+          ],
+          "entity_type": "RESULT",
+          "matched_record_id": null,
+          "matched_encounter_id": null,
+          "proposed_record_id": null,
+          "identity_relationship": "MISSING_CONTEXT",
+          "temporal_relationship": "AMBIGUOUS",
+          "new_write_needed": false,
+          "intended_action": "FLAG_MISSING_CONTEXT",
+          "target_collection": "encounters[].results[]",
+          "provenance_fact_ids": [
+            "f11"
+          ],
+          "reason": "The result is dated 2026-05-01, but two supplied encounters share that date and the referenced active encounter enc-new is not present in the supplied encounter list. The target encounter cannot be determined unambiguously.",
+          "evidence": [
+            "f11 reports hemoglobin 12 g/dL at 2026-05-01T11:00:00Z.",
+            "enc-a and enc-b are both dated 2026-05-01.",
+            "active_encounter_id is enc-new, which is not represented in the supplied encounters."
+          ],
+          "human_approval_required": true
+        }
+      ],
+      "summary": "Flag the hemoglobin result for missing encounter context; no result write can be planned until the target encounter is resolved."
+    },
+    "compiler_decisions": [
+      {
+        "source_fact_ids": [
+          "f11"
+        ],
+        "planned_action": "FLAG_MISSING_CONTEXT",
+        "compiled_action": "FLAG_MISSING_CONTEXT",
+        "target_path": "workflow.review",
+        "record_id": null,
+        "encounter_id": null,
+        "emitted": true,
+        "reason": "The result is dated 2026-05-01, but two supplied encounters share that date and the referenced active encounter enc-new is not present in the supplied encounter list. The target encounter cannot be determined unambiguously."
+      }
+    ],
+    "execution_policy": {
+      "human_approval_required": true
+    },
+    "final_updates": [
+      {
+        "case_id": "stress-p11:stress-e11:ehr_alpha",
+        "action_type": "FLAG_MISSING_CONTEXT",
+        "target_path": "workflow.review",
+        "record_id": null,
+        "encounter_id": null,
+        "value": {
+          "reason": "encounter ambiguous",
+          "candidate_encounters": [
+            "enc-a",
+            "enc-b"
+          ]
+        },
+        "timestamp": "2026-05-01T11:00:00Z",
+        "provenance": {
+          "institution": "B",
+          "external_id": null
+        },
+        "source_fact_ids": [
+          "f11"
+        ],
+        "reconciliation_kind": "missing_context",
+        "temporal_classification": "ambiguous"
+      }
+    ],
+    "evaluator_result": {
+      "case_id": "stress-p11:stress-e11:ehr_alpha",
+      "target_schema_id": "ehr_alpha",
+      "categories": [
+        "missing_context",
+        "encounter_disambiguation"
+      ],
+      "expected_updates": 1,
+      "predicted_updates": 1,
+      "semantic_update_set_correct": true,
+      "action_matches": 1,
+      "action_denominator": 1,
+      "target_matches": 1,
+      "target_denominator": 1,
+      "encounter_matches": 0,
+      "encounter_denominator": 0,
+      "value_matches": 1,
+      "value_denominator": 1,
+      "provenance_matches": 1,
+      "provenance_denominator": 1,
+      "temporal_matches": 1,
+      "temporal_denominator": 1,
+      "reconciliation_matches": 1,
+      "reconciliation_denominator": 1,
+      "semantic_matches": 1
+    }
+  },
+  {
+    "case_id": "stress-p12:stress-e12:ehr_beta",
+    "input": {
+      "case": {
+        "case_id": "stress-p12:stress-e12:ehr_beta",
+        "patient_id": "stress-p12",
+        "event_id": "stress-e12",
+        "target_schema_id": "ehr_beta"
+      },
+      "current_patient_record": {
+        "patient_id": "stress-p12",
+        "synthetic": true,
+        "active_encounter_id": "enc-new",
+        "encounters": [
+          {
+            "id": "enc-new",
+            "results": []
+          }
+        ]
+      },
+      "incoming_event": {
+        "patient_id": "stress-p12",
+        "event_id": "stress-e12",
+        "synthetic": true,
+        "facts": [
+          {
+            "id": "f12",
+            "kind": "result",
+            "value": "7.1",
+            "timestamp": "2026-05-02T11:00:00Z",
+            "institution": "C"
+          }
+        ]
+      },
+      "target_schema": {
+        "id": "ehr_beta",
+        "fields": [
+          "visits[].observations[]",
+          "visits[].orders[]",
+          "visits[].documents[]",
+          "review_queue"
+        ]
+      }
+    },
+    "plan": {
+      "case_id": "stress-p12:stress-e12:ehr_beta",
+      "items": [
+        {
+          "source_fact_ids": [
+            "f12"
+          ],
+          "entity_type": "RESULT",
+          "matched_record_id": null,
+          "matched_encounter_id": "enc-new",
+          "proposed_record_id": null,
+          "identity_relationship": "MISSING_CONTEXT",
+          "temporal_relationship": "AMBIGUOUS",
+          "new_write_needed": false,
+          "intended_action": "FLAG_MISSING_CONTEXT",
+          "target_collection": "review_queue",
+          "provenance_fact_ids": [
+            "f12"
+          ],
+          "reason": "The result has a value and timestamp but lacks the test identity and unit required to create or match an observation.",
+          "evidence": [
+            "f12 value: 7.1",
+            "f12 timestamp: 2026-05-02T11:00:00Z",
+            "No analyte/test name or unit is supplied",
+            "enc-new is the only supplied active encounter"
+          ],
+          "human_approval_required": true
+        }
+      ],
+      "summary": "Flag the incoming result for missing test identity and unit; no observation write can be planned safely."
+    },
+    "compiler_decisions": [
+      {
+        "source_fact_ids": [
+          "f12"
+        ],
+        "planned_action": "FLAG_MISSING_CONTEXT",
+        "compiled_action": "FLAG_MISSING_CONTEXT",
+        "target_path": "review_queue",
+        "record_id": null,
+        "encounter_id": null,
+        "emitted": true,
+        "reason": "The result has a value and timestamp but lacks the test identity and unit required to create or match an observation."
+      }
+    ],
+    "execution_policy": {
+      "human_approval_required": true
+    },
+    "final_updates": [
+      {
+        "case_id": "stress-p12:stress-e12:ehr_beta",
+        "action_type": "FLAG_MISSING_CONTEXT",
+        "target_path": "review_queue",
+        "record_id": null,
+        "encounter_id": null,
+        "value": {
+          "reason": "test identity and unit missing",
+          "value": "7.1"
+        },
+        "timestamp": "2026-05-02T11:00:00Z",
+        "provenance": {
+          "institution": "C",
+          "external_id": null
+        },
+        "source_fact_ids": [
+          "f12"
+        ],
+        "reconciliation_kind": "missing_context",
+        "temporal_classification": "ambiguous"
+      }
+    ],
+    "evaluator_result": {
+      "case_id": "stress-p12:stress-e12:ehr_beta",
+      "target_schema_id": "ehr_beta",
+      "categories": [
+        "missing_context"
+      ],
+      "expected_updates": 1,
+      "predicted_updates": 1,
+      "semantic_update_set_correct": false,
+      "action_matches": 1,
+      "action_denominator": 1,
+      "target_matches": 1,
+      "target_denominator": 1,
+      "encounter_matches": 0,
+      "encounter_denominator": 1,
+      "value_matches": 1,
+      "value_denominator": 1,
+      "provenance_matches": 1,
+      "provenance_denominator": 1,
+      "temporal_matches": 0,
+      "temporal_denominator": 1,
+      "reconciliation_matches": 1,
+      "reconciliation_denominator": 1,
+      "semantic_matches": 0
+    }
+  },
+  {
+    "case_id": "stress-p13:stress-e13:ehr_alpha",
+    "input": {
+      "case": {
+        "case_id": "stress-p13:stress-e13:ehr_alpha",
+        "patient_id": "stress-p13",
+        "event_id": "stress-e13",
+        "target_schema_id": "ehr_alpha"
+      },
+      "current_patient_record": {
+        "patient_id": "stress-p13",
+        "synthetic": true,
+        "active_encounter_id": "enc-new",
+        "encounters": [
+          {
+            "id": "enc-new",
+            "documents": [
+              {
+                "id": "doc13",
+                "accession": null,
+                "title": "Pathology report"
+              }
+            ]
+          }
+        ]
+      },
+      "incoming_event": {
+        "patient_id": "stress-p13",
+        "event_id": "stress-e13",
+        "synthetic": true,
+        "facts": [
+          {
+            "id": "f13a",
+            "kind": "document",
+            "title": "Pathology report",
+            "external_document_id": "D13",
+            "institution": "B"
+          },
+          {
+            "id": "f13b",
+            "kind": "identity",
+            "external_document_id": "D13",
+            "accession": "ACC13",
+            "encounter_id": "enc-new"
+          }
+        ]
+      },
+      "target_schema": {
+        "id": "ehr_alpha",
+        "fields": [
+          "encounters[].results[]",
+          "encounters[].requests[]",
+          "encounters[].documents[]",
+          "workflow.review"
+        ]
+      }
+    },
+    "plan": {
+      "case_id": "stress-p13:stress-e13:ehr_alpha",
+      "items": [
+        {
+          "source_fact_ids": [
+            "f13a",
+            "f13b"
+          ],
+          "entity_type": "DOCUMENT",
+          "matched_record_id": "doc13",
+          "matched_encounter_id": "enc-new",
+          "proposed_record_id": "doc13",
+          "identity_relationship": "PARTIAL_DUPLICATE",
+          "temporal_relationship": "NOT_APPLICABLE",
+          "new_write_needed": true,
+          "intended_action": "LINK",
+          "target_collection": "encounters[].documents[]",
+          "provenance_fact_ids": [
+            "f13a",
+            "f13b"
+          ],
+          "reason": "The incoming document matches the existing document by normalized title and explicitly belongs to enc-new, while adding the new external document identity D13 and associated accession ACC13.",
+          "evidence": [
+            "Existing doc13 in enc-new has title 'Pathology report'.",
+            "f13a has the same normalized title and external_document_id D13.",
+            "f13b links external_document_id D13 to accession ACC13 and encounter_id enc-new."
+          ],
+          "human_approval_required": false
+        }
+      ],
+      "summary": "Link the existing document doc13 to external identity D13 and its associated metadata; no new document record is needed."
+    },
+    "compiler_decisions": [
+      {
+        "source_fact_ids": [
+          "f13a",
+          "f13b"
+        ],
+        "planned_action": "LINK",
+        "compiled_action": "UPDATE",
+        "target_path": "encounters[].documents[]",
+        "record_id": "doc13",
+        "encounter_id": "enc-new",
+        "emitted": true,
+        "reason": "The incoming document matches the existing document by normalized title and explicitly belongs to enc-new, while adding the new external document identity D13 and associated accession ACC13."
+      }
+    ],
+    "execution_policy": {
+      "human_approval_required": false
+    },
+    "final_updates": [
+      {
+        "case_id": "stress-p13:stress-e13:ehr_alpha",
+        "action_type": "UPDATE",
+        "target_path": "encounters[].documents[]",
+        "record_id": "doc13",
+        "encounter_id": "enc-new",
+        "value": {
+          "title": "Pathology report",
+          "external_document_id": "D13",
+          "accession": "ACC13"
+        },
+        "timestamp": null,
+        "provenance": {
+          "institution": "B",
+          "external_id": "D13"
+        },
+        "source_fact_ids": [
+          "f13a",
+          "f13b"
+        ],
+        "reconciliation_kind": "partial_duplicate",
+        "temporal_classification": null
+      }
+    ],
+    "evaluator_result": {
+      "case_id": "stress-p13:stress-e13:ehr_alpha",
+      "target_schema_id": "ehr_alpha",
+      "categories": [
+        "multi_fact_dependency",
+        "document_identity"
+      ],
+      "expected_updates": 1,
+      "predicted_updates": 1,
+      "semantic_update_set_correct": true,
+      "action_matches": 1,
+      "action_denominator": 1,
+      "target_matches": 1,
+      "target_denominator": 1,
+      "encounter_matches": 1,
+      "encounter_denominator": 1,
+      "value_matches": 1,
+      "value_denominator": 1,
+      "provenance_matches": 1,
+      "provenance_denominator": 1,
+      "temporal_matches": 0,
+      "temporal_denominator": 0,
+      "reconciliation_matches": 1,
+      "reconciliation_denominator": 1,
+      "semantic_matches": 1
+    }
+  },
+  {
+    "case_id": "stress-p14:stress-e14:ehr_beta",
+    "input": {
+      "case": {
+        "case_id": "stress-p14:stress-e14:ehr_beta",
+        "patient_id": "stress-p14",
+        "event_id": "stress-e14",
+        "target_schema_id": "ehr_beta"
+      },
+      "current_patient_record": {
+        "patient_id": "stress-p14",
+        "synthetic": true,
+        "active_encounter_id": "enc-new",
+        "encounters": [
+          {
+            "id": "enc-old",
+            "documents": []
+          },
+          {
+            "id": "enc-new",
+            "documents": []
+          }
+        ]
+      },
+      "incoming_event": {
+        "patient_id": "stress-p14",
+        "event_id": "stress-e14",
+        "synthetic": true,
+        "facts": [
+          {
+            "id": "f14a",
+            "kind": "document",
+            "title": "Consult note",
+            "external_document_id": "D14",
+            "institution": "C"
+          },
+          {
+            "id": "f14b",
+            "kind": "identity",
+            "external_document_id": "D14",
+            "encounter_id": "enc-old"
+          }
+        ]
+      },
+      "target_schema": {
+        "id": "ehr_beta",
+        "fields": [
+          "visits[].observations[]",
+          "visits[].orders[]",
+          "visits[].documents[]",
+          "review_queue"
+        ]
+      }
+    },
+    "plan": {
+      "case_id": "stress-p14:stress-e14:ehr_beta",
+      "items": [
+        {
+          "source_fact_ids": [
+            "f14a",
+            "f14b"
+          ],
+          "entity_type": "DOCUMENT",
+          "matched_record_id": null,
+          "matched_encounter_id": "enc-old",
+          "proposed_record_id": "D14",
+          "identity_relationship": "NEW",
+          "temporal_relationship": "HISTORICAL",
+          "new_write_needed": true,
+          "intended_action": "ADD",
+          "target_collection": "visits[].documents[]",
+          "provenance_fact_ids": [
+            "f14a",
+            "f14b"
+          ],
+          "reason": "The incoming document has a new external identity and is explicitly associated with the existing historical encounter enc-old.",
+          "evidence": [
+            "f14a identifies the document as 'Consult note' with external_document_id D14 and institution C.",
+            "f14b links external_document_id D14 to encounter_id enc-old.",
+            "No existing document records are present in enc-old or enc-new."
+          ],
+          "human_approval_required": false
+        }
+      ],
+      "summary": "Add the new document D14 to the existing historical encounter enc-old."
+    },
+    "compiler_decisions": [
+      {
+        "source_fact_ids": [
+          "f14a",
+          "f14b"
+        ],
+        "planned_action": "ADD",
+        "compiled_action": "ADD",
+        "target_path": "visits[].documents[]",
+        "record_id": "D14",
+        "encounter_id": "enc-old",
+        "emitted": true,
+        "reason": "The incoming document has a new external identity and is explicitly associated with the existing historical encounter enc-old."
+      }
+    ],
+    "execution_policy": {
+      "human_approval_required": false
+    },
+    "final_updates": [
+      {
+        "case_id": "stress-p14:stress-e14:ehr_beta",
+        "action_type": "ADD",
+        "target_path": "visits[].documents[]",
+        "record_id": "D14",
+        "encounter_id": "enc-old",
+        "value": {
+          "title": "Consult note",
+          "external_document_id": "D14"
+        },
+        "timestamp": null,
+        "provenance": {
+          "institution": "C",
+          "external_id": "D14"
+        },
+        "source_fact_ids": [
+          "f14a",
+          "f14b"
+        ],
+        "reconciliation_kind": "new_document",
+        "temporal_classification": null
+      }
+    ],
+    "evaluator_result": {
+      "case_id": "stress-p14:stress-e14:ehr_beta",
+      "target_schema_id": "ehr_beta",
+      "categories": [
+        "multi_fact_dependency",
+        "encounter_disambiguation"
+      ],
+      "expected_updates": 1,
+      "predicted_updates": 1,
+      "semantic_update_set_correct": true,
+      "action_matches": 1,
+      "action_denominator": 1,
+      "target_matches": 1,
+      "target_denominator": 1,
+      "encounter_matches": 1,
+      "encounter_denominator": 1,
+      "value_matches": 1,
+      "value_denominator": 1,
+      "provenance_matches": 1,
+      "provenance_denominator": 1,
+      "temporal_matches": 0,
+      "temporal_denominator": 0,
+      "reconciliation_matches": 1,
+      "reconciliation_denominator": 1,
+      "semantic_matches": 1
+    }
+  },
+  {
+    "case_id": "stress-p15:stress-e15:ehr_alpha",
+    "input": {
+      "case": {
+        "case_id": "stress-p15:stress-e15:ehr_alpha",
+        "patient_id": "stress-p15",
+        "event_id": "stress-e15",
+        "target_schema_id": "ehr_alpha"
+      },
+      "current_patient_record": {
+        "patient_id": "stress-p15",
+        "synthetic": true,
+        "active_encounter_id": "enc-new",
+        "encounters": [
+          {
+            "id": "enc-new",
+            "results": [
+              {
+                "id": "na15",
+                "test_name": "sodium",
+                "value": "140",
+                "unit": "mmol/L",
+                "timestamp": "2026-06-01T10:00:00Z"
+              }
+            ]
+          }
+        ]
+      },
+      "incoming_event": {
+        "patient_id": "stress-p15",
+        "event_id": "stress-e15",
+        "synthetic": true,
+        "facts": [
+          {
+            "id": "f15a",
+            "kind": "result",
+            "test_name": "sodium",
+            "value": "140",
+            "unit": "mmol/L",
+            "timestamp": "2026-06-01T10:00:00Z",
+            "institution": "B"
+          },
+          {
+            "id": "f15b",
+            "kind": "result",
+            "test_name": "potassium",
+            "value": "3.0",
+            "unit": "mmol/L",
+            "timestamp": "2026-06-01T11:00:00Z",
+            "institution": "A",
+            "external_id": "S15"
+          },
+          {
+            "id": "f15c",
+            "kind": "result",
+            "test_name": "potassium",
+            "value": "4.0",
+            "unit": "mmol/L",
+            "timestamp": "2026-06-01T11:00:00Z",
+            "institution": "B",
+            "external_id": "S15"
+          },
+          {
+            "id": "f15d",
+            "kind": "result",
+            "value": "9",
+            "institution": "C"
+          }
+        ]
+      },
+      "target_schema": {
+        "id": "ehr_alpha",
+        "fields": [
+          "encounters[].results[]",
+          "encounters[].requests[]",
+          "encounters[].documents[]",
+          "workflow.review"
+        ]
+      }
+    },
+    "plan": {
+      "case_id": "stress-p15:stress-e15:ehr_alpha",
+      "items": [
+        {
+          "source_fact_ids": [
+            "f15a"
+          ],
+          "entity_type": "RESULT",
+          "matched_record_id": "na15",
+          "matched_encounter_id": "enc-new",
+          "proposed_record_id": "na15",
+          "identity_relationship": "PARTIAL_DUPLICATE",
+          "temporal_relationship": "SAME_MEASUREMENT",
+          "new_write_needed": true,
+          "intended_action": "UPDATE",
+          "target_collection": "encounters[].results[]",
+          "provenance_fact_ids": [
+            "f15a"
+          ],
+          "reason": "The sodium result matches the existing measurement exactly, while the incoming fact adds meaningful institution metadata.",
+          "evidence": [
+            "Both records identify sodium at 2026-06-01T10:00:00Z.",
+            "Both values are 140 mmol/L.",
+            "Incoming fact f15a supplies institution B, which is absent from record na15."
+          ],
+          "human_approval_required": false
+        },
+        {
+          "source_fact_ids": [
+            "f15b",
+            "f15c"
+          ],
+          "entity_type": "RESULT",
+          "matched_record_id": null,
+          "matched_encounter_id": "enc-new",
+          "proposed_record_id": "S15",
+          "identity_relationship": "TRUE_CONFLICT",
+          "temporal_relationship": "SAME_MEASUREMENT",
+          "new_write_needed": false,
+          "intended_action": "FLAG_CONFLICT",
+          "target_collection": "workflow.review",
+          "provenance_fact_ids": [
+            "f15b",
+            "f15c"
+          ],
+          "reason": "Two incoming facts claim the same external result identity and timestamp but report different potassium values.",
+          "evidence": [
+            "Both facts have external_id S15.",
+            "Both identify potassium at 2026-06-01T11:00:00Z.",
+            "Fact f15b reports 3.0 mmol/L, while f15c reports 4.0 mmol/L."
+          ],
+          "human_approval_required": true
+        },
+        {
+          "source_fact_ids": [
+            "f15d"
+          ],
+          "entity_type": "RESULT",
+          "matched_record_id": null,
+          "matched_encounter_id": null,
+          "proposed_record_id": null,
+          "identity_relationship": "MISSING_CONTEXT",
+          "temporal_relationship": "AMBIGUOUS",
+          "new_write_needed": false,
+          "intended_action": "FLAG_MISSING_CONTEXT",
+          "target_collection": "workflow.review",
+          "provenance_fact_ids": [
+            "f15d"
+          ],
+          "reason": "The fact lacks sufficient result identity and temporal context for encounter assignment or record creation.",
+          "evidence": [
+            "Fact f15d provides value 9 and institution C but no test name, unit, timestamp, or external identifier."
+          ],
+          "human_approval_required": true
+        }
+      ],
+      "summary": "Plan one metadata update for the existing sodium measurement, flag one same-identity potassium value conflict, and flag one result fact with missing identity and encounter context."
+    },
+    "compiler_decisions": [
+      {
+        "source_fact_ids": [
+          "f15a"
+        ],
+        "planned_action": "UPDATE",
+        "compiled_action": "UPDATE",
+        "target_path": "encounters[].results[]",
+        "record_id": "na15",
+        "encounter_id": "enc-new",
+        "emitted": true,
+        "reason": "The sodium result matches the existing measurement exactly, while the incoming fact adds meaningful institution metadata."
+      },
+      {
+        "source_fact_ids": [
+          "f15b",
+          "f15c"
+        ],
+        "planned_action": "FLAG_CONFLICT",
+        "compiled_action": "FLAG_CONFLICT",
+        "target_path": "workflow.review",
+        "record_id": null,
+        "encounter_id": "enc-new",
+        "emitted": true,
+        "reason": "Two incoming facts claim the same external result identity and timestamp but report different potassium values."
+      },
+      {
+        "source_fact_ids": [
+          "f15d"
+        ],
+        "planned_action": "FLAG_MISSING_CONTEXT",
+        "compiled_action": "FLAG_MISSING_CONTEXT",
+        "target_path": "workflow.review",
+        "record_id": null,
+        "encounter_id": null,
+        "emitted": true,
+        "reason": "The fact lacks sufficient result identity and temporal context for encounter assignment or record creation."
+      }
+    ],
+    "execution_policy": {
+      "human_approval_required": true
+    },
+    "final_updates": [
+      {
+        "case_id": "stress-p15:stress-e15:ehr_alpha",
+        "action_type": "UPDATE",
+        "target_path": "encounters[].results[]",
+        "record_id": "na15",
+        "encounter_id": "enc-new",
+        "value": {
+          "test_name": "sodium",
+          "value": "140",
+          "unit": "mmol/L"
+        },
+        "timestamp": "2026-06-01T10:00:00Z",
+        "provenance": {
+          "institution": "B",
+          "external_id": null
+        },
+        "source_fact_ids": [
+          "f15a"
+        ],
+        "reconciliation_kind": "partial_duplicate",
+        "temporal_classification": "same_measurement"
+      },
+      {
+        "case_id": "stress-p15:stress-e15:ehr_alpha",
+        "action_type": "FLAG_CONFLICT",
+        "target_path": "workflow.review",
+        "record_id": null,
+        "encounter_id": "enc-new",
+        "value": {
+          "test_name": "potassium",
+          "values": [
+            "3.0",
+            "4.0"
+          ],
+          "unit": "mmol/L"
+        },
+        "timestamp": "2026-06-01T11:00:00Z",
+        "provenance": {
+          "institutions": [
+            "A",
+            "B"
+          ],
+          "external_id": "S15"
+        },
+        "source_fact_ids": [
+          "f15b",
+          "f15c"
+        ],
+        "reconciliation_kind": "true_conflict",
+        "temporal_classification": "same_measurement"
+      },
+      {
+        "case_id": "stress-p15:stress-e15:ehr_alpha",
+        "action_type": "FLAG_MISSING_CONTEXT",
+        "target_path": "workflow.review",
+        "record_id": null,
+        "encounter_id": null,
+        "value": {
+          "reason": "test identity, unit, and timestamp missing",
+          "value": "9"
+        },
+        "timestamp": null,
+        "provenance": {
+          "institution": "C",
+          "external_id": null
+        },
+        "source_fact_ids": [
+          "f15d"
+        ],
+        "reconciliation_kind": "missing_context",
+        "temporal_classification": "ambiguous"
+      }
+    ],
+    "evaluator_result": {
+      "case_id": "stress-p15:stress-e15:ehr_alpha",
+      "target_schema_id": "ehr_alpha",
+      "categories": [
+        "multi_action",
+        "true_conflict",
+        "semantic_duplicate",
+        "missing_context"
+      ],
+      "expected_updates": 3,
+      "predicted_updates": 3,
+      "semantic_update_set_correct": false,
+      "action_matches": 2,
+      "action_denominator": 3,
+      "target_matches": 3,
+      "target_denominator": 3,
+      "encounter_matches": 2,
+      "encounter_denominator": 3,
+      "value_matches": 3,
+      "value_denominator": 3,
+      "provenance_matches": 3,
+      "provenance_denominator": 3,
+      "temporal_matches": 2,
+      "temporal_denominator": 2,
+      "reconciliation_matches": 2,
+      "reconciliation_denominator": 3,
+      "semantic_matches": 1
+    }
+  },
+  {
+    "case_id": "stress-p16:stress-e16:ehr_beta",
+    "input": {
+      "case": {
+        "case_id": "stress-p16:stress-e16:ehr_beta",
+        "patient_id": "stress-p16",
+        "event_id": "stress-e16",
+        "target_schema_id": "ehr_beta"
+      },
+      "current_patient_record": {
+        "patient_id": "stress-p16",
+        "synthetic": true,
+        "active_encounter_id": "enc-new",
+        "encounters": [
+          {
+            "id": "enc-new",
+            "requests": [
+              {
+                "id": "r16",
+                "description": "Chest radiograph",
+                "status": "ordered"
+              }
+            ],
+            "results": []
+          }
+        ]
+      },
+      "incoming_event": {
+        "patient_id": "stress-p16",
+        "event_id": "stress-e16",
+        "synthetic": true,
+        "facts": [
+          {
+            "id": "f16a",
+            "kind": "request",
+            "description": "Chest radiograph",
+            "status": "completed",
+            "institution": "B"
+          },
+          {
+            "id": "f16b",
+            "kind": "result",
+            "test_name": "glucose",
+            "value": "6.0",
+            "unit": "mmol/L",
+            "timestamp": "2026-06-02T13:00:00Z",
+            "institution": "B"
+          }
+        ]
+      },
+      "target_schema": {
+        "id": "ehr_beta",
+        "fields": [
+          "visits[].observations[]",
+          "visits[].orders[]",
+          "visits[].documents[]",
+          "review_queue"
+        ]
+      }
+    },
+    "plan": {
+      "case_id": "stress-p16:stress-e16:ehr_beta",
+      "items": [
+        {
+          "source_fact_ids": [
+            "f16a"
+          ],
+          "entity_type": "REQUEST",
+          "matched_record_id": "r16",
+          "matched_encounter_id": "enc-new",
+          "proposed_record_id": "r16",
+          "identity_relationship": "PARTIAL_DUPLICATE",
+          "temporal_relationship": "SAME_EVENT",
+          "new_write_needed": true,
+          "intended_action": "UPDATE",
+          "target_collection": "visits[].orders[]",
+          "provenance_fact_ids": [
+            "f16a"
+          ],
+          "reason": "The normalized description exactly matches the existing request, while completed status and institution B are meaningful metadata not represented on the existing ordered request.",
+          "evidence": [
+            "Incoming description: Chest radiograph",
+            "Existing request r16 description: Chest radiograph",
+            "Incoming status: completed; existing status: ordered",
+            "Incoming institution: B",
+            "enc-new is the supplied active encounter and contains r16"
+          ],
+          "human_approval_required": false
+        },
+        {
+          "source_fact_ids": [
+            "f16b"
+          ],
+          "entity_type": "RESULT",
+          "matched_record_id": null,
+          "matched_encounter_id": "enc-new",
+          "proposed_record_id": null,
+          "identity_relationship": "NEW",
+          "temporal_relationship": "NOT_APPLICABLE",
+          "new_write_needed": true,
+          "intended_action": "ADD",
+          "target_collection": "visits[].observations[]",
+          "provenance_fact_ids": [
+            "f16b"
+          ],
+          "reason": "No existing glucose result is present, so the timestamped measurement is new history. No stable result identifier was supplied.",
+          "evidence": [
+            "Test: glucose",
+            "Value: 6.0 mmol/L",
+            "Timestamp: 2026-06-02T13:00:00Z",
+            "Institution: B",
+            "enc-new is the supplied active encounter and currently has no results"
+          ],
+          "human_approval_required": false
+        }
+      ],
+      "summary": "Update the matching chest radiograph request with completion and institution metadata, and add the new glucose observation to the active encounter."
+    },
+    "compiler_decisions": [
+      {
+        "source_fact_ids": [
+          "f16a"
+        ],
+        "planned_action": "UPDATE",
+        "compiled_action": "UPDATE",
+        "target_path": "visits[].orders[]",
+        "record_id": "r16",
+        "encounter_id": "enc-new",
+        "emitted": true,
+        "reason": "The normalized description exactly matches the existing request, while completed status and institution B are meaningful metadata not represented on the existing ordered request."
+      },
+      {
+        "source_fact_ids": [
+          "f16b"
+        ],
+        "planned_action": "ADD",
+        "compiled_action": "ADD",
+        "target_path": "visits[].observations[]",
+        "record_id": "f16b",
+        "encounter_id": "enc-new",
+        "emitted": true,
+        "reason": "No existing glucose result is present, so the timestamped measurement is new history. No stable result identifier was supplied."
+      }
+    ],
+    "execution_policy": {
+      "human_approval_required": false
+    },
+    "final_updates": [
+      {
+        "case_id": "stress-p16:stress-e16:ehr_beta",
+        "action_type": "UPDATE",
+        "target_path": "visits[].orders[]",
+        "record_id": "r16",
+        "encounter_id": "enc-new",
+        "value": {
+          "description": "Chest radiograph",
+          "status": "completed"
+        },
+        "timestamp": null,
+        "provenance": {
+          "institution": "B",
+          "external_id": null
+        },
+        "source_fact_ids": [
+          "f16a"
+        ],
+        "reconciliation_kind": "partial_duplicate",
+        "temporal_classification": null
+      },
+      {
+        "case_id": "stress-p16:stress-e16:ehr_beta",
+        "action_type": "ADD",
+        "target_path": "visits[].observations[]",
+        "record_id": "f16b",
+        "encounter_id": "enc-new",
+        "value": {
+          "test_name": "glucose",
+          "value": "6.0",
+          "unit": "mmol/L"
+        },
+        "timestamp": "2026-06-02T13:00:00Z",
+        "provenance": {
+          "institution": "B",
+          "external_id": null
+        },
+        "source_fact_ids": [
+          "f16b"
+        ],
+        "reconciliation_kind": "new_observation",
+        "temporal_classification": null
+      }
+    ],
+    "evaluator_result": {
+      "case_id": "stress-p16:stress-e16:ehr_beta",
+      "target_schema_id": "ehr_beta",
+      "categories": [
+        "multi_action",
+        "partial_duplicate",
+        "provenance_history"
+      ],
+      "expected_updates": 2,
+      "predicted_updates": 2,
+      "semantic_update_set_correct": false,
+      "action_matches": 2,
+      "action_denominator": 2,
+      "target_matches": 2,
+      "target_denominator": 2,
+      "encounter_matches": 2,
+      "encounter_denominator": 2,
+      "value_matches": 2,
+      "value_denominator": 2,
+      "provenance_matches": 2,
+      "provenance_denominator": 2,
+      "temporal_matches": 0,
+      "temporal_denominator": 1,
+      "reconciliation_matches": 2,
+      "reconciliation_denominator": 2,
+      "semantic_matches": 1
+    }
+  },
+  {
+    "case_id": "stress-p17:stress-e17:ehr_alpha",
+    "input": {
+      "case": {
+        "case_id": "stress-p17:stress-e17:ehr_alpha",
+        "patient_id": "stress-p17",
+        "event_id": "stress-e17",
+        "target_schema_id": "ehr_alpha"
+      },
+      "current_patient_record": {
+        "patient_id": "stress-p17",
+        "synthetic": true,
+        "active_encounter_id": "enc-new",
+        "encounters": [
+          {
+            "id": "enc-old",
+            "results": [
+              {
+                "id": "cr17",
+                "test_name": "creatinine",
+                "value": "1.0",
+                "unit": "mg/dL",
+                "timestamp": "2026-01-01T08:00:00Z"
+              }
+            ]
+          },
+          {
+            "id": "enc-new",
+            "results": []
+          }
+        ]
+      },
+      "incoming_event": {
+        "patient_id": "stress-p17",
+        "event_id": "stress-e17",
+        "synthetic": true,
+        "facts": [
+          {
+            "id": "f17a",
+            "kind": "result",
+            "test_name": "creatinine",
+            "value": "88.4",
+            "unit": "umol/L",
+            "timestamp": "2026-01-01T08:00:00Z",
+            "encounter_id": "enc-old",
+            "institution": "C"
+          },
+          {
+            "id": "f17b",
+            "kind": "result",
+            "test_name": "creatinine",
+            "value": "100",
+            "unit": "umol/L",
+            "timestamp": "2026-07-01T08:00:00Z",
+            "encounter_id": "enc-new",
+            "institution": "C"
+          }
+        ]
+      },
+      "target_schema": {
+        "id": "ehr_alpha",
+        "fields": [
+          "encounters[].results[]",
+          "encounters[].requests[]",
+          "encounters[].documents[]",
+          "workflow.review"
+        ]
+      }
+    },
+    "plan": {
+      "case_id": "stress-p17:stress-e17:ehr_alpha",
+      "items": [
+        {
+          "source_fact_ids": [
+            "f17a"
+          ],
+          "entity_type": "RESULT",
+          "matched_record_id": "cr17",
+          "matched_encounter_id": "enc-old",
+          "proposed_record_id": null,
+          "identity_relationship": "EQUIVALENT_UNIT_DUPLICATE",
+          "temporal_relationship": "SAME_MEASUREMENT",
+          "new_write_needed": false,
+          "intended_action": "NO_OP",
+          "target_collection": "encounters[].results[]",
+          "provenance_fact_ids": [
+            "f17a"
+          ],
+          "reason": "The incoming creatinine result is equivalent to the existing same-time measurement after unit conversion.",
+          "evidence": [
+            "f17a reports creatinine 88.4 umol/L at 2026-01-01T08:00:00Z in enc-old.",
+            "cr17 reports creatinine 1.0 mg/dL at the same timestamp in enc-old.",
+            "1.0 mg/dL creatinine equals 88.4 umol/L."
+          ],
+          "human_approval_required": false
+        },
+        {
+          "source_fact_ids": [
+            "f17b"
+          ],
+          "entity_type": "RESULT",
+          "matched_record_id": null,
+          "matched_encounter_id": "enc-new",
+          "proposed_record_id": null,
+          "identity_relationship": "NEW",
+          "temporal_relationship": "DISTINCT_LATER",
+          "new_write_needed": true,
+          "intended_action": "ADD",
+          "target_collection": "encounters[].results[]",
+          "provenance_fact_ids": [
+            "f17b"
+          ],
+          "reason": "This is a distinct later creatinine measurement for the supplied encounter and is not already represented.",
+          "evidence": [
+            "f17b reports creatinine 100 umol/L at 2026-07-01T08:00:00Z in enc-new.",
+            "The only existing creatinine result is dated 2026-01-01T08:00:00Z in enc-old.",
+            "enc-new currently has no results."
+          ],
+          "human_approval_required": false
+        }
+      ],
+      "summary": "Treat f17a as an equivalent-unit duplicate requiring no write, and add f17b as a distinct later result to enc-new."
+    },
+    "compiler_decisions": [
+      {
+        "source_fact_ids": [
+          "f17a"
+        ],
+        "planned_action": "NO_OP",
+        "compiled_action": "NO_OP",
+        "target_path": "encounters[].results[]",
+        "record_id": "cr17",
+        "encounter_id": "enc-old",
+        "emitted": true,
+        "reason": "The incoming creatinine result is equivalent to the existing same-time measurement after unit conversion."
+      },
+      {
+        "source_fact_ids": [
+          "f17b"
+        ],
+        "planned_action": "ADD",
+        "compiled_action": "ADD",
+        "target_path": "encounters[].results[]",
+        "record_id": "f17b",
+        "encounter_id": "enc-new",
+        "emitted": true,
+        "reason": "This is a distinct later creatinine measurement for the supplied encounter and is not already represented."
+      }
+    ],
+    "execution_policy": {
+      "human_approval_required": false
+    },
+    "final_updates": [
+      {
+        "case_id": "stress-p17:stress-e17:ehr_alpha",
+        "action_type": "NO_OP",
+        "target_path": "encounters[].results[]",
+        "record_id": "cr17",
+        "encounter_id": "enc-old",
+        "value": {
+          "test_name": "creatinine",
+          "value": "1.0",
+          "unit": "mg/dL"
+        },
+        "timestamp": "2026-01-01T08:00:00Z",
+        "provenance": {
+          "institution": "C",
+          "external_id": null
+        },
+        "source_fact_ids": [
+          "f17a"
+        ],
+        "reconciliation_kind": "equivalent_duplicate",
+        "temporal_classification": "same_measurement"
+      },
+      {
+        "case_id": "stress-p17:stress-e17:ehr_alpha",
+        "action_type": "ADD",
+        "target_path": "encounters[].results[]",
+        "record_id": "f17b",
+        "encounter_id": "enc-new",
+        "value": {
+          "test_name": "creatinine",
+          "value": "100",
+          "unit": "umol/L"
+        },
+        "timestamp": "2026-07-01T08:00:00Z",
+        "provenance": {
+          "institution": "C",
+          "external_id": null
+        },
+        "source_fact_ids": [
+          "f17b"
+        ],
+        "reconciliation_kind": "new_observation",
+        "temporal_classification": "distinct_time"
+      }
+    ],
+    "evaluator_result": {
+      "case_id": "stress-p17:stress-e17:ehr_alpha",
+      "target_schema_id": "ehr_alpha",
+      "categories": [
+        "multi_action",
+        "encounter_disambiguation",
+        "semantic_duplicate"
+      ],
+      "expected_updates": 2,
+      "predicted_updates": 2,
+      "semantic_update_set_correct": true,
+      "action_matches": 2,
+      "action_denominator": 2,
+      "target_matches": 2,
+      "target_denominator": 2,
+      "encounter_matches": 2,
+      "encounter_denominator": 2,
+      "value_matches": 2,
+      "value_denominator": 2,
+      "provenance_matches": 2,
+      "provenance_denominator": 2,
+      "temporal_matches": 2,
+      "temporal_denominator": 2,
+      "reconciliation_matches": 2,
+      "reconciliation_denominator": 2,
+      "semantic_matches": 2
+    }
+  },
+  {
+    "case_id": "stress-p18:stress-e18:ehr_beta",
+    "input": {
+      "case": {
+        "case_id": "stress-p18:stress-e18:ehr_beta",
+        "patient_id": "stress-p18",
+        "event_id": "stress-e18",
+        "target_schema_id": "ehr_beta"
+      },
+      "current_patient_record": {
+        "patient_id": "stress-p18",
+        "synthetic": true,
+        "active_encounter_id": "enc-new",
+        "encounters": [
+          {
+            "id": "enc-new",
+            "results": [
+              {
+                "id": "h18",
+                "test_name": "hemoglobin",
+                "value": "11",
+                "unit": "g/dL",
+                "timestamp": "2026-07-02T08:00:00Z",
+                "institution": "A"
+              }
+            ]
+          }
+        ]
+      },
+      "incoming_event": {
+        "patient_id": "stress-p18",
+        "event_id": "stress-e18",
+        "synthetic": true,
+        "facts": [
+          {
+            "id": "f18",
+            "kind": "result",
+            "test_name": "hemoglobin",
+            "value": "12",
+            "unit": "g/dL",
+            "timestamp": "2026-07-02T12:00:00Z",
+            "institution": "B"
+          }
+        ]
+      },
+      "target_schema": {
+        "id": "ehr_beta",
+        "fields": [
+          "visits[].observations[]",
+          "visits[].orders[]",
+          "visits[].documents[]",
+          "review_queue"
+        ]
+      }
+    },
+    "plan": {
+      "case_id": "stress-p18:stress-e18:ehr_beta",
+      "items": [
+        {
+          "source_fact_ids": [
+            "f18"
+          ],
+          "entity_type": "RESULT",
+          "matched_record_id": null,
+          "matched_encounter_id": "enc-new",
+          "proposed_record_id": null,
+          "identity_relationship": "NEW",
+          "temporal_relationship": "DISTINCT_LATER",
+          "new_write_needed": true,
+          "intended_action": "ADD",
+          "target_collection": "visits[].observations[]",
+          "provenance_fact_ids": [
+            "f18"
+          ],
+          "reason": "The incoming hemoglobin result is a later measurement and therefore represents new history rather than a conflict with the existing result.",
+          "evidence": [
+            "Existing result h18: hemoglobin 11 g/dL at 2026-07-02T08:00:00Z, institution A.",
+            "Incoming fact f18: hemoglobin 12 g/dL at 2026-07-02T12:00:00Z, institution B.",
+            "The supplied active encounter is enc-new."
+          ],
+          "human_approval_required": false
+        }
+      ],
+      "summary": "Add the later hemoglobin measurement to the active encounter as a new observation."
+    },
+    "compiler_decisions": [
+      {
+        "source_fact_ids": [
+          "f18"
+        ],
+        "planned_action": "ADD",
+        "compiled_action": "ADD",
+        "target_path": "visits[].observations[]",
+        "record_id": "f18",
+        "encounter_id": "enc-new",
+        "emitted": true,
+        "reason": "The incoming hemoglobin result is a later measurement and therefore represents new history rather than a conflict with the existing result."
+      }
+    ],
+    "execution_policy": {
+      "human_approval_required": false
+    },
+    "final_updates": [
+      {
+        "case_id": "stress-p18:stress-e18:ehr_beta",
+        "action_type": "ADD",
+        "target_path": "visits[].observations[]",
+        "record_id": "f18",
+        "encounter_id": "enc-new",
+        "value": {
+          "test_name": "hemoglobin",
+          "value": "12",
+          "unit": "g/dL"
+        },
+        "timestamp": "2026-07-02T12:00:00Z",
+        "provenance": {
+          "institution": "B",
+          "external_id": null
+        },
+        "source_fact_ids": [
+          "f18"
+        ],
+        "reconciliation_kind": "new_observation",
+        "temporal_classification": "distinct_time"
+      }
+    ],
+    "evaluator_result": {
+      "case_id": "stress-p18:stress-e18:ehr_beta",
+      "target_schema_id": "ehr_beta",
+      "categories": [
+        "cross_institution_temporal",
+        "provenance_history"
+      ],
+      "expected_updates": 1,
+      "predicted_updates": 1,
+      "semantic_update_set_correct": true,
+      "action_matches": 1,
+      "action_denominator": 1,
+      "target_matches": 1,
+      "target_denominator": 1,
+      "encounter_matches": 1,
+      "encounter_denominator": 1,
+      "value_matches": 1,
+      "value_denominator": 1,
+      "provenance_matches": 1,
+      "provenance_denominator": 1,
+      "temporal_matches": 1,
+      "temporal_denominator": 1,
+      "reconciliation_matches": 1,
+      "reconciliation_denominator": 1,
+      "semantic_matches": 1
+    }
+  },
+  {
+    "case_id": "stress-p19:stress-e19:ehr_alpha",
+    "input": {
+      "case": {
+        "case_id": "stress-p19:stress-e19:ehr_alpha",
+        "patient_id": "stress-p19",
+        "event_id": "stress-e19",
+        "target_schema_id": "ehr_alpha"
+      },
+      "current_patient_record": {
+        "patient_id": "stress-p19",
+        "synthetic": true,
+        "active_encounter_id": "enc-new",
+        "encounters": [
+          {
+            "id": "enc-new",
+            "requests": [
+              {
+                "id": "r19",
+                "external_id": "RX19",
+                "status": "cancelled"
+              }
+            ]
+          }
+        ]
+      },
+      "incoming_event": {
+        "patient_id": "stress-p19",
+        "event_id": "stress-e19",
+        "synthetic": true,
+        "facts": [
+          {
+            "id": "f19a",
+            "kind": "request",
+            "external_id": "RX19",
+            "status": "active",
+            "institution": "B"
+          },
+          {
+            "id": "f19b",
+            "kind": "identity",
+            "external_id": "RX19",
+            "encounter_id": "enc-new"
+          }
+        ]
+      },
+      "target_schema": {
+        "id": "ehr_alpha",
+        "fields": [
+          "encounters[].results[]",
+          "encounters[].requests[]",
+          "encounters[].documents[]",
+          "workflow.review"
+        ]
+      }
+    },
+    "plan": {
+      "case_id": "stress-p19:stress-e19:ehr_alpha",
+      "items": [
+        {
+          "source_fact_ids": [
+            "f19a",
+            "f19b"
+          ],
+          "entity_type": "REQUEST",
+          "matched_record_id": "r19",
+          "matched_encounter_id": "enc-new",
+          "proposed_record_id": "r19",
+          "identity_relationship": "TRUE_CONFLICT",
+          "temporal_relationship": "SAME_EVENT",
+          "new_write_needed": false,
+          "intended_action": "FLAG_CONFLICT",
+          "target_collection": "workflow.review",
+          "provenance_fact_ids": [
+            "f19a",
+            "f19b"
+          ],
+          "reason": "The incoming request and existing request share external identity RX19 and encounter enc-new but have conflicting statuses: active versus cancelled.",
+          "evidence": [
+            "Existing request r19 in enc-new has external_id RX19 and status cancelled.",
+            "Fact f19a has external_id RX19 and status active.",
+            "Fact f19b associates external_id RX19 with encounter enc-new."
+          ],
+          "human_approval_required": true
+        }
+      ],
+      "summary": "One same-identity request status conflict requires human review; no request write is planned."
+    },
+    "compiler_decisions": [
+      {
+        "source_fact_ids": [
+          "f19a",
+          "f19b"
+        ],
+        "planned_action": "FLAG_CONFLICT",
+        "compiled_action": "FLAG_CONFLICT",
+        "target_path": "encounters[].requests[]",
+        "record_id": "r19",
+        "encounter_id": "enc-new",
+        "emitted": true,
+        "reason": "The incoming request and existing request share external identity RX19 and encounter enc-new but have conflicting statuses: active versus cancelled."
+      }
+    ],
+    "execution_policy": {
+      "human_approval_required": true
+    },
+    "final_updates": [
+      {
+        "case_id": "stress-p19:stress-e19:ehr_alpha",
+        "action_type": "FLAG_CONFLICT",
+        "target_path": "encounters[].requests[]",
+        "record_id": "r19",
+        "encounter_id": "enc-new",
+        "value": {
+          "external_id": "RX19",
+          "existing_status": "cancelled",
+          "incoming_status": "active"
+        },
+        "timestamp": null,
+        "provenance": {
+          "institution": "B",
+          "external_id": "RX19"
+        },
+        "source_fact_ids": [
+          "f19a",
+          "f19b"
+        ],
+        "reconciliation_kind": "true_conflict",
+        "temporal_classification": null
+      }
+    ],
+    "evaluator_result": {
+      "case_id": "stress-p19:stress-e19:ehr_alpha",
+      "target_schema_id": "ehr_alpha",
+      "categories": [
+        "true_conflict",
+        "multi_fact_dependency"
+      ],
+      "expected_updates": 1,
+      "predicted_updates": 1,
+      "semantic_update_set_correct": true,
+      "action_matches": 1,
+      "action_denominator": 1,
+      "target_matches": 1,
+      "target_denominator": 1,
+      "encounter_matches": 1,
+      "encounter_denominator": 1,
+      "value_matches": 1,
+      "value_denominator": 1,
+      "provenance_matches": 1,
+      "provenance_denominator": 1,
+      "temporal_matches": 0,
+      "temporal_denominator": 0,
+      "reconciliation_matches": 1,
+      "reconciliation_denominator": 1,
+      "semantic_matches": 1
+    }
+  },
+  {
+    "case_id": "stress-p20:stress-e20:ehr_beta",
+    "input": {
+      "case": {
+        "case_id": "stress-p20:stress-e20:ehr_beta",
+        "patient_id": "stress-p20",
+        "event_id": "stress-e20",
+        "target_schema_id": "ehr_beta"
+      },
+      "current_patient_record": {
+        "patient_id": "stress-p20",
+        "synthetic": true,
+        "active_encounter_id": "enc-new",
+        "encounters": [
+          {
+            "id": "enc-new",
+            "documents": []
+          }
+        ]
+      },
+      "incoming_event": {
+        "patient_id": "stress-p20",
+        "event_id": "stress-e20",
+        "synthetic": true,
+        "facts": [
+          {
+            "id": "f20",
+            "kind": "document",
+            "title": "Radiology report",
+            "institution": "C"
+          }
+        ]
+      },
+      "target_schema": {
+        "id": "ehr_beta",
+        "fields": [
+          "visits[].observations[]",
+          "visits[].orders[]",
+          "visits[].documents[]",
+          "review_queue"
+        ]
+      }
+    },
+    "plan": {
+      "case_id": "stress-p20:stress-e20:ehr_beta",
+      "items": [
+        {
+          "source_fact_ids": [
+            "f20"
+          ],
+          "entity_type": "DOCUMENT",
+          "matched_record_id": null,
+          "matched_encounter_id": "enc-new",
+          "proposed_record_id": null,
+          "identity_relationship": "NEW",
+          "temporal_relationship": "NOT_APPLICABLE",
+          "new_write_needed": true,
+          "intended_action": "ADD",
+          "target_collection": "visits[].documents[]",
+          "provenance_fact_ids": [
+            "f20"
+          ],
+          "reason": "No existing document matches the incoming document, and the active encounter supplies the target context.",
+          "evidence": [
+            "Incoming document title is \"Radiology report\".",
+            "Incoming institution is \"C\".",
+            "Encounter enc-new has no existing documents.",
+            "enc-new is the active encounter."
+          ],
+          "human_approval_required": false
+        }
+      ],
+      "summary": "Add the new radiology report document to active encounter enc-new."
+    },
+    "compiler_decisions": [
+      {
+        "source_fact_ids": [
+          "f20"
+        ],
+        "planned_action": "ADD",
+        "compiled_action": "ADD",
+        "target_path": "visits[].documents[]",
+        "record_id": "f20",
+        "encounter_id": "enc-new",
+        "emitted": true,
+        "reason": "No existing document matches the incoming document, and the active encounter supplies the target context."
+      }
+    ],
+    "execution_policy": {
+      "human_approval_required": false
+    },
+    "final_updates": [
+      {
+        "case_id": "stress-p20:stress-e20:ehr_beta",
+        "action_type": "ADD",
+        "target_path": "visits[].documents[]",
+        "record_id": "f20",
+        "encounter_id": "enc-new",
+        "value": {
+          "title": "Radiology report"
+        },
+        "timestamp": null,
+        "provenance": {
+          "institution": "C",
+          "external_id": null
+        },
+        "source_fact_ids": [
+          "f20"
+        ],
+        "reconciliation_kind": "new_document",
+        "temporal_classification": null
+      }
+    ],
+    "evaluator_result": {
+      "case_id": "stress-p20:stress-e20:ehr_beta",
+      "target_schema_id": "ehr_beta",
+      "categories": [
+        "missing_context",
+        "document_identity"
+      ],
+      "expected_updates": 1,
+      "predicted_updates": 1,
+      "semantic_update_set_correct": false,
+      "action_matches": 0,
+      "action_denominator": 1,
+      "target_matches": 0,
+      "target_denominator": 1,
+      "encounter_matches": 1,
+      "encounter_denominator": 1,
+      "value_matches": 0,
+      "value_denominator": 1,
+      "provenance_matches": 1,
+      "provenance_denominator": 1,
+      "temporal_matches": 0,
+      "temporal_denominator": 0,
+      "reconciliation_matches": 0,
+      "reconciliation_denominator": 1,
+      "semantic_matches": 0
+    }
+  }
+]
