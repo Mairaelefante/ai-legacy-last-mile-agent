@@ -1,0 +1,148 @@
+{
+  "resourceType": "Bundle",
+  "id": "bundle-demo-001",
+  "type": "collection",
+  "meta": {
+    "tag": [
+      {
+        "system": "https://example.invalid/tags",
+        "code": "synthetic-demo"
+      }
+    ]
+  },
+  "entry": [
+    {
+      "fullUrl": "Patient/patient-demo-001",
+      "resource": {
+        "resourceType": "Patient",
+        "id": "patient-demo-001",
+        "meta": {
+          "tag": [
+            {
+              "system": "https://example.invalid/tags",
+              "code": "synthetic-demo"
+            }
+          ]
+        },
+        "name": [
+          {
+            "text": "Jordan Lee — SYNTHETIC"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "Encounter/encounter-demo-001",
+      "resource": {
+        "resourceType": "Encounter",
+        "id": "encounter-demo-001",
+        "meta": {
+          "tag": [
+            {
+              "system": "https://example.invalid/tags",
+              "code": "synthetic-demo"
+            }
+          ]
+        },
+        "status": "in-progress",
+        "subject": {
+          "reference": "Patient/patient-demo-001"
+        },
+        "period": {
+          "start": "2026-08-30T08:30:00Z"
+        }
+      }
+    },
+    {
+      "fullUrl": "Observation/observation-creatinine-001",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "observation-creatinine-001",
+        "meta": {
+          "tag": [
+            {
+              "system": "https://example.invalid/tags",
+              "code": "synthetic-demo"
+            }
+          ]
+        },
+        "status": "final",
+        "code": {
+          "text": "creatinine"
+        },
+        "subject": {
+          "reference": "Patient/patient-demo-001"
+        },
+        "encounter": {
+          "reference": "Encounter/encounter-demo-001"
+        },
+        "effectiveDateTime": "2026-08-30T09:00:00Z",
+        "valueQuantity": {
+          "value": 1.0,
+          "unit": "mg/dL"
+        }
+      }
+    },
+    {
+      "fullUrl": "Observation/observation-potassium-001",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "observation-potassium-001",
+        "meta": {
+          "tag": [
+            {
+              "system": "https://example.invalid/tags",
+              "code": "synthetic-demo"
+            }
+          ]
+        },
+        "status": "final",
+        "code": {
+          "text": "potassium"
+        },
+        "subject": {
+          "reference": "Patient/patient-demo-001"
+        },
+        "encounter": {
+          "reference": "Encounter/encounter-demo-001"
+        },
+        "effectiveDateTime": "2026-08-30T09:15:00Z",
+        "valueQuantity": {
+          "value": 3.9,
+          "unit": "mmol/L"
+        }
+      }
+    },
+    {
+      "fullUrl": "DiagnosticReport/report-knee-001",
+      "resource": {
+        "resourceType": "DiagnosticReport",
+        "id": "report-knee-001",
+        "meta": {
+          "tag": [
+            {
+              "system": "https://example.invalid/tags",
+              "code": "synthetic-demo"
+            }
+          ]
+        },
+        "status": "final",
+        "identifier": [
+          {
+            "system": "https://example.invalid/accession",
+            "value": "ACC-DEMO-001"
+          }
+        ],
+        "code": {
+          "text": "Right knee report"
+        },
+        "subject": {
+          "reference": "Patient/patient-demo-001"
+        },
+        "encounter": {
+          "reference": "Encounter/encounter-demo-001"
+        }
+      }
+    }
+  ]
+}

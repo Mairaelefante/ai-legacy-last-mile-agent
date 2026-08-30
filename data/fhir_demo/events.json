@@ -1,0 +1,143 @@
+[
+  {
+    "event_id": "demo-event-01",
+    "label": "New sodium Observation",
+    "source": "synthetic-lab-a",
+    "resource": {
+      "resourceType": "Observation",
+      "id": "incoming-sodium-001",
+      "meta": {
+        "tag": [
+          {
+            "system": "https://example.invalid/tags",
+            "code": "synthetic-demo"
+          }
+        ]
+      },
+      "identifier": [
+        {
+          "system": "https://example.invalid/lab-id",
+          "value": "LAB-SODIUM-001"
+        }
+      ],
+      "status": "final",
+      "code": {
+        "text": "sodium"
+      },
+      "subject": {
+        "reference": "Patient/patient-demo-001"
+      },
+      "encounter": {
+        "reference": "Encounter/encounter-demo-001"
+      },
+      "effectiveDateTime": "2026-08-30T10:00:00Z",
+      "valueQuantity": {
+        "value": 139,
+        "unit": "mmol/L"
+      }
+    }
+  },
+  {
+    "event_id": "demo-event-02",
+    "label": "Equivalent creatinine Observation",
+    "source": "synthetic-lab-b",
+    "resource": {
+      "resourceType": "Observation",
+      "id": "incoming-creatinine-001",
+      "meta": {
+        "tag": [
+          {
+            "system": "https://example.invalid/tags",
+            "code": "synthetic-demo"
+          }
+        ]
+      },
+      "status": "final",
+      "code": {
+        "text": "creatinine"
+      },
+      "subject": {
+        "reference": "Patient/patient-demo-001"
+      },
+      "encounter": {
+        "reference": "Encounter/encounter-demo-001"
+      },
+      "effectiveDateTime": "2026-08-30T09:00:00Z",
+      "valueQuantity": {
+        "value": 88.4,
+        "unit": "umol/L"
+      }
+    }
+  },
+  {
+    "event_id": "demo-event-03",
+    "label": "Conflicting DiagnosticReport",
+    "source": "synthetic-imaging-b",
+    "resource": {
+      "resourceType": "DiagnosticReport",
+      "id": "incoming-knee-report-001",
+      "meta": {
+        "tag": [
+          {
+            "system": "https://example.invalid/tags",
+            "code": "synthetic-demo"
+          }
+        ]
+      },
+      "status": "final",
+      "identifier": [
+        {
+          "system": "https://example.invalid/accession",
+          "value": "ACC-DEMO-001"
+        }
+      ],
+      "code": {
+        "text": "Left knee report"
+      },
+      "subject": {
+        "reference": "Patient/patient-demo-001"
+      },
+      "encounter": {
+        "reference": "Encounter/encounter-demo-001"
+      }
+    }
+  },
+  {
+    "event_id": "demo-event-04",
+    "label": "Later potassium Observation",
+    "source": "synthetic-lab-a",
+    "resource": {
+      "resourceType": "Observation",
+      "id": "incoming-potassium-002",
+      "meta": {
+        "tag": [
+          {
+            "system": "https://example.invalid/tags",
+            "code": "synthetic-demo"
+          }
+        ]
+      },
+      "identifier": [
+        {
+          "system": "https://example.invalid/lab-id",
+          "value": "LAB-POTASSIUM-002"
+        }
+      ],
+      "status": "final",
+      "code": {
+        "text": "potassium"
+      },
+      "subject": {
+        "reference": "Patient/patient-demo-001"
+      },
+      "encounter": {
+        "reference": "Encounter/encounter-demo-001"
+      },
+      "effectiveDateTime": "2026-08-30T15:00:00Z",
+      "valueQuantity": {
+        "value": 4.4,
+        "unit": "mmol/L"
+      }
+    }
+  }
+]
