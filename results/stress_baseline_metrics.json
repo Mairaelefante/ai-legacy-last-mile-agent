@@ -1,0 +1,19 @@
+{
+  "benchmark_version": "stress-v1.0.0",
+  "expected_cases": 20,
+  "expected_updates": 24,
+  "predicted_updates": 33,
+  "case_level_semantic_update_set_accuracy": 0.0,
+  "semantic_update_accuracy": 0.0,
+  "action_decision_accuracy": 0.625,
+  "target_record_identity_accuracy": 0.5833333333333334,
+  "encounter_association_accuracy": 0.782608695652174,
+  "value_accuracy": 0.0,
+  "provenance_source_attribution_accuracy": 0.0,
+  "temporal_reconciliation_accuracy": 0.0,
+  "duplicate_reconciliation_decision_accuracy": 0.041666666666666664,
+  "conflict_classification_accuracy": 1.0,
+  "missing_context_detection_recall": 1.0,
+  "extra_update_rate": 0.375,
+  "missing_update_rate": 0.0
+}
