@@ -159,6 +159,19 @@ semantic evaluator, one-call baseline, leakage/integrity tests, explicit
 normalization contract, benchmark statistics, and SHA-256 manifest. Experiment
 002 data, evaluation behavior, prompts, and results remain unchanged.
 
+### Valid frozen stress baseline
+
+Using the same base model, the valid run completed all 20 calls and produced 33
+updates for 24 expected updates. Case-level semantic update-set accuracy and
+semantic update accuracy were 0.0. Action accuracy was 0.625, target identity
+accuracy 0.5833333333, encounter accuracy 0.7826086957, and duplicate
+reconciliation accuracy 0.0416666667. Conflict classification and missing-context
+recall were both 1.0; extra-update rate was 0.375 and missing-update rate 0.0.
+
+This result exposed genuine reconciliation errors as well as noncanonical output
+and excess-action problems on the harder benchmark. It is not the invalid
+transport-failure result described above.
+
 ## Experiment 003 — Structured reconciliation planner and canonical compiler
 
 ### Evidence and hypothesis
@@ -191,12 +204,15 @@ collapses identical updates and represents human approval only as execution
 policy. It reads the current record, incoming event, target schema, and plan; it
 does not read ground truth, evaluator output, or case-specific answer tables.
 
-### Evaluation status
+### Results
 
-Implementation and local deterministic tests are complete. A new measured score
-is pending a valid 20-case API run because this development environment has no
-`OPENAI_API_KEY`. Until then, the frozen direct baseline remains the only result
-and no improvement claim is made.
+The valid 20-case run produced 24 updates for 24 expected updates. Case-level
+semantic update-set accuracy was 0.35 and semantic update accuracy 0.4166666667.
+Action accuracy was 0.9583333333, target identity 0.9166666667, encounter
+association 0.8695652174, value 0.875, provenance 0.9166666667, temporal
+reconciliation 0.8461538462, and duplicate reconciliation 0.9583333333. Conflict
+classification and missing-context recall remained 1.0; extra- and missing-update
+rates were both 0.0.
 
 ### Research interpretation
 
@@ -204,8 +220,8 @@ A low exact-match score can be a benchmark bug rather than an intelligence
 failure. We rejected a formatter-driven win and redesigned evaluation around
 semantic reconciliation. On the harder benchmark, the useful boundary is not
 “add more agents”: the LLM is used for ambiguous reconciliation and deterministic
-code enforces the write contract. Whether that boundary improves the primary
-metric remains an empirical question for the pending run.
+code enforces the write contract. The valid run improved the primary case-level
+metric from 0.0 to 0.35 without changing the base model.
 
 ## Experiment 004 — Narrow canonicalization and identity normalization
 
@@ -250,8 +266,64 @@ retry, verifier, second model call, multi-agent orchestration, retrieval, extern
 tool, or fine-tuning. Stable identifiers unavailable in the supplied input remain
 an explicit benchmark limitation.
 
-### Evaluation status
+### Final frozen-benchmark results
 
-No Experiment 004 API run has been performed and no metric improvement is
-claimed. The new behavior is covered by deterministic tests; a valid one-time
-20-case run is still required to measure the hypothesis.
+The valid run produced 24 updates for 24 expected updates. Case-level semantic
+update-set accuracy was 0.65 and semantic update accuracy 0.6666666667. Action
+accuracy was 0.875, target identity 0.8333333333, encounter association
+0.9130434783, value 0.9166666667, provenance 0.9166666667, temporal reconciliation
+0.7692307692, and duplicate reconciliation 0.875. Conflict classification remained
+1.0, missing-context recall was 0.75, and extra- and missing-update rates were 0.0.
+
+The primary metric improved from 7/20 exact cases in Experiment 003 to 13/20 in
+Experiment 004, but the component regressions are not hidden. The two experiments
+used fresh model calls. Transition analysis found 7 cases exact in both, 6 changed
+from failure to exact, none changed from exact to failure, and 7 failed in both.
+Five newly exact cases were primarily deterministic representation or
+canonicalization improvements; one was a genuine planner/reconciliation
+improvement. The observed component regressions were attributable to fresh-call
+planner variance rather than the deterministic Experiment 004 transformations.
+
+Two benchmark targets include stable identifiers unavailable from inference
+input. They remain an explicit limitation: they were not hard-coded and ground
+truth was not exposed to inference to increase the score.
+
+## Final hackathon demo — narrow synthetic FHIR boundary
+
+The final demo keeps Experiment 004 unchanged and adds a small integration layer:
+
+```text
+Synthetic FHIR Bundle
+  → deterministic Synthetic FHIR Validation and Adaptation Tool
+  → live Experiment 004 planner
+  → deterministic Experiment 004 compiler
+  → proposed FHIR-compatible change
+  → separate simulated human approval
+  → evolving in-memory synthetic Bundle
+```
+
+The tool supports only Patient, Encounter, Observation, and DiagnosticReport. It
+requires synthetic markers, resolves local Patient/Encounter references, validates
+the supported subset, and fails closed before inference. It performs adaptation,
+not reconciliation reasoning.
+
+The four-event live demo was run successfully locally with the same configured
+base model and one live planner call per event:
+
+1. new sodium: `NEW / DISTINCT_LATER` → `ADD` → approved POST Observation preview
+   applied only to the in-memory synthetic Bundle;
+2. equivalent-unit creatinine: `EQUIVALENT_UNIT_DUPLICATE / SAME_MEASUREMENT` →
+   `NO_OP`, with no proposal or state change;
+3. same-accession right/left report: `TRUE_CONFLICT / NOT_APPLICABLE` →
+   `FLAG_CONFLICT`, with review required and no clinical write;
+4. later potassium: `NEW / DISTINCT_LATER` → `ADD` → approved POST Observation
+   preview applied only to the in-memory synthetic Bundle.
+
+The final live summary was 2 observations added, 1 duplicate avoided, 1 conflict
+awaiting review, 0 external writes, and 0 clinical recommendations. Replay mode is
+an offline reproducibility fallback and is explicitly not live inference.
+
+This remains a synthetic research demonstration, not production EHR integration
+or evidence of clinical deployment readiness. The hackathon scope deliberately
+excludes a multi-agent redesign, hard-coded benchmark identifiers, Medplum, SMART
+on FHIR, a FHIR server, and a general-purpose FHIR layer.

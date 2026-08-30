@@ -47,62 +47,62 @@ prompt receives a current record, incoming facts, target schema, allowed actions
 and task rules. Categories, expected updates, scoring labels, evaluator output,
 and ground truth are excluded and covered by automated leakage tests.
 
-```bash
-python -m ai_legacy_last_mile.run_stress_baseline
-python -m ai_legacy_last_mile.stress_evaluator results/stress_baseline_predictions.json
-cat results/stress_baseline_metrics.json
+```text
+Synthetic FHIR Bundle
+  → deterministic Synthetic FHIR Validation and Adaptation Tool
+  → LIVE Experiment 004 planner
+  → unchanged deterministic Experiment 004 compiler
+  → proposed FHIR-compatible change
+  → separate simulated human approval
+  → evolving in-memory synthetic Bundle
 ```
 
-See `data/stress_benchmark/README.md` for frozen normalization/scoring rules and
-`freeze_manifest.json` for v1.0.0 integrity hashes and statistics.
+The deliberately narrow subset supports `Patient`, `Encounter`, `Observation`,
+and `DiagnosticReport`. The deterministic tool enforces synthetic markers,
+resolves local Patient/Encounter references, validates the supported subset, and
+fails closed before a model call on invalid or unsupported data. It adapts data;
+it does **not** make reconciliation decisions.
 
-## Experiment 003: plan reconciliation, compile the write contract
+The live demo was successfully run locally with the same configured base model
+and exactly one live planner call for each event:
 
-The valid direct stress baseline made 33 predictions for 24 expected updates.
-Its conflict and missing-context detection were strong, but its primary
-case-level semantic update-set accuracy was 0.0: it emitted extra operational
-actions and used noncanonical values, provenance, temporal classes, and
-reconciliation labels. This evidence supports a narrow boundary change rather
-than a multi-agent system.
+| Event | Planner | Compiler and outcome |
+|---|---|---|
+| New sodium Observation | `NEW / DISTINCT_LATER` | `ADD`; POST Observation preview; simulated approval; applied only to the in-memory synthetic Bundle |
+| Equivalent-unit creatinine | `EQUIVALENT_UNIT_DUPLICATE / SAME_MEASUREMENT` | `NO_OP`; no FHIR proposal; record unchanged |
+| Same-accession right/left DiagnosticReport | `TRUE_CONFLICT / NOT_APPLICABLE` | `FLAG_CONFLICT`; review required; no clinical write; state unchanged |
+| Later potassium Observation | `NEW / DISTINCT_LATER` | `ADD`; POST Observation preview; simulated approval; applied only to the in-memory synthetic Bundle |
 
-Experiment 003 makes exactly one LLM call per frozen case. The call returns an
-auditable `ReconciliationPlan` containing fact groups, matched record and
-encounter identities, identity/temporal enums, intended action, evidence, and
-approval policy. Deterministic Python then selects a path from the supplied
-schema, preserves existing identities, constructs values and provenance from
-the supplied facts, canonicalizes benchmark labels, and removes identical
-actions. Human approval remains execution-policy metadata and never becomes a
-separate clinical update.
+Final live-demo summary: **2 observations added, 1 duplicate avoided, 1 conflict
+awaiting review, 0 external writes, and 0 clinical recommendations**.
 
-The run writes separate `stress_exp003_*` artifacts and leaves every baseline
-artifact untouched. `stress_exp003_plans.json` preserves the input, plan,
-compiler decision, final action, policy, and evaluator result for every
-successful case, so at least three different behavior trajectories can be used
-in the demo without cherry-picking the aggregate evaluation.
+Live mode requires an API key and never silently falls back to replay:
 
 ```bash
 export OPENAI_API_KEY='your-api-key'
-export OPENAI_MODEL='gpt-5.6-sol'
-python -m ai_legacy_last_mile.run_reconciliation_agent
-cat results/stress_exp003_metrics.json
+export OPENAI_MODEL='gpt-5.6-sol'  # optional; this is the current default
+run-fhir-demo --live
 ```
 
-No Experiment 003 score is claimed until those artifacts come from one valid
-20-case API run. The inference runner never reads ground truth; evaluation is
-performed only after all predictions have been produced. This remains a
-synthetic research prototype, not evidence of clinical or deployment readiness.
+Replay is an offline reproducibility fallback using committed structured plan
+fixtures. It still passes each plan through the actual Experiment 004 validation
+and compiler, but it is **not live model inference**:
 
-For Windows PowerShell, the complete run and metric print is one block:
-
-```powershell
-$env:OPENAI_API_KEY = "your-api-key"
-$env:OPENAI_MODEL = "gpt-5.6-sol"
-python -m ai_legacy_last_mile.run_reconciliation_agent
-if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-Get-Content results/stress_exp003_metrics.json
+```bash
+run-fhir-demo --replay
 ```
 
-Research prototype. Synthetic data only. No autonomous clinical decisions. No production EHR deployment. Human approval required for consequential write actions.
+This demo is not production EHR integration or a claim of deployment readiness.
+
+## Deliberate non-features and rejected ideas
+
+- We rejected a formatter-only improvement after the early benchmark was found
+  to measure representation mismatches more than reconciliation.
+- We did not add a multi-agent architecture because failure analysis did not
+  justify its complexity.
+- We did not hard-code unavailable benchmark identifiers.
+- We did not build production EHR integration, Medplum, SMART on FHIR, a FHIR
+  server, or a general-purpose FHIR layer for the hackathon.
 
 A Python 3.12 hackathon scaffold for testing whether AI-generated structured
 information can be transferred reliably into heterogeneous legacy systems.
@@ -136,6 +136,30 @@ python -m pip install -e '.[dev]'
 ```bash
 python -m pytest
 ```
+
+## Reproduce the frozen stress evaluation
+
+Evaluate the committed frozen-baseline predictions without making a model call:
+
+```bash
+python -m ai_legacy_last_mile.stress_evaluator \
+  results/stress_baseline_predictions.json
+```
+
+To generate a new stress-baseline run first, configure the model and run the
+existing one-call-per-case command. This overwrites the corresponding baseline
+artifacts and is not required for the FHIR replay demo:
+
+```bash
+export OPENAI_API_KEY='your-api-key'
+export OPENAI_MODEL='gpt-5.6-sol'
+python -m ai_legacy_last_mile.run_stress_baseline
+python -m ai_legacy_last_mile.stress_evaluator \
+  results/stress_baseline_predictions.json
+```
+
+See `data/stress_benchmark/README.md` for the frozen equivalence rules and
+`data/stress_benchmark/freeze_manifest.json` for integrity hashes.
 
 ## Dataset
 
