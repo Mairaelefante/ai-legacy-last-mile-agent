@@ -1,0 +1,23 @@
+{
+  "benchmark_version": "stress-v1.0.0",
+  "expected_cases": 20,
+  "expected_updates": 24,
+  "predicted_updates": 24,
+  "case_level_semantic_update_set_accuracy": 0.35,
+  "semantic_update_accuracy": 0.4166666666666667,
+  "action_decision_accuracy": 0.9583333333333334,
+  "target_record_identity_accuracy": 0.9166666666666666,
+  "encounter_association_accuracy": 0.8695652173913043,
+  "value_accuracy": 0.875,
+  "provenance_source_attribution_accuracy": 0.9166666666666666,
+  "temporal_reconciliation_accuracy": 0.8461538461538461,
+  "duplicate_reconciliation_decision_accuracy": 0.9583333333333334,
+  "conflict_classification_accuracy": 1.0,
+  "missing_context_detection_recall": 1.0,
+  "extra_update_rate": 0.0,
+  "missing_update_rate": 0.0,
+  "model": "gpt-5.6-sol",
+  "model_calls": 20,
+  "failed_calls": 0,
+  "runtime_seconds": 207.204
+}
