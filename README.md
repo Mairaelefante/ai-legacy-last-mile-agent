@@ -1,338 +1,285 @@
 # AI Legacy Last-Mile Agent
 
-## Offline-safe synthetic FHIR demo
+Research prototype for **agentic clinical record reconciliation**:
+deciding how fragmented incoming clinical information should be
+reconciled against an evolving record before any operational write is
+allowed.
 
-The demo places the unchanged Experiment 004 planner and deterministic compiler
-behind a deliberately narrow FHIR R4-style adapter. It supports one wholly
-synthetic patient and only `Patient`, `Encounter`, `Observation`, and
-`DiagnosticReport`. The deterministic tool requires synthetic markers, resolves
-local patient/encounter references, and rejects unsupported or inconsistent input
-before inference. Proposed additions pass through a separate simulated approval
-gate and are applied only to an in-memory copy of the synthetic Bundle. Conflicts
-and no-op decisions never change clinical state. No external EHR write is made,
-and the workflow does not diagnose or recommend treatment.
+**Safety scope:** synthetic data only; no clinical recommendations; no
+external EHR writes; no production deployment.
 
-Primary live mode makes exactly one structured Experiment 004 planner call for
-each of four events and never silently falls back to replay:
+## Problem
 
-```bash
-export OPENAI_API_KEY='your-api-key'
-export OPENAI_MODEL='gpt-5.6-sol'  # optional
-run-fhir-demo --live
+Incoming clinical information is not only an extraction problem. A
+system must determine whether a new fact is new information, a
+duplicate, an equivalent measurement in different units, a partial
+update, a true conflict, missing required context, or a distinct later
+event.
+
+## Core contribution
+
+**Probabilistic semantic reconciliation → deterministic operational
+write compilation.**
+
+The language model reasons about what incoming information means
+relative to the current record. Deterministic Python controls exactly
+how that reasoning can become an operational update. The measured
+experiments use the same foundation model; the improvement comes from
+the surrounding architecture, not fine-tuning.
+
+> More agentic behavior is not always better. Give the model freedom
+> where reasoning is ambiguous, and constraints where actions have
+> consequences.
+
+## Architecture
+
+``` text
+current record + incoming information + target schema
+                         ↓
+          Structured Reconciliation Planner
+               one LLM call per case
+                         ↓
+         Deterministic Canonical Compiler
+                         ↓
+              canonical proposed action
+                         ↓
+               separate evaluation
 ```
 
-The deterministic fallback uses committed recorded-plan fixtures and makes no API
-calls. Its output is explicitly labeled as replay rather than live inference:
+The final demo adds a narrow FHIR boundary:
 
-```bash
-run-fhir-demo --replay
+``` text
+Synthetic FHIR Bundle
+        ↓
+Synthetic FHIR Validation and Adaptation Tool
+        ↓
+Live Experiment 004 planner
+        ↓
+Deterministic compiler
+        ↓
+FHIR-compatible proposed change
+        ↓
+Separate simulated human approval
+        ↓
+Evolving in-memory synthetic Bundle
 ```
 
-This is a synthetic research demonstration, not a general FHIR implementation,
-FHIR server, autonomous clinical system, or production EHR integration.
+## Setup and tests
 
-## Frozen reconciliation stress benchmark (v1.0.0)
+Python 3.12 is required.
 
-Experiment 002 was useful but its apparent failures were overwhelmingly JSON
-representation mismatches, while action selection and traceability were already
-semantically strong. The separate `data/stress_benchmark/` suite therefore tests
-the operational bottleneck: cross-source temporal history, explicit unit
-equivalence, duplicates and partial duplicates, true conflicts, encounter
-selection, provenance, dependent facts, ambiguity, and heterogeneous actions.
-It does not alter or replace any Experiment 002 input, evaluator, or result.
-
-The baseline makes exactly one general provider-neutral LLM request per case,
-with no verifier, agent team, retry, or deterministic answer generator. Its
-prompt receives a current record, incoming facts, target schema, allowed actions,
-and task rules. Categories, expected updates, scoring labels, evaluator output,
-and ground truth are excluded and covered by automated leakage tests.
-
-```bash
-python -m ai_legacy_last_mile.run_stress_baseline
-python -m ai_legacy_last_mile.stress_evaluator results/stress_baseline_predictions.json
-cat results/stress_baseline_metrics.json
-```
-
-See `data/stress_benchmark/README.md` for frozen normalization/scoring rules and
-`freeze_manifest.json` for v1.0.0 integrity hashes and statistics.
-
-## Experiment 003: plan reconciliation, compile the write contract
-
-The valid direct stress baseline made 33 predictions for 24 expected updates.
-Its conflict and missing-context detection were strong, but its primary
-case-level semantic update-set accuracy was 0.0: it emitted extra operational
-actions and used noncanonical values, provenance, temporal classes, and
-reconciliation labels. This evidence supports a narrow boundary change rather
-than a multi-agent system.
-
-Experiment 003 makes exactly one LLM call per frozen case. The call returns an
-auditable `ReconciliationPlan` containing fact groups, matched record and
-encounter identities, identity/temporal enums, intended action, evidence, and
-approval policy. Deterministic Python then selects a path from the supplied
-schema, preserves existing identities, constructs values and provenance from
-the supplied facts, canonicalizes benchmark labels, and removes identical
-actions. Human approval remains execution-policy metadata and never becomes a
-separate clinical update.
-
-The run writes separate `stress_exp003_*` artifacts and leaves every baseline
-artifact untouched. `stress_exp003_plans.json` preserves the input, plan,
-compiler decision, final action, policy, and evaluator result for every
-successful case, so at least three different behavior trajectories can be used
-in the demo without cherry-picking the aggregate evaluation.
-
-```bash
-export OPENAI_API_KEY='your-api-key'
-export OPENAI_MODEL='gpt-5.6-sol'
-python -m ai_legacy_last_mile.run_reconciliation_agent
-cat results/stress_exp003_metrics.json
-```
-
-No Experiment 003 score is claimed until those artifacts come from one valid
-20-case API run. The inference runner never reads ground truth; evaluation is
-performed only after all predictions have been produced. This remains a
-synthetic research prototype, not evidence of clinical or deployment readiness.
-
-For Windows PowerShell, the complete run and metric print is one block:
-
-```powershell
-$env:OPENAI_API_KEY = "your-api-key"
-$env:OPENAI_MODEL = "gpt-5.6-sol"
-python -m ai_legacy_last_mile.run_reconciliation_agent
-if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-Get-Content results/stress_exp003_metrics.json
-```
-
-Research prototype. Synthetic data only. No autonomous clinical decisions. No production EHR deployment. Human approval required for consequential write actions.
-
-A Python 3.12 hackathon scaffold for testing whether AI-generated structured
-information can be transferred reliably into heterogeneous legacy systems.
-The project defines validated data contracts, wholly synthetic fixtures, a
-deterministic evaluator, and an intentionally simple single-LLM baseline. It
-includes no multi-agent workflow, LangGraph, UI, real EHR integration, or SMART
-on FHIR integration.
-
-## Project layout
-
-```text
-src/ai_legacy_last_mile/  Pydantic models, fixture loaders, and evaluator
-data/                       Synthetic documents, target schemas, and ground truth
-eval/                       Workspace for future prediction outputs
-tests/                      Dataset and evaluator unit tests
-```
-
-## Setup
-
-Python 3.12 is required. Create an isolated environment and install the package
-with its test dependency:
-
-```bash
+``` bash
 python3.12 -m venv .venv
 source .venv/bin/activate
 python -m pip install -e '.[dev]'
-```
-
-## Test
-
-```bash
 python -m pytest
 ```
 
-## Dataset
+If the editable package is not installed, run tests with `src` on
+`PYTHONPATH`.
 
-`data/clinical_documents.json` contains ten fictional outpatient documents.
-Names, dates, conditions, and measurements are generated solely for testing and
-do not represent real people or encounters. Each document exposes normalized
-`SourceFact` records.
+## Benchmark-design lesson
 
-`data/target_schemas.json` defines two invented EHR contracts. The same concepts
-use deliberately different paths and nesting. `data/ground_truth_mappings.json`
-stores the expected assignments outside evaluator code for every document and
-both schemas.
+An earlier stateful benchmark produced a low exact-match score, but
+failure analysis showed that most failures were
+representation/serialization mismatches. A formatter-only fix could
+therefore have created an attractive score increase without solving the
+real reconciliation problem.
 
-## Run the single-agent baseline
+That direction was rejected. A separate harder semantic stress benchmark
+was created and frozen before the later experiments.
 
-This baseline makes exactly **one** OpenAI request for each document/schema pair.
-Each request receives the complete clinical document, all normalized source
-facts, and the complete target schema. It has no retries, verification pass,
-tools, agent framework, semantic mapping rules, evaluator feedback, or access to
-ground truth.
+> A low exact-match score can sometimes expose a benchmark problem
+> rather than an intelligence problem. We rejected a formatter-driven
+> win and redesigned the evaluation to measure reconciliation.
 
-Set the two required environment variables (the application does not read a
-`.env` file):
+The earlier Experiment 002 material remains in repository history; the
+final measured comparison uses the frozen stress benchmark below.
 
-```bash
-export OPENAI_API_KEY='your-api-key'
-export OPENAI_MODEL='your-structured-output-capable-model'
+## Frozen reconciliation stress benchmark --- v1.0.0
+
+20 cases, 24 expected updates. It tests semantic and partial duplicates,
+unit equivalence, temporal history, provenance, encounter
+disambiguation, true conflicts, missing context, dependent facts, and
+heterogeneous actions. Ground truth and evaluator feedback are excluded
+from inference.
+
+### Direct stress baseline
+
+One general-purpose LLM call per case; no verifier, agent team, retry
+loop, deterministic answer generator, or evaluator feedback.
+
+The baseline produced **33 predicted updates for 24 expected updates**.
+
+  Metric                                      Baseline
+  ----------------------------------------- ----------
+  Case-level semantic update-set accuracy        0.000
+  Semantic update accuracy                       0.000
+  Action decision accuracy                       0.625
+  Target record identity accuracy                0.583
+  Encounter association accuracy                 0.783
+  Value accuracy                                 0.000
+  Provenance attribution accuracy                0.000
+  Temporal reconciliation accuracy               0.000
+  Duplicate reconciliation accuracy              0.042
+  Conflict classification accuracy               1.000
+  Missing-context detection recall               1.000
+  Extra update rate                              0.375
+  Missing update rate                            0.000
+
+``` bash
+python -m ai_legacy_last_mile.run_stress_baseline
 ```
 
-Run all 20 document/schema cases:
+## Experiment 003 --- Structured Planner + Deterministic Compiler
 
-```bash
-python -m ai_legacy_last_mile.run_baseline \
-  --documents data/clinical_documents.json \
-  --schemas data/target_schemas.json \
-  --output results/baseline_predictions.json
+Experiment 003 introduced the main architectural change. One structured
+LLM planning call returns identity/temporal relations, intended action,
+evidence, matched record/encounter information, and source facts.
+Deterministic Python constructs canonical paths, values, provenance and
+labels, suppresses duplicate actions, and keeps approval policy separate
+from clinical updates.
+
+  Metric                                      Baseline    Exp. 003
+  ----------------------------------------- ---------- -----------
+  Case-level semantic update-set accuracy        0.000   **0.350**
+  Semantic update accuracy                       0.000   **0.417**
+  Action decision accuracy                       0.625   **0.958**
+  Target record identity accuracy                0.583   **0.917**
+  Encounter association accuracy                 0.783   **0.870**
+  Value accuracy                                 0.000   **0.875**
+  Provenance attribution accuracy                0.000   **0.917**
+  Temporal reconciliation accuracy               0.000   **0.846**
+  Duplicate reconciliation accuracy              0.042   **0.958**
+  Conflict classification accuracy               1.000       1.000
+  Missing-context detection recall               1.000       1.000
+  Extra update rate                              0.375   **0.000**
+  Missing update rate                            0.000       0.000
+
+The system moved from **33 predictions for 24 expected** to **24
+predictions for 24 expected**, reducing extra-update rate from **37.5%
+to 0%**.
+
+``` bash
+python -m ai_legacy_last_mile.run_reconciliation_agent
 ```
 
-This writes:
+## Experiment 004 --- Narrow canonicalization hardening
 
-- `results/baseline_predictions.json`: validated `MappingCase` predictions;
-- `results/baseline_predictions.raw.json`: raw structured response text or error
-  for every request;
-- `results/baseline_predictions.failures.json`: malformed responses, missing
-  mappings, invalid paths, and API failures. A failed case remains in predictions
-  with no mappings so it is penalized during evaluation. There are no retries.
+Experiment 004 preserves the same planner/compiler architecture and adds
+only narrow generic normalization and canonicalization. It does not add
+a second model call, retrieval, multi-agent orchestration, case-specific
+rules, or ground-truth access.
 
-## Evaluate predictions separately
+  Metric                                       Exp. 003    Exp. 004
+  ----------------------------------------- ----------- -----------
+  Case-level semantic update-set accuracy         0.350   **0.650**
+  Semantic update accuracy                        0.417   **0.667**
+  Action decision accuracy                    **0.958**       0.875
+  Target record identity accuracy             **0.917**       0.833
+  Encounter association accuracy                  0.870   **0.913**
+  Value accuracy                                  0.875   **0.917**
+  Provenance attribution accuracy                 0.917       0.917
+  Temporal reconciliation accuracy            **0.846**       0.769
+  Duplicate reconciliation accuracy           **0.958**       0.875
+  Conflict classification accuracy                1.000       1.000
+  Missing-context detection recall            **1.000**       0.750
+  Extra update rate                               0.000       0.000
+  Missing update rate                             0.000       0.000
 
-Only after generation finishes, run the existing deterministic evaluator. This
-separation prevents expected mappings and metrics from leaking into the baseline:
+Primary case-level accuracy improved from **35% to 65%**. Transition
+analysis: 7 exact→exact, 6 fail→exact, 0 exact→fail, 7 fail→fail. Five
+of six newly exact cases were primarily deterministic
+representation/canonicalization improvements; one was a genuine planner
+improvement.
 
-```bash
-python -m ai_legacy_last_mile.evaluator \
-  results/baseline_predictions.json \
-  --output results/baseline_metrics.json \
-  --per-case-output results/baseline_per_case_metrics.json
+The regressions are intentionally reported. Read-only failure analysis
+attributed observed component regressions to fresh-call planner variance
+rather than the deterministic Experiment 004 transformations.
+
+Two benchmark targets contain identifiers unavailable in agent input.
+They were deliberately **not hard-coded**, and ground truth was never
+exposed to inference.
+
+``` bash
+python -m ai_legacy_last_mile.run_reconciliation_agent_exp004
 ```
 
-The deterministic evaluator performs exact comparisons of source fact ID,
-target field path, and JSON value, and reports precision, recall, and Jaccard
-field-mapping accuracy. Aggregate and per-case metrics are saved by the command.
-No performance number is claimed until a real API-backed run is completed.
+## End-to-end synthetic FHIR demo
 
-## Milestone 3: stateful update benchmark
+Supported subset: `Patient`, `Encounter`, `Observation`,
+`DiagnosticReport`.
 
-Experiment 001 remains the reproducible single-request field-mapping benchmark
-described above. Milestone 3 adds a separate, more realistic evaluation
-environment for a future Experiment 002; it does not make the old baseline solve
-the new task and does not add a multi-agent implementation.
+The deterministic FHIR tool validates synthetic markers and local
+Patient/Encounter references and fails closed on invalid or unsupported
+input before inference. It does not make semantic reconciliation
+decisions.
 
-The stateful benchmark combines:
+### Live mode
 
-- 10 current fictional inpatient records in `data/patient_records.json`;
-- 20 explicitly sourced incoming events in `data/incoming_events.json`;
-- 40 stable patient/event/schema cases in `data/stateful_cases.json`;
-- 52 expected traceable actions in `data/ground_truth_updates.json`;
-- operational field extensions for the existing `ehr_alpha` and `ehr_beta`
-  systems in `data/stateful_schema_extensions.json`.
-
-The events cover clinical notes, explicit medication changes, imaging and
-consultation requests, laboratory results, radiology reports, external
-documents, duplicates, incompatible source statements, and information lacking
-the context required for safe mapping. Actions are limited to `ADD`, `UPDATE`,
-`NO_OP`, `FLAG_CONFLICT`, and `FLAG_MISSING_CONTEXT`. Consequential proposals and
-flags require human review; the benchmark does not apply updates to a record.
-
-Future predictions should be a JSON list of `ProposedUpdate` objects. Evaluate
-them independently with:
-
-```bash
-python -m ai_legacy_last_mile.update_evaluator \
-  results/update_predictions.json \
-  --output results/update_metrics.json \
-  --per-case-output results/update_per_case_metrics.json
+``` bash
+python -m ai_legacy_last_mile.run_fhir_demo --live
 ```
 
-The deterministic report includes exact update, action-type, target-path,
-proposed-value, and source-traceability accuracy, plus conflict-detection and
-missing-context detection recall. No Experiment 002 predictor is implemented yet.
+Observed local live trajectory:
 
-### Stateful case identity and heterogeneous destinations
+1.  New sodium Observation → `NEW / DISTINCT_LATER` → `ADD`.
+2.  Equivalent-unit creatinine →
+    `EQUIVALENT_UNIT_DUPLICATE / SAME_MEASUREMENT` → `NO_OP`.
+3.  Conflicting DiagnosticReport → `TRUE_CONFLICT / NOT_APPLICABLE` →
+    `FLAG_CONFLICT`.
+4.  Later potassium Observation → `NEW / DISTINCT_LATER` → `ADD`.
 
-Every stateful case has an explicit `case_id`, `patient_id`, `event_id`, and
-`target_schema_id`. The same 20 source events are evaluated once against each of
-the two existing synthetic EHR systems. Their operational extensions deliberately
-use different paths for equivalent concepts—for example, Alpha imaging requests
-use `encounter.requests.radiology`, while Beta uses `chart.orders.imaging`.
+Observed summary:
 
-The original `target_schemas.json` remains unchanged for Experiment 001
-reproducibility. The extension fixture adds only the operational destinations
-needed by the stateful task and remains keyed to those same schema IDs. A future
-Experiment 002 predictor must receive the selected base schema and its stateful
-extension as input; ground truth remains a separate evaluator-only fixture.
-
-Ten destination-specific cases contain multiple expected actions (five source
-events evaluated against both schemas). Single sources include explicitly
-supported combinations such as a medication change plus a new medication and
-imaging request, two investigations, a laboratory result plus supplied diary
-text, a valid result plus a conflict, and a document plus a missing-context flag.
-
-### Primary stateful metric
-
-The primary metric is **case-level exact update set accuracy**: the proportion of
-patient/event/schema cases where the complete multiset of predicted updates
-equals the expected set. A case is correct only when no expected action is
-missing, no extra action is proposed, and every action has the correct type,
-target path, proposed value, and source-fact traceability. Action-level component
-metrics remain available for diagnosis but are not the primary success measure.
-
-## Experiment 002: single-LLM stateful update baseline
-
-Experiment 002 measures the simplest fair baseline for the frozen stateful
-benchmark: one patient/event/schema case produces exactly one general-purpose LLM
-request and one structured `ProposedUpdate` set. Unlike Experiment 001, the input
-includes current patient-record state and arriving information over time. Unlike
-future experiments, it has no retry, critic, verifier, specialized agent, tool,
-or evaluator feedback during generation.
-
-Use the Python 3.12 setup described above, then export the same two required
-environment variables:
-
-```bash
-export OPENAI_API_KEY='your-api-key'
-export OPENAI_MODEL='your-structured-output-capable-model'
+``` text
+observations added: 2
+duplicates avoided: 1
+conflicts awaiting review: 1
+external writes performed: 0
+clinical recommendations made: 0
 ```
 
-Generate all 40 cases with exactly one request per case:
+This live trajectory is demonstration evidence, **not a benchmark
+metric** and not a claim of 100% accuracy.
 
-```bash
-python -m ai_legacy_last_mile.run_stateful_baseline \
-  --records data/patient_records.json \
-  --events data/incoming_events.json \
-  --cases data/stateful_cases.json \
-  --schemas data/target_schemas.json \
-  --schema-extensions data/stateful_schema_extensions.json \
-  --output results/stateful_baseline_predictions.json
+### Replay mode
+
+``` bash
+python -m ai_legacy_last_mile.run_fhir_demo --replay
 ```
 
-Generation writes these artifacts before any evaluation is run:
+Replay uses committed structured planner fixtures and makes no live
+model inference. It is an offline reproducibility fallback.
 
-- `results/stateful_baseline_predictions.json` — validated updates from
-  successful cases;
-- `results/stateful_baseline_raw.json` — one raw response or recorded error per
-  case;
-- `results/stateful_baseline_failures.json` — API and validation failures. A
-  failed case contributes no predicted updates and is penalized later.
+## Deliberately rejected directions
 
-After generation is complete, run the frozen evaluator separately:
+-   Formatter-only optimization after discovering the earlier benchmark
+    over-measured representation mismatch.
+-   Multi-agent complexity without evidence that it addressed measured
+    failures.
+-   Hard-coded identifiers unavailable to the agent.
+-   Experiment 005 score chasing.
+-   Production EHR integration, Medplum, SMART on FHIR, or an external
+    FHIR server.
+-   General-purpose FHIR support.
 
-```bash
-python -m ai_legacy_last_mile.update_evaluator \
-  results/stateful_baseline_predictions.json \
-  --output results/stateful_baseline_metrics.json \
-  --per-case-output results/stateful_baseline_per_case_metrics.json
-```
+## Safety and scope
 
-The model input contains only the current synthetic record, explicitly sourced
-incoming event, case identity, base destination schema, matching operational
-extension, allowed actions, output contract, and safety/task rules. It never
-contains expected updates, ground truth, scores, other cases' answers, or hidden
-answer-derived hints. All Experiment 002 results remain pending until a real API
-run is performed.
+-   Synthetic data only; no real patient information.
+-   No autonomous diagnosis, prescribing, or clinical decision-making.
+-   No clinical recommendations.
+-   No external EHR writes.
+-   Consequential simulated changes pass through a separate approval
+    gate.
+-   The live demo mutates only an in-memory synthetic Bundle.
+-   Real deployment would require institution-specific interoperability,
+    authentication/authorization, privacy/security controls,
+    auditability, regulatory/compliance review, clinical validation, and
+    production human-review workflows.
 
-## Safety and Scope
+## Main takeaway
 
-- **Synthetic data only:** all patient names, records, events, sources, and
-  clinical content in this repository are fictional.
-- This is a research/hackathon prototype, not a production-ready clinical system.
-- It has no access to a production EHR and performs no real record updates.
-- It must not perform autonomous diagnosis.
-- It must not perform autonomous prescribing.
-- It must not perform autonomous clinical decision-making.
-- It may only organize explicit source information, map it, identify changes or
-  conflicts, and propose traceable updates supported by that information.
-- All proposed consequential changes require review and approval by an
-  authorized human; a proposal is never an instruction to provide care.
-- Deployment in a real healthcare environment would require institutional
-  authorization, security and privacy review, regulatory and compliance
-  assessment, and system-specific integration.
+The contribution is not a smarter model. It is a safer and more testable
+boundary between **probabilistic semantic reasoning** and
+**consequential operational execution**.
