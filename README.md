@@ -5,6 +5,12 @@ deciding how fragmented incoming clinical information should be
 reconciled against an evolving record before any operational write is
 allowed.
 
+**Intended users:** clinical documentation and health-IT integration
+teams responsible for reconciling incoming structured clinical
+information into an EHR. The prototype targets the repetitive
+reconciliation step before a consequential write, while keeping human
+review separate from model reasoning.
+
 **Safety scope:** synthetic data only; no clinical recommendations; no
 external EHR writes; no production deployment.
 
@@ -63,6 +69,11 @@ Separate simulated human approval
         ↓
 Evolving in-memory synthetic Bundle
 ```
+
+Representative end-to-end traces, including planner instructions, tool
+responses, compiler actions, the human checkpoint, and a challenging
+conflict case, are documented in
+[`AGENT_TRAJECTORIES.md`](AGENT_TRAJECTORIES.md).
 
 ## Setup and tests
 
