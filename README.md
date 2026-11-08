@@ -1,3 +1,11 @@
+![AI Legacy Last-Mile Agent](cover.svg)
+
+> **Semantic reconciliation · Deterministic write controls**
+
+**Focus:** AI Agents & Verification · [Source and project files](./)
+
+---
+
 # AI Legacy Last-Mile Agent
 
 Research prototype for **agentic clinical record reconciliation**:
